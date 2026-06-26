@@ -1,4 +1,4 @@
 interface:
   display_name: "Market Signal Analysis"
-  short_description: "Analyze technical signals, sector rotation, and bubble momentum."
-  default_prompt: "Analyze this investment target using technical indicators, multi-timeframe signal scoring, sector/theme breadth, bubble momentum risk, and statistically weighted buy/sell probabilities."
+  short_description: "Analyze technical signals, sector rotation, bubble momentum, and U.S. macro liquidity."
+  default_prompt: "Analyze this investment target using technical indicators, multi-timeframe signal scoring, sector/theme breadth, bubble momentum risk, U.S. macro liquidity/Fed policy-regime context, and statistically weighted probabilities."

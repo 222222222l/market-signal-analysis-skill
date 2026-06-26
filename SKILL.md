@@ -1,6 +1,6 @@
 ---
 name: market-signal-analysis
-description: Professional technical market signal analysis for stocks, ETFs, sectors/boards, themes, indices, and other liquid investment markets. Use when Codex needs to analyze OHLCV market data, upstream agent/API market data, or user-provided price history to identify buy/sell/hold signals, compute common technical indicators such as volume, moving averages, MACD, RSI, KDJ/stochastic, Bollinger Bands, ATR, momentum, breakout, top divergence, and bottom divergence, score signals across hourly/daily/weekly/monthly timeframes, evaluate sector/theme rotation, breadth, leading-stock strength, bubble momentum, sentiment support, and bubble-risk exhaustion, adapt analysis for short-term/mid-term/long-term user horizons, and produce statistically weighted buy/sell/hold or bold/cautious probabilities with matched signal evidence. Default assumptions and weights target the mature U.S. equity market, with branchable market profiles for other markets.
+description: Professional technical market signal analysis for stocks, ETFs, sectors/boards, themes, indices, and other liquid investment markets. Use when Codex needs to analyze OHLCV market data, upstream agent/API market data, or user-provided price history to identify buy/sell/hold signals, compute common technical indicators such as volume, moving averages, MACD, RSI, KDJ/stochastic, Bollinger Bands, ATR, momentum, breakout, top divergence, and bottom divergence, score signals across hourly/daily/weekly/monthly timeframes, evaluate sector/theme rotation, breadth, leading-stock strength, bubble momentum, sentiment support, bubble-risk exhaustion, U.S. macro liquidity, Treasury issuance, money-market plumbing, and Federal Reserve policy-regime direction, adapt analysis for short-term/mid-term/long-term user horizons, and produce statistically weighted buy/sell/hold, bold/cautious, or macro-regime probabilities with matched signal evidence. Default assumptions and weights target the mature U.S. equity market, with branchable market profiles for other markets.
 ---
 
 # Market Signal Analysis
@@ -34,6 +34,12 @@ Use a two-score framework:
 
 Do not use valuation alone as a timing signal in a bubble momentum regime. Treat "expensive but strong" differently from "expensive and weakening"; require price/volume deterioration, breadth deterioration, or failed-breakout evidence before calling a trend broken.
 
+## U.S. Macro Liquidity and Fed Policy
+
+When the user asks about U.S. liquidity, Fed hawkish/dovish direction, rate-cut/rate-hike probability, Treasury issuance, term premium, reserve scarcity, SOFR-IORB pressure, ON RRP, TGA, QT/QE, recession versus inflation, or macro transmission into equities/bonds/gold/USD, read references/us-macro-liquidity-fed-policy.md before producing a view.
+
+Classify the macro state before labeling the Fed as hawkish or dovish. Use five jointly evaluated variable groups: inflation/labor momentum, fiscal issuance and term premium, liquidity plumbing, AI/capex and real-demand support, and market transmission. Do not treat one data release or one headline as sufficient evidence for a regime change.
+
 ## Deep Learning Extension
 
 When the user asks about Transformer models, deep learning, pretraining, fine-tuning, dynamic indicator weights, long-context daily sequences, target-price prediction, return-distribution prediction, or quantitative decision models, read references/deep-learning-extension.md before designing or coding the model.
@@ -51,6 +57,7 @@ Always consider these families when data supports them:
 - Volume confirmation: volume expansion on breakout, volume drying on pullback, price-volume divergence, relative volume.
 - Sector breadth and rotation: share of constituents above MA20/MA50/MA120, new highs versus new lows, advance/decline ratio, leader versus laggard contribution, intra-sector rotation continuity, and whether gains are broad or only driven by one or two leaders.
 - Bubble momentum and exhaustion: overextension above MA20/MA50, gap/limit-up clustering, failed second breakouts, double-top invalidation, long upper shadows, blow-off volume, fund inflow/financing/turnover heat, and insider sell-down or inquiry-transfer pressure.
+- U.S. macro liquidity and Fed policy: inflation second derivative, ECI/wage momentum, payroll breadth, unemployment trend, QRA and Treasury supply, ACM/term-premium impulse, SOFR-IORB and repo pressure, ON RRP/TGA/reserve balance changes, SRF usage, AI/capex support, MOVE/VIX and risk-parity/CTA transmission.
 - MACD: line/signal cross, histogram acceleration/deceleration, zero-line regime, bullish/bearish divergence.
 - RSI: overbought/oversold, centerline confirmation, bullish/bearish divergence, failure swing when detectable.
 - KDJ/stochastic: K/D/J cross, high/low zone reversal, overbought/oversold persistence.
@@ -65,6 +72,7 @@ Read these files as needed:
 - references/research-basis.md: empirical research used to prioritize U.S. equity default weights.
 - references/statistical-weighting.md: scoring, horizon windows, sample-size rules, and default weights.
 - references/sector-bubble-analysis.md: sector/theme breadth, rotation, leadership, bubble momentum score, bubble-risk score, bold/cautious decision matrix, and A-share policy/liquidity caveats.
+- references/us-macro-liquidity-fed-policy.md: U.S. macro liquidity dashboard, Fed policy-regime state machine, Treasury issuance and term-premium analysis, SOFR-IORB/reserve plumbing checks, and macro asset-playbook mapping.
 - references/signal-taxonomy.md: exact signal definitions and evidence schema.
 - references/market-profiles.md: U.S. equity default profile and branch rules for other markets.
 - references/output-format.md: required answer format.
