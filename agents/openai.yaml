@@ -1,4 +1,4 @@
 interface:
   display_name: "Market Signal Analysis"
-  short_description: "Analyze technical signals, sector rotation, bubble momentum, and U.S. macro liquidity."
-  default_prompt: "Analyze this investment target using technical indicators, multi-timeframe signal scoring, sector/theme breadth, bubble momentum risk, U.S. macro liquidity/Fed policy-regime context, and statistically weighted probabilities."
+  short_description: "Analyze fundamentals, technical trends, noisy news, cycle overlays, sector rotation, bubble momentum, and macro liquidity."
+  default_prompt: "Analyze this investment target using single-stock fundamental quality, company-news noise filtering, valuation and price-zone scenarios, multi-cycle overlay from economic/Kondratieff/dollar-liquidity cycles to industry and sector cycles, Bayesian trend probability, trend-stage and trend-end levels, technical indicators, multi-timeframe signal scoring, sector/theme breadth, bubble momentum risk, U.S. macro liquidity/Fed policy-regime context, and statistically weighted probabilities."

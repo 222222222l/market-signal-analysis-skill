@@ -67,3 +67,26 @@ Do not fabricate a numeric probability. Use:
 ```text
 当前数据不足以输出可靠概率。我可以识别到的静态信号是...，但缺少...，因此只能给出低置信度方向性观察。
 ```
+
+## Trend-Stage Questions
+
+When the user asks where a trend ends, whether an uptrend/downtrend is still intact, or how to use Vegas/ATR/MA levels, use this compact structure in addition to any probability view:
+
+1. Data, horizon, and confidence.
+2. Current trend stage: base, early reversal, healthy uptrend, acceleration, distribution/fatigue, trend break, or downtrend.
+3. Key levels:
+   - short warning level
+   - strong warning level
+   - mid-trend break level
+   - formal main-trend end level
+4. Weighted dashboard:
+   - trend structure / MA stack
+   - Vegas channel
+   - momentum and relative strength
+   - breakout/support structure
+   - volume/turnover confirmation
+   - MACD/RSI/KDJ confirmation
+   - volatility and ATR trailing risk
+5. Bullish evidence versus bearish/risk evidence.
+6. What would upgrade the trend and what would downgrade it.
+7. Risk-control language matched to the user's horizon.

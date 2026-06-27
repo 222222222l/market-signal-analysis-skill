@@ -4,6 +4,8 @@ Use this reference when analyzing U.S. liquidity, Federal Reserve policy directi
 
 Core principle: do not ask "hawkish or dovish?" first. Classify the macro state first, then infer the Fed reaction function and market playbook. One payroll print, one CPI print, or one speech is not enough; require alignment across inflation/labor, fiscal/term-premium, liquidity plumbing, real-demand support, and market transmission.
 
+For early crisis detection, separate level, first-derivative, and second-derivative evidence. A high level measures current severity; a first derivative measures marginal deterioration; a second derivative measures acceleration, broadening, or contagion across adjacent markets. When the user asks about early warning, acceleration, contagion, or crisis transmission chains, also read macro-stress-derivative-analysis.md.
+
 ## Method Quality
 
 This framework is usable and economically grounded if applied as a probabilistic state machine:
@@ -28,6 +30,7 @@ Prefer these official or primary sources before market commentary:
 | Reserves | FRED reserve balances with Federal Reserve Banks: https://fred.stlouisfed.org/series/WRESBAL |
 | ON RRP | FRED overnight reverse repurchase agreements: https://fred.stlouisfed.org/series/RRPONTSYD |
 | TGA | FRED Treasury General Account: https://fred.stlouisfed.org/series/WTREGEN |
+| Discount window | Federal Reserve H.4.1 loans: primary credit, secondary credit, and seasonal credit; FRED primary credit weekly average: https://fred.stlouisfed.org/series/WPC |
 | Term premium | New York Fed ACM term premia: https://www.newyorkfed.org/research/data_indicators/term-premia-tabs |
 | Repo/SRF | New York Fed repo, reverse repo, and Standing Repo Facility operations: https://www.newyorkfed.org/markets |
 
@@ -39,7 +42,7 @@ Evaluate these five groups together. Do not let one group dominate unless it is 
 | --- | --- | --- |
 | Inflation and labor second derivative | Core services ex-housing / supercore proxy, ECI, average hourly earnings, payroll breadth, unemployment trend, claims, JOLTS, energy impulse | Determines whether the Fed can focus on growth weakness or must keep inflation credibility first. |
 | Fiscal issuance and term premium | Treasury QRA, bill versus coupon mix, auction tails/bid-to-cover/dealer takedown, TGA path, deficit surprises, ACM/market term premium | Separates monetary policy rate expectations from duration-supply and risk-premium shocks. |
-| Liquidity plumbing | SOFR-IORB, EFFR-IORB, repo rates, ON RRP, reserve balances, TGA, SRF/repo take-up, quarter-end/calendar effects | Identifies reserve scarcity or money-market stress before it appears in risk assets. |
+| Liquidity plumbing | SOFR-IORB, EFFR-IORB, repo rates, ON RRP, reserve balances, TGA, discount-window primary/secondary/seasonal credit, SRF/repo take-up, quarter-end/calendar effects | Identifies reserve scarcity, bank-funding stress, or money-market stress before it appears in risk assets. |
 | AI/capex and real-demand support | AI capex, power/grid/transformer demand, semiconductor cycle, corporate bond issuance, capex guidance, earnings breadth | Explains why growth assets may resist high rates when real investment demand remains strong. |
 | Market transmission | MOVE, VIX, MOVE/VIX correlation, credit spreads, USD, real yields, CTA/risk-parity deleveraging, equity breadth | Shows whether macro pressure is staying in rates or spilling into broad risk assets. |
 
@@ -190,6 +193,7 @@ Meaning: funding-market stress overrides the normal inflation/recession debate.
 Typical signs:
 
 - SOFR-IORB or repo stress rises, reserves/TGA/ON RRP configuration tightens, SRF/repo usage appears.
+- Discount-window primary credit rises quickly from a low base, or secondary credit appears, especially if the rise persists beyond quarter-end/calendar noise.
 - Treasury market liquidity deteriorates.
 
 Trading posture:
@@ -239,11 +243,31 @@ Interpretation:
 - High plumbing score (+2) can override the aggregate for short-horizon risk management.
 - Divergent scores imply a mixed regime; present scenario probabilities instead of a single call.
 
+## Derivative Stress Overlay
+
+After scoring the five variable groups, add a derivative overlay when crisis risk or plumbing stress matters:
+
+| Layer | Meaning | Macro use |
+| --- | --- | --- |
+| Level | Current absolute severity versus history and policy thresholds. | Determines whether stress is already in a crisis regime. |
+| First derivative | Latest change over 1-day/1-week/1-month windows. | Detects early marginal deterioration before levels look extreme. |
+| Second derivative | Change in the rate of change, or cross-market acceleration. | Identifies whether a local stress signal is becoming a transmission chain. |
+
+Examples:
+
+- Discount-window primary credit: level shows current borrowing size; first derivative shows whether banks are using the facility more; second derivative is a faster rise plus secondary credit, SRF usage, bank-spread widening, or SOFR-IORB pressure.
+- ON RRP/TGA/reserves: level shows remaining liquidity buffer; first derivative shows drain pace; second derivative is an accelerating drain that coincides with repo stress or reserve-distribution pressure.
+- Labor: level shows current unemployment; first derivative shows claims/unemployment worsening; second derivative is deterioration spreading across claims, hours, payroll breadth, revisions, and credit spreads.
+- Treasury supply: level shows expected issuance burden; first derivative shows auction demand weakening; second derivative is weak auctions clustering with rising term premium and MOVE.
+
+Do not average away second-derivative plumbing stress. A small absolute level can still matter if it is accelerating and confirmed by adjacent markets.
+
 ## Indicator Rules of Thumb
 
 Use rules of thumb as warnings, not hard laws:
 
 - SOFR-IORB: rising toward zero or positive for several sessions is a reserve-distribution warning; adjust for quarter-end and Treasury settlement dates.
+- Discount window: primary credit is a bank-liquidity stress and collateral-funding gauge, not a normal QE-style liquidity injection. A small absolute balance can be benign if stable; a fast multi-week rise, secondary-credit usage, or a level that remains elevated after calendar effects is a plumbing warning. Confirm with SOFR-IORB, repo rates, reserve balances, ON RRP, TGA, SRF usage, bank equity/credit spreads, and deposit stress.
 - ON RRP: decline is not automatically bearish if reserves remain ample; it becomes dangerous when ON RRP is low, TGA rises, and reserves fall together.
 - TGA: rebuild drains reserves; drawdown adds reserves. Always combine TGA with RRP and reserve balances.
 - Term premium: rising term premium with stable front-end expectations is a fiscal/supply shock; rising front-end expectations is a policy shock.
@@ -259,8 +283,9 @@ When using this reference, include:
 1. Data and horizon: latest data window and whether data are current, stale, or partial.
 2. State probabilities: baseline bear steepening, inflation bear flattening, fiscal/term-premium shock, plumbing tightening, traditional recession/disinflation.
 3. Five-group dashboard: score, evidence, and missing data for each group.
-4. Fed reaction read: policy-rate path, balance-sheet/plumbing tools, and communication bias.
-5. Asset transmission: equities, Treasuries, USD, gold, credit, and high-duration growth.
-6. Invalidation triggers: what data would flip the state.
+4. Derivative stress overlay when applicable: level, first derivative, second derivative, and transmission-chain status.
+5. Fed reaction read: policy-rate path, balance-sheet/plumbing tools, and communication bias.
+6. Asset transmission: equities, Treasuries, USD, gold, credit, and high-duration growth.
+7. Invalidation triggers: what data would flip the state.
 
 Never present the output as a deterministic Fed forecast. Always distinguish policy-rate decisions from plumbing operations, and distinguish liquidity repair from a true dovish pivot.

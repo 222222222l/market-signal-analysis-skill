@@ -1,6 +1,6 @@
 ---
 name: market-signal-analysis
-description: Professional technical market signal analysis for stocks, ETFs, sectors/boards, themes, indices, and other liquid investment markets. Use when Codex needs to analyze OHLCV market data, upstream agent/API market data, or user-provided price history to identify buy/sell/hold signals, compute common technical indicators such as volume, moving averages, MACD, RSI, KDJ/stochastic, Bollinger Bands, ATR, momentum, breakout, top divergence, and bottom divergence, score signals across hourly/daily/weekly/monthly timeframes, evaluate sector/theme rotation, breadth, leading-stock strength, bubble momentum, sentiment support, bubble-risk exhaustion, U.S. macro liquidity, Treasury issuance, money-market plumbing, and Federal Reserve policy-regime direction, adapt analysis for short-term/mid-term/long-term user horizons, and produce statistically weighted buy/sell/hold, bold/cautious, or macro-regime probabilities with matched signal evidence. Default assumptions and weights target the mature U.S. equity market, with branchable market profiles for other markets.
+description: Market-signal analysis for stocks, ETFs, sectors, indices, and liquid markets. Use for OHLCV or structured market data to compute indicators, evaluate trend stage and trend-end levels, analyze single-stock fundamentals plus technicals, filter noisy company news from hard operating signals, estimate short-term and long-term price zones, apply multi-cycle overlay analysis from economic/Kondratieff/dollar-liquidity cycles to industry and sector cycles, and assess multi-timeframe buy/sell/hold signals, sector rotation, breadth, sentiment, liquidity, macro-regime context, and cautious probability-weighted evidence.
 ---
 
 # Market Signal Analysis
@@ -23,6 +23,14 @@ Analyze technical signals only from sufficient OHLCV data or structured upstream
 7. Calibrate scores with historical hit analysis when enough in-sample data exists. Penalize weak sample sizes, high turnover, high drawdown, high correlation among duplicate indicators, and unvalidated parameter searches.
 8. Produce a probability-style technical view with matched evidence, opposing evidence, confidence, and caveats.
 
+## Trend Stage and Trend End Analysis
+
+When the user asks about trend direction, stage trend, uptrend/downtrend ending, Vegas channel, channel position, formal trend break, "where the trend ends", "whether the main rise is over", staged stop/risk levels, trend-following holding rules, or Chinese-language phrases for main-rise, cooling-off, breakdown, or topping, read references/trend-stage-analysis.md before producing a view.
+
+Use trend-stage analysis as a weighted evidence dashboard, not as a one-indicator verdict. Select or reweight indicators by asset type and market structure: broad indices need MA/Vegas/breadth confirmation; high-beta A-share themes need MA20/MA50, ATR/Chandelier, failed-breakout, turnover heat, and breadth; crypto/futures need wider volatility and leverage/liquidation context; low-liquidity small caps need lower confidence.
+
+Separate early risk-reduction signals from formal trend-end signals. In fast or parabolic trends, do not wait for the daily Vegas channel to manage risk; use MA20/MA50, 2ATR/3ATR Chandelier, Donchian 20/55-day lows, volume, and relative strength first, then use EMA144/169 and weekly structure for main-trend invalidation.
+
 ## Sector, Theme, and Bubble Momentum
 
 When the user asks about a sector/board/theme, market main line, bubble-like trend, sentiment support, "whether to be bold or cautious", "whether the theme can keep rising", "double top versus second breakout", or "whether a sector can double", read references/sector-bubble-analysis.md before producing a view.
@@ -34,9 +42,23 @@ Use a two-score framework:
 
 Do not use valuation alone as a timing signal in a bubble momentum regime. Treat "expensive but strong" differently from "expensive and weakening"; require price/volume deterioration, breadth deterioration, or failed-breakout evidence before calling a trend broken.
 
+## Multi-Cycle Overlay Analysis
+
+When the user asks about economic cycles, Kondratieff cycles, dollar tides, liquidity cycles, credit cycles, inventory cycles, industry cycles, sector cycles, cyclical resonance, cycle weighting, Bayesian trend probability, or which industries are in rising/declining prosperity phases under multiple cycles, read references/cycle-overlay-analysis.md before producing a view.
+
+Use cycle analysis as a structured prior and confirmation layer, not as deterministic prophecy. Long cycles such as Kondratieff/technology-capex waves should receive low tactical weight unless confirmed by current orders, pricing power, capacity utilization, profit revisions, and market relative strength. Avoid double-counting the same evidence across macro, industry, and technical buckets.
+
+## Single-Stock Fundamental and Technical Analysis
+
+When the user asks about an individual stock's fundamentals, whether to cut losses or hold, whether company news is real catalyst or noise, whether a "good story" changes the investment thesis, where short-term or long-term price may go, or how to combine financial statements, announcements, valuation, and technical levels, read references/single-stock-fundamental-technical-analysis.md before producing a view.
+
+Treat company announcements, market rumors, and concept labels as evidence with different reliability. Do not upgrade a stock because of broad narrative words such as cooperation, layout, empowerment, robot, AI, semiconductor, low-altitude, overseas expansion, or strategic transformation unless the signal has a verifiable amount, timeline, delivery path, financial-statement impact, and price/volume confirmation. Separate "company is not bad" from "stock has positive expected return from this price."
+
 ## U.S. Macro Liquidity and Fed Policy
 
-When the user asks about U.S. liquidity, Fed hawkish/dovish direction, rate-cut/rate-hike probability, Treasury issuance, term premium, reserve scarcity, SOFR-IORB pressure, ON RRP, TGA, QT/QE, recession versus inflation, or macro transmission into equities/bonds/gold/USD, read references/us-macro-liquidity-fed-policy.md before producing a view.
+When the user asks about U.S. liquidity, Fed hawkish/dovish direction, rate-cut/rate-hike probability, Treasury issuance, term premium, reserve scarcity, SOFR-IORB pressure, ON RRP, TGA, QT/QE, discount-window borrowing, primary credit, recession versus inflation, or macro transmission into equities/bonds/gold/USD, read references/us-macro-liquidity-fed-policy.md before producing a view.
+
+When the user asks about early crisis detection, first-derivative or second-derivative macro signals, marginal deterioration, acceleration, contagion, transmission chains, or whether a liquidity/funding stress signal is only local or becoming systemic, also read references/macro-stress-derivative-analysis.md.
 
 Classify the macro state before labeling the Fed as hawkish or dovish. Use five jointly evaluated variable groups: inflation/labor momentum, fiscal issuance and term premium, liquidity plumbing, AI/capex and real-demand support, and market transmission. Do not treat one data release or one headline as sufficient evidence for a regime change.
 
@@ -53,11 +75,14 @@ When the user asks about publishable research positioning, related work, literat
 Always consider these families when data supports them:
 
 - Trend and breakout: moving average slope/cross, price above/below MA20/MA50/MA200, 20-day/55-day/channel breakout, support/resistance break.
+- Trend stage and trend-end structure: MA20/50/120/200 stack and slope, daily Vegas EMA144/169, long-cycle EMA576/676 when enough data exists, 2ATR/3ATR Chandelier levels, Donchian 20/55-day highs/lows, recover/fail behavior, and weekly confirmation.
 - Momentum and relative strength: 3/6/12-month momentum for mid/long horizons, rate of change, trend continuation.
 - Volume confirmation: volume expansion on breakout, volume drying on pullback, price-volume divergence, relative volume.
 - Sector breadth and rotation: share of constituents above MA20/MA50/MA120, new highs versus new lows, advance/decline ratio, leader versus laggard contribution, intra-sector rotation continuity, and whether gains are broad or only driven by one or two leaders.
 - Bubble momentum and exhaustion: overextension above MA20/MA50, gap/limit-up clustering, failed second breakouts, double-top invalidation, long upper shadows, blow-off volume, fund inflow/financing/turnover heat, and insider sell-down or inquiry-transfer pressure.
-- U.S. macro liquidity and Fed policy: inflation second derivative, ECI/wage momentum, payroll breadth, unemployment trend, QRA and Treasury supply, ACM/term-premium impulse, SOFR-IORB and repo pressure, ON RRP/TGA/reserve balance changes, SRF usage, AI/capex support, MOVE/VIX and risk-parity/CTA transmission.
+- Multi-cycle overlay: economic growth/inflation/credit phase, Kondratieff or technology-capex background, dollar liquidity tide, domestic policy and fiscal impulse, inventory and capex cycle, industry supply-demand and pricing cycle, sector market cycle, and Bayesian posterior trend probability after cross-validation.
+- Single-stock fundamentals and event quality: revenue, deducted profit, gross margin, operating cash flow, debt and liquidity, segment revenue/profit mix, customer concentration, governance, pledge/reduction/buyback/supply pressure, valuation versus growth, and whether announcements can enter earnings or cash flow.
+- U.S. macro liquidity and Fed policy: inflation second derivative, ECI/wage momentum, payroll breadth, unemployment trend, QRA and Treasury supply, ACM/term-premium impulse, SOFR-IORB and repo pressure, ON RRP/TGA/reserve balance changes, discount-window primary/secondary/seasonal credit, SRF usage, first-derivative and second-derivative stress acceleration, AI/capex support, MOVE/VIX and risk-parity/CTA transmission.
 - MACD: line/signal cross, histogram acceleration/deceleration, zero-line regime, bullish/bearish divergence.
 - RSI: overbought/oversold, centerline confirmation, bullish/bearish divergence, failure swing when detectable.
 - KDJ/stochastic: K/D/J cross, high/low zone reversal, overbought/oversold persistence.
@@ -71,8 +96,12 @@ Read these files as needed:
 
 - references/research-basis.md: empirical research used to prioritize U.S. equity default weights.
 - references/statistical-weighting.md: scoring, horizon windows, sample-size rules, and default weights.
+- references/trend-stage-analysis.md: trend-stage taxonomy, Vegas channel rules, fast-trend risk stack, asset-specific weighting, trend-end levels, and trend question output format.
 - references/sector-bubble-analysis.md: sector/theme breadth, rotation, leadership, bubble momentum score, bubble-risk score, bold/cautious decision matrix, and A-share policy/liquidity caveats.
+- references/cycle-overlay-analysis.md: multi-cycle hierarchy from long economic/Kondratieff/dollar-liquidity cycles to industry/sector cycles, horizon-specific weights, Bayesian posterior trend probability, cross-validation, and industry-cycle classification.
+- references/single-stock-fundamental-technical-analysis.md: single-stock workflow for filtering noisy news, identifying core operating signals, scoring fundamentals, combining valuation with technical levels, and giving short-term/long-term price zones and risk-control decision trees.
 - references/us-macro-liquidity-fed-policy.md: U.S. macro liquidity dashboard, Fed policy-regime state machine, Treasury issuance and term-premium analysis, SOFR-IORB/reserve plumbing checks, and macro asset-playbook mapping.
+- references/macro-stress-derivative-analysis.md: level, first-derivative, and second-derivative macro stress framework for early crisis warning, acceleration scoring, and transmission-chain mapping.
 - references/signal-taxonomy.md: exact signal definitions and evidence schema.
 - references/market-profiles.md: U.S. equity default profile and branch rules for other markets.
 - references/output-format.md: required answer format.
