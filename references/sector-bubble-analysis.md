@@ -110,6 +110,8 @@ If cap-weighted sector indices rise while equal-weight or median constituent ret
 
 For A-shares, adjust interpretation for price limits, T+1 trading, retail participation, policy narratives, financing balance, ETF/fund subscriptions, and sell-down announcements.
 
+When the user asks whether ordinary investors can follow a sector ETF, whether broad ETFs are safe to hold, or whether index stability is masking retail losses, also use references/a-share-macro-trading-model.md. A strong A-share theme is lower quality if the broad market is in range-stabilized liquidity extraction, ETF shares are contracting, median-stock returns are deeply negative, and the theme's turnover share greatly exceeds its market-cap share.
+
 Policy support can extend trends and valuation expansion, but it is not a substitute for breadth and liquidity. Distinguish:
 
 - Real industry cycle: orders, prices, capacity, margins, and earnings improve.

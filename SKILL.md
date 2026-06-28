@@ -1,6 +1,6 @@
 ---
 name: market-signal-analysis
-description: Market-signal analysis for stocks, ETFs, sectors, indices, and liquid markets. Use for OHLCV or structured market data to compute indicators, evaluate trend stage and trend-end levels, analyze single-stock fundamentals plus technicals, filter noisy company news from hard operating signals, estimate short-term and long-term price zones, apply multi-cycle overlay analysis from economic/Kondratieff/dollar-liquidity cycles to industry and sector cycles, and assess multi-timeframe buy/sell/hold signals, sector rotation, breadth, sentiment, liquidity, macro-regime context, and cautious probability-weighted evidence.
+description: Market-signal analysis for stocks, ETFs, sectors, indices, and liquid markets. Use for OHLCV or structured market data to compute indicators, evaluate trend stage and trend-end levels, analyze single-stock fundamentals plus technicals, filter noisy company news from hard operating signals, estimate short-term and long-term price zones, apply multi-cycle overlay analysis from economic/Kondratieff/dollar-liquidity cycles to industry and sector cycles, verify official government and regulator data through component decomposition, bias/water estimation, and cross-validation, analyze A-share broad/sector ETF macro trading regimes such as index stabilization, ETF-share contraction, turnover concentration, main-line crowding, and retail risk control, and assess multi-timeframe buy/sell/hold signals, sector rotation, breadth, sentiment, liquidity, macro-regime context, and cautious probability-weighted evidence.
 ---
 
 # Market Signal Analysis
@@ -42,6 +42,18 @@ Use a two-score framework:
 
 Do not use valuation alone as a timing signal in a bubble momentum regime. Treat "expensive but strong" differently from "expensive and weakening"; require price/volume deterioration, breadth deterioration, or failed-breakout evidence before calling a trend broken.
 
+## A-Share Macro ETF Trading Model
+
+When the user asks about A-share broad-index ETFs, sector-index ETFs, CSI 300, CSI A500, SSE 50, STAR 50, ChiNext, "index range-bound while retail accounts bleed", national-team or operator-capital behavior, ETF share contraction, turnover concentration, main-line crowding, when ordinary investors can hold ETFs with lower risk, or when to exit after abnormal capital behavior, read references/a-share-macro-trading-model.md before producing a view.
+
+Use the model as an evidence-based regime classifier, not as proof of a coordinated manipulation scheme. Combine it with trend-stage analysis for index levels and sector-bubble analysis for crowded main-line ETFs. For ordinary investors, prioritize ETF holdability, hard exit conditions, and whether price, breadth, ETF shares, and leader behavior confirm each other.
+
+## Official Data Verification
+
+When the analysis relies on government, central-bank, exchange, regulator, or official statistical data such as CPI/PCE, GDP, employment, wages, fiscal data, credit aggregates, money supply, FX reserves, trade, property, industrial output, PMI, official fund-flow data, or regulatory disclosures, read references/official-data-verification.md before assigning probabilities.
+
+Never use an official headline number alone as a high-confidence market signal. Decompose sub-components, estimate possible measurement bias or "water", cross-check with independent data, and explain contradictions. If sub-component or cross-check data is missing, reduce confidence and state the limitation.
+
 ## Multi-Cycle Overlay Analysis
 
 When the user asks about economic cycles, Kondratieff cycles, dollar tides, liquidity cycles, credit cycles, inventory cycles, industry cycles, sector cycles, cyclical resonance, cycle weighting, Bayesian trend probability, or which industries are in rising/declining prosperity phases under multiple cycles, read references/cycle-overlay-analysis.md before producing a view.
@@ -79,8 +91,10 @@ Always consider these families when data supports them:
 - Momentum and relative strength: 3/6/12-month momentum for mid/long horizons, rate of change, trend continuation.
 - Volume confirmation: volume expansion on breakout, volume drying on pullback, price-volume divergence, relative volume.
 - Sector breadth and rotation: share of constituents above MA20/MA50/MA120, new highs versus new lows, advance/decline ratio, leader versus laggard contribution, intra-sector rotation continuity, and whether gains are broad or only driven by one or two leaders.
+- A-share ETF macro-trading regime: broad-index ETF share changes, index trend versus median-stock performance, top turnover concentration, theme turnover share versus market-cap share, leader high-volume distribution, policy/liquidity support confirmation, and hard downgrade/exit signals for broad and sector ETFs.
 - Bubble momentum and exhaustion: overextension above MA20/MA50, gap/limit-up clustering, failed second breakouts, double-top invalidation, long upper shadows, blow-off volume, fund inflow/financing/turnover heat, and insider sell-down or inquiry-transfer pressure.
 - Multi-cycle overlay: economic growth/inflation/credit phase, Kondratieff or technology-capex background, dollar liquidity tide, domestic policy and fiscal impulse, inventory and capex cycle, industry supply-demand and pricing cycle, sector market cycle, and Bayesian posterior trend probability after cross-validation.
+- Official-data verification: headline versus sub-components, definition/sample/revision checks, estimated bias/water range, reconstructed data range, cross-checks with market prices and independent proxies, and contradiction diagnosis before turning government data into a trading signal.
 - Single-stock fundamentals and event quality: revenue, deducted profit, gross margin, operating cash flow, debt and liquidity, segment revenue/profit mix, customer concentration, governance, pledge/reduction/buyback/supply pressure, valuation versus growth, and whether announcements can enter earnings or cash flow.
 - U.S. macro liquidity and Fed policy: inflation second derivative, ECI/wage momentum, payroll breadth, unemployment trend, QRA and Treasury supply, ACM/term-premium impulse, SOFR-IORB and repo pressure, ON RRP/TGA/reserve balance changes, discount-window primary/secondary/seasonal credit, SRF usage, first-derivative and second-derivative stress acceleration, AI/capex support, MOVE/VIX and risk-parity/CTA transmission.
 - MACD: line/signal cross, histogram acceleration/deceleration, zero-line regime, bullish/bearish divergence.
@@ -98,6 +112,8 @@ Read these files as needed:
 - references/statistical-weighting.md: scoring, horizon windows, sample-size rules, and default weights.
 - references/trend-stage-analysis.md: trend-stage taxonomy, Vegas channel rules, fast-trend risk stack, asset-specific weighting, trend-end levels, and trend question output format.
 - references/sector-bubble-analysis.md: sector/theme breadth, rotation, leadership, bubble momentum score, bubble-risk score, bold/cautious decision matrix, and A-share policy/liquidity caveats.
+- references/a-share-macro-trading-model.md: A-share broad/sector ETF macro-trading regime classifier for index stabilization, ETF-share contraction, retail-loss breadth, turnover concentration, main-line crowding, operator-capital inference, ETF holdability scores, and hard exit/re-entry rules.
+- references/official-data-verification.md: official government/regulator data verification framework for component decomposition, estimated bias/water, reconstructed ranges, cross-validation, contradiction handling, and confidence adjustment.
 - references/cycle-overlay-analysis.md: multi-cycle hierarchy from long economic/Kondratieff/dollar-liquidity cycles to industry/sector cycles, horizon-specific weights, Bayesian posterior trend probability, cross-validation, and industry-cycle classification.
 - references/single-stock-fundamental-technical-analysis.md: single-stock workflow for filtering noisy news, identifying core operating signals, scoring fundamentals, combining valuation with technical levels, and giving short-term/long-term price zones and risk-control decision trees.
 - references/us-macro-liquidity-fed-policy.md: U.S. macro liquidity dashboard, Fed policy-regime state machine, Treasury issuance and term-premium analysis, SOFR-IORB/reserve plumbing checks, and macro asset-playbook mapping.

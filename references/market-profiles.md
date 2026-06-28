@@ -37,7 +37,7 @@ overrides:
 
 ## Candidate Branch Adjustments
 
-- A-shares: account for price limits, T+1 trading, retail participation, policy/news sensitivity, suspension risk, northbound flows when available, and different turnover behavior.
+- A-shares: account for price limits, T+1 trading, retail participation, policy/news sensitivity, suspension risk, ETF support/redemption, margin financing, northbound flows when available, and different turnover behavior. For broad-index or sector-index ETF questions, use references/a-share-macro-trading-model.md to classify whether the market is in policy-floor repair, range-stabilized liquidity extraction, main-line acceleration, crowded distribution, broad breakdown, or post-washout accumulation. Do not treat index stability as healthy breadth unless median-stock returns, ETF shares, turnover concentration, and leader behavior confirm it.
 - Hong Kong equities: account for China macro/policy exposure, lower liquidity in small/mid caps, different trading holidays, and FX linkage.
 - Futures: account for contract rolls, margin, leverage, tick size, expiry, contango/backwardation, and session structure.
 - Forex: account for 24/5 trading, macro calendars, carry, central-bank risk, and weaker centralized volume data.

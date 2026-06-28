@@ -90,3 +90,33 @@ When the user asks where a trend ends, whether an uptrend/downtrend is still int
 5. Bullish evidence versus bearish/risk evidence.
 6. What would upgrade the trend and what would downgrade it.
 7. Risk-control language matched to the user's horizon.
+
+## A-Share ETF Macro-Trading Questions
+
+When the user asks about A-share broad ETFs, sector ETFs, index stabilization, operator-capital behavior, ETF-share contraction, turnover concentration, retail-loss breadth, or when ordinary investors can hold/exit ETFs, add this compact dashboard:
+
+1. Data, horizon, and confidence.
+2. A-share regime: policy-floor repair, range-stabilized liquidity extraction, main-line acceleration, crowded distribution, broad breakdown, or post-washout accumulation.
+3. Broad ETF holdability score: 0-100, with the main supporting and opposing evidence.
+4. Sector ETF main-line score when relevant: 0-100, with crowding/distribution risk.
+5. Operator-capital pattern: broad support, range support with liquidity extraction, crowded distribution, or defensive de-risking.
+6. Ordinary-investor action: batch hold, small follow, short tactical only, reduce, or wait in cash.
+7. Hard exit signals and re-entry signals.
+
+Do not say an ETF is low-risk merely because the index is stable. Require confirmation from breadth, ETF shares, turnover concentration, leader behavior, policy/liquidity support, and trend structure.
+
+## Official Data Questions
+
+When official government, central-bank, exchange, regulator, or official statistical data materially affects the conclusion, add this compact verification block:
+
+1. Official data used.
+2. Headline read.
+3. Key sub-components and weights.
+4. Data quality score: 0-5.
+5. Estimated bias/water range and reconstructed range when possible.
+6. Cross-checks confirming the official signal.
+7. Cross-checks contradicting the official signal.
+8. Likely reason for contradiction.
+9. Market implication and confidence adjustment.
+
+Never present a top-line official number as decisive if the sub-components, methodology, or independent cross-checks are unavailable.

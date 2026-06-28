@@ -12,6 +12,7 @@ The skill combines classic OHLCV technical analysis with statistical signal weig
 - Sector and theme analysis: breadth, rotation, leading-stock strength, benchmark-relative strength, volume confirmation, and policy/liquidity caveats.
 - Bubble-market analysis: trend/momentum score, bubble-risk score, bold/cautious decision matrix, double-top versus second-breakout interpretation, and exhaustion signals.
 - U.S. macro liquidity and Federal Reserve policy-regime analysis: inflation/labor second derivative, Treasury issuance, term premium, SOFR-IORB pressure, ON RRP/TGA/reserves, AI/capex support, and market transmission.
+- Official government/regulator data verification: headline decomposition, component weights, estimated bias/water ranges, reconstructed ranges, and cross-validation against independent market or real-economy evidence.
 - A-share-specific caveats such as price limits, T+1, retail participation, policy narratives, financing, ETF/fund flows, and large shareholder sell-down announcements.
 - Optional deep-learning/Transformer-oriented design guidance for quantitative signal models.
 
@@ -56,6 +57,10 @@ Build a cautious/bold decision view for this theme after a second breakout.
 Classify the current U.S. macro liquidity state and Fed policy bias using inflation, Treasury issuance, SOFR-IORB, reserves, AI capex, and market transmission.
 ```
 
+```text
+Verify whether this official CPI/GDP/employment/credit data is reliable enough for a market signal by decomposing sub-components, estimating possible bias, and cross-checking independent evidence.
+```
+
 ## Repository Layout
 
 ```text
@@ -64,6 +69,7 @@ Classify the current U.S. macro liquidity state and Fed policy bias using inflat
 |-- agents/
 |   `-- openai.yaml
 |-- references/
+|   |-- official-data-verification.md
 |   |-- deep-learning-extension.md
 |   |-- market-profiles.md
 |   |-- output-format.md
@@ -95,6 +101,13 @@ Classify the current U.S. macro liquidity state and Fed policy bias using inflat
 - Scenario state machine: baseline bear steepening, inflation bear flattening, fiscal issuance shock, plumbing tightening, traditional recession/disinflation.
 - SOFR-IORB, ON RRP, TGA, reserves, SRF/repo, and term-premium rules of thumb.
 - Fed reaction and cross-asset playbook mapping.
+
+`references/official-data-verification.md` contains the official-data quality framework:
+
+- Headline versus sub-component checks.
+- Estimated bias/water and reconstructed ranges.
+- Cross-validation with market, fiscal, corporate, household, trade, and real-economy indicators.
+- Contradiction diagnosis before converting official data into a trading signal.
 
 ## Validation
 
