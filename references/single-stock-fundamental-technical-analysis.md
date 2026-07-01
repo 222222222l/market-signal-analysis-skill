@@ -117,6 +117,7 @@ Use references/trend-stage-analysis.md for detailed trend-stage rules. For singl
 - Short-term trend: 5 to 20 trading days. Use MA5/10/20, ATR, Donchian 20-day high/low, gaps, limit-up/limit-down behavior, volume, and event date.
 - Medium trend: 2 to 12 weeks. Use MA20/50, Donchian 55-day high/low, 2ATR/3ATR Chandelier, MACD zero-line regime, relative strength versus sector.
 - Long trend: 3 to 24 months. Use MA120/200, daily Vegas EMA144/169, weekly structure, 120/250-day range, valuation and earnings trend.
+- Granville rules: classify whether price is breaking above, pulling back to, reclaiming, failing at, or overextending away from the relevant MA20/50/120/200. Use this to distinguish "trend repair", "healthy pullback", "failed rebound", "oversold bounce", and "distribution after overextension".
 
 For short-term price expectations, provide zones:
 
@@ -159,6 +160,7 @@ For individual stocks, include:
 5. Technical read:
    - Trend stage.
    - Short-term, medium-term, and long-term structure.
+   - Granville moving-average state for the most relevant horizon.
    - Key support/resistance/invalidation levels.
 6. Price zones:
    - Short-term rebound zone.

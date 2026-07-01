@@ -1,6 +1,6 @@
 # Trend Stage Analysis
 
-Use this reference when the user asks whether a trend is ending, where an uptrend/downtrend would be invalidated, how to judge a stage trend, whether to hold a main-trend position, or how to combine Vegas channel, moving averages, ATR stops, Donchian levels, momentum, volume, and relative strength.
+Use this reference when the user asks whether a trend is ending, where an uptrend/downtrend would be invalidated, how to judge a stage trend, whether to hold a main-trend position, or how to combine Vegas channel, Granville moving-average rules, ordinary moving averages, ATR stops, Donchian levels, momentum, volume, and relative strength.
 
 Do not claim that any indicator has a permanently highest win rate. Treat "best" indicators as regime-dependent evidence. Use historically robust priors, then adjust by asset type, liquidity, volatility, market structure, and available backtest samples.
 
@@ -32,7 +32,7 @@ Use this trend-stage weighting when the user's primary question is trend directi
 
 | Family | Default Weight | What To Check |
 | --- | ---: | --- |
-| Trend structure and MA stack | 0.25 | Price vs MA20/50/120/200, MA slopes, higher highs/lows, pullback behavior. |
+| Trend structure and MA stack | 0.25 | Price vs MA20/50/120/200, Granville rule state, MA slopes, higher highs/lows, pullback behavior. |
 | Vegas channel | 0.20 | Daily EMA144/169 main channel, EMA576/676 long-cycle background, channel slope, recover/fail behavior. |
 | Momentum and relative strength | 0.15 | 3/6/12-month momentum, benchmark/sector/peer relative strength, persistence during market pullbacks. |
 | Breakout and support structure | 0.12 | Donchian 20/55 highs/lows, failed breakouts, prior pivot support/resistance, gap/limit zones. |
@@ -91,6 +91,37 @@ Formal daily trend-end rule:
 
 Do not wait for Vegas in parabolic or high-beta trends. By the time price reaches EMA144/169, a large drawdown may already have occurred.
 
+## Granville Moving-Average Rules (葛兰碧八大法则)
+
+Use Granville rules as a price-behavior checklist around an important moving average, not as a standalone trading system. Select the reference average by horizon:
+
+- Tactical trading: MA20 or MA30.
+- Swing trend: MA50 or MA60.
+- Long trend: MA120, MA200, or MA250.
+- Full trend view: compare the Granville state across short, swing, and long averages.
+
+Bullish rules:
+
+1. Price breaks above a flattening or rising MA after a base, while the MA turns up: early reversal candidate.
+2. Price pulls back toward a rising MA and holds above it: healthy continuation or staged-add candidate.
+3. Price briefly dips below a rising MA but quickly reclaims it with volume or relative-strength repair: false-break / bear-trap candidate.
+4. Price is far below a falling MA after capitulation and starts reverting: oversold rebound only unless the MA later flattens and price builds a base.
+
+Bearish rules:
+
+1. Price breaks below a flattening or falling MA after a mature advance, while the MA turns down: trend-damage candidate.
+2. Price rallies toward a falling MA and fails: reduce-on-rebound or avoid-bottom-fishing signal.
+3. Price briefly rises above a falling MA but cannot hold it: bull-trap / failed-repair candidate.
+4. Price is far above a rising MA after a parabolic move and then loses MA20 or forms exhaustion volume: risk-reduction signal, even before long-term trend breaks.
+
+Confirmation rules:
+
+- Upgrade a Granville signal only when volume, relative strength, breadth, and higher-timeframe structure confirm it.
+- Downgrade it when the MA is flat and price is range-bound; many Granville signals whipsaw inside sideways markets.
+- In A-shares, limit-up/limit-down, suspensions, theme hype, and T+1 constraints can delay execution; use wider confirmation bands.
+- In low-liquidity stocks, do not treat one-day volume spikes as reliable confirmation.
+- For losing positions, a bearish Granville state should prevent averaging down unless fundamental evidence improves and price reclaims the relevant MA.
+
 ## Fast-Trend Risk Stack
 
 When price is far above Vegas, stage risk controls from fast to slow:
@@ -107,6 +138,7 @@ For long-term holders, separate "take-profit/risk reduction" from "formal trend 
 ## Auxiliary Indicator Rules
 
 - MA stack: healthy uptrends usually have price > MA20 > MA50 > MA120 > MA200 with upward slopes. Slope matters more than the mere cross.
+- Granville: classify whether price is breaking, pulling back, reclaiming, failing, or overextending around the relevant MA; treat the rule as stronger when it agrees with MA slope and volume.
 - Donchian: 20-day lows are short-term risk markers; 55-day lows are stronger trend-damage markers. Breakouts that fail within 3-5 sessions are bearish evidence.
 - Chandelier Exit: use highest high over 20 or 60 sessions minus 2ATR/3ATR. The 2ATR level is earlier but noisier; 3ATR is slower but more robust.
 - MACD: above-zero MACD supports trend continuation; below-zero crosses after extended runs are more serious than isolated signal-line crosses.

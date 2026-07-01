@@ -1,6 +1,6 @@
 # Cycle Overlay Analysis
 
-Use this reference when a request asks about macro cycles, Kondratieff cycles, dollar-liquidity tides, credit/inventory cycles, industry prosperity cycles, sector rotation cycles, multi-cycle resonance, cycle weighting, or Bayesian trend probabilities.
+Use this reference when a request asks about macro cycles, Kondratieff cycles, dollar-liquidity tides, credit/inventory cycles, industry prosperity cycles, sector rotation cycles, multi-cycle resonance, cycle weighting, macro-financial regime, buffer cushions, black-swan risk, or Bayesian trend probabilities.
 
 Cycle analysis should improve evidence discipline. It should not turn vague long-cycle stories into deterministic forecasts. Treat long cycles as priors; require current data to confirm them.
 
@@ -18,6 +18,20 @@ Analyze from slow to fast, then reconcile from fast back to slow:
 | Sector market cycle | 1 week-18 months | relative strength, breadth, turnover, fund flow, earnings revisions, valuation percentile, leadership | Confirms whether investors are pricing the cycle. |
 | Single-security cycle | days-24 months | company fundamentals, events, technical stage, float supply, insider actions | Converts cycle view into actionable risk levels. |
 
+## Macro-Financial Five-Direction Checklist
+
+Before assigning a macro or sector probability, reconcile five directions:
+
+| Direction | What It Measures | Typical Evidence | Bayesian Role |
+| --- | --- | --- | --- |
+| Fundamentals and cycles | Real demand, profits, margins, credit, inventory, capex, employment | GDP/PMI, earnings, order backlog, spreads, utilization, credit impulse | Sets the base prior. |
+| Market sentiment and bubble | Whether price has outrun fundamentals or fear has overshot reality | valuation percentile, turnover, leverage, fund flows, breadth, options/skew, media consensus | Adjusts timing and crash/rebound risk. |
+| Official-data water | Whether headline data may overstate or understate true momentum | sub-components, revisions, alternative proxies, trade-partner data, market prices | Reduces reliability or reconstructs the prior. |
+| Buffer cushions | Resources that absorb shocks before forced liquidation or policy panic | cash, deposits, reserves, bank capital, provisions, fiscal space, maturities, collateral, current account, hedges | Dampens or amplifies transmission speed. |
+| Black-swan vulnerability | Low-probability high-impact jump risks | geopolitics, policy shock, funding freeze, fraud, cyber, commodity shock, sanctions, disaster | Adds scenario tails and position-size caution. |
+
+Do not treat a buffer as the same thing as bullish momentum. A strong buffer may only delay deterioration or reduce forced selling; it does not prove new profit growth.
+
 ## Signal Scoring
 
 For each layer, assign a direction score and reliability:
@@ -33,6 +47,27 @@ Use current, measurable data where possible:
 - Liquidity: rates, credit spreads, money/credit growth, dollar index, funding stress, equity turnover.
 - Industry: capacity utilization, inventory days, backlog, order intake, utilization, revenue and margin revisions.
 - Market: relative strength, breadth, volume, valuation, fund flows, earnings revisions.
+
+## Buffer-Cushion Scoring
+
+Score buffers separately from cycle direction:
+
+- Buffer score `b`: `+2` ample and usable, `+1` moderate, `0` unclear/neutral, `-1` thin, `-2` already being consumed or unavailable.
+- Reliability `br`: `0.3` weak/noisy, `0.5` partial evidence, `0.7` good evidence, `1.0` multi-source confirmation.
+- Transmission effect: positive buffers slow stress propagation; negative buffers accelerate it.
+
+Common buffer checks:
+
+| Buffer | Positive Evidence | Negative Evidence |
+| --- | --- | --- |
+| Household | high liquid deposits, low short-term debt service, stable wages | falling income, rising delinquency, forced asset sales |
+| Corporate | net cash, low refinancing need, high backlog, short cash-conversion cycle | receivables surge, inventory buildup, refinancing wall |
+| Financial system | high capital/provisions, stable deposits, low wholesale funding reliance | rising NPL migration, deposit competition, capital injections under stress |
+| Government/policy | fiscal room, credible facility, targeted support with funding source | hidden debt rollover pressure, unfunded mandates, delayed payments |
+| External | current-account surplus, usable FX liquidity, stable capital flows | funding squeeze, reserve drain, currency mismatch |
+| Market structure | low leverage, dispersed positioning, reasonable valuation | crowded ownership, margin financing, ETF/liquidity illusion |
+
+When data is official or incomplete, estimate a buffer range instead of a point score and reduce `br`.
 
 ## Horizon Weights
 
@@ -109,14 +144,25 @@ Use Bayesian updating to turn a prior trend probability into a posterior probabi
    - `posterior_logit = logit(prior) + beta * cycle_score`
    - Default `beta = 0.75` for medium-term sector calls.
    - Use `beta = 0.45` for short-term trades and `beta = 0.90` for long-term industry calls with strong data.
-4. Add or subtract only non-overlapping hard evidence:
+4. Add buffer-cushion evidence:
+   - `buffer_score = sum(buffer_weight_i * br_i * b_i) / sum(buffer_weight_i * br_i)`
+   - `posterior_logit += gamma * buffer_score`
+   - Default `gamma = 0.25` for ordinary sector calls, `0.40` for macro-financial stress calls, and `0.15` for short-term technical trades.
+   - Cap the positive buffer contribution at `+0.25` logit unless buffers directly create demand or earnings.
+   - Allow negative buffer contribution down to `-0.50` logit when buffers are already being consumed.
+5. Add or subtract only non-overlapping hard evidence:
    - `+0.15 to +0.35` for confirmed price increases, backlog, earnings revisions, and breadth confirmation.
    - `-0.15 to -0.35` for margin compression, inventory buildup, financing stress, or failed price breakout.
    - Cap total manual adjustment to `+/-0.50` unless a major shock occurs.
-5. Convert back:
+6. Add black-swan scenario overlay:
+   - Do not predict an exact black-swan event as a base case.
+   - Assign tail vulnerability: low, medium, high.
+   - For high vulnerability, report a downside scenario probability and reduce position confidence even if the base posterior is favorable.
+   - For realized shocks, bypass ordinary caps and rebuild scenarios from liquidity, solvency, policy response, and price gaps.
+7. Convert back:
    - `posterior_probability = 1 / (1 + exp(-posterior_logit))`
 
-Report probabilities as scenario-weighted evidence, not certainty. If the posterior exceeds 70% only because of narrative or low-reliability long-cycle assumptions, reduce it.
+Report probabilities as scenario-weighted evidence, not certainty. If the posterior exceeds 70% only because of narrative, low-reliability long-cycle assumptions, or buffers that only delay stress, reduce it.
 
 ## Cross-Validation
 
@@ -127,6 +173,7 @@ Require at least three of five evidence families before calling a sector a risin
 3. Financial statements: revenue, gross margin, deducted profit, cash flow, or earnings revisions improve.
 4. Market confirmation: relative strength, breadth, volume, leadership, or valuation rerating confirms.
 5. Micro confirmation: leading companies disclose orders, capacity utilization, delivery, or customer adoption.
+6. Buffer confirmation: balance-sheet, liquidity, fiscal, external, or market-structure cushions are not being rapidly consumed.
 
 For declining cycles, require at least three of:
 
@@ -144,7 +191,8 @@ When using cycle overlay, include:
 1. Data date, sources, horizon, and confidence.
 2. Cycle-state table by layer with direction score, reliability, and evidence.
 3. Weighted cycle score and Bayesian posterior probability.
-4. Cross-validation: macro/policy, industry data, financial statements, market confirmation, micro evidence.
-5. Upside industries: why multiple cycles align, what could invalidate the view.
-6. Downside/declining industries: what pressures overlap, what could reverse the view.
-7. Ordinary-investor caution: distinguish prosperity trend from chaseable price, and name the level or evidence that would force reassessment.
+4. Five-direction macro check: fundamentals/cycles, sentiment/bubble, official-data water, buffers, black-swan vulnerability.
+5. Cross-validation: macro/policy, industry data, financial statements, market confirmation, micro evidence, buffer confirmation.
+6. Upside industries: why multiple cycles align, what could invalidate the view.
+7. Downside/declining industries: what pressures overlap, what could reverse the view.
+8. Ordinary-investor caution: distinguish prosperity trend from chaseable price, and name the level or evidence that would force reassessment.

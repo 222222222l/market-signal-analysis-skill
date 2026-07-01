@@ -1,6 +1,6 @@
 ---
 name: market-signal-analysis
-description: Market-signal analysis for stocks, ETFs, sectors, indices, and liquid markets. Use for OHLCV or structured market data to compute indicators, evaluate trend stage and trend-end levels, analyze single-stock fundamentals plus technicals, filter noisy company news from hard operating signals, estimate short-term and long-term price zones, apply multi-cycle overlay analysis from economic/Kondratieff/dollar-liquidity cycles to industry and sector cycles, verify official government and regulator data through component decomposition, bias/water estimation, and cross-validation, analyze A-share broad/sector ETF macro trading regimes such as index stabilization, ETF-share contraction, turnover concentration, main-line crowding, and retail risk control, and assess multi-timeframe buy/sell/hold signals, sector rotation, breadth, sentiment, liquidity, macro-regime context, and cautious probability-weighted evidence.
+description: Market-signal analysis for stocks, ETFs, sectors, indices, and liquid markets. Use for OHLCV or structured market data to compute indicators, evaluate trend stage and trend-end levels including Granville moving-average rules, analyze single-stock fundamentals plus technicals, filter noisy company news from hard operating signals, estimate short-term and long-term price zones, apply multi-cycle overlay analysis from economic/Kondratieff/dollar-liquidity cycles to industry and sector cycles with Bayesian buffer-cushion and black-swan overlays, verify official government and regulator data through component decomposition, bias/water estimation, and cross-validation, analyze A-share broad/sector ETF macro trading regimes such as index stabilization, ETF-share contraction, turnover concentration, main-line crowding, and retail risk control, and assess multi-timeframe buy/sell/hold signals, sector rotation, breadth, sentiment, liquidity, macro-regime context, and cautious probability-weighted evidence.
 ---
 
 # Market Signal Analysis
@@ -25,7 +25,7 @@ Analyze technical signals only from sufficient OHLCV data or structured upstream
 
 ## Trend Stage and Trend End Analysis
 
-When the user asks about trend direction, stage trend, uptrend/downtrend ending, Vegas channel, channel position, formal trend break, "where the trend ends", "whether the main rise is over", staged stop/risk levels, trend-following holding rules, or Chinese-language phrases for main-rise, cooling-off, breakdown, or topping, read references/trend-stage-analysis.md before producing a view.
+When the user asks about trend direction, stage trend, uptrend/downtrend ending, Vegas channel, Granville rules, channel position, formal trend break, "where the trend ends", "whether the main rise is over", staged stop/risk levels, trend-following holding rules, or Chinese-language phrases for main-rise, cooling-off, breakdown, or topping, read references/trend-stage-analysis.md before producing a view.
 
 Use trend-stage analysis as a weighted evidence dashboard, not as a one-indicator verdict. Select or reweight indicators by asset type and market structure: broad indices need MA/Vegas/breadth confirmation; high-beta A-share themes need MA20/MA50, ATR/Chandelier, failed-breakout, turnover heat, and breadth; crypto/futures need wider volatility and leverage/liquidation context; low-liquidity small caps need lower confidence.
 
@@ -56,9 +56,9 @@ Never use an official headline number alone as a high-confidence market signal. 
 
 ## Multi-Cycle Overlay Analysis
 
-When the user asks about economic cycles, Kondratieff cycles, dollar tides, liquidity cycles, credit cycles, inventory cycles, industry cycles, sector cycles, cyclical resonance, cycle weighting, Bayesian trend probability, or which industries are in rising/declining prosperity phases under multiple cycles, read references/cycle-overlay-analysis.md before producing a view.
+When the user asks about economic cycles, Kondratieff cycles, dollar tides, liquidity cycles, credit cycles, inventory cycles, industry cycles, sector cycles, cyclical resonance, cycle weighting, Bayesian trend probability, buffer cushions, black-swan risk, macro-financial regime, or which industries are in rising/declining prosperity phases under multiple cycles, read references/cycle-overlay-analysis.md before producing a view.
 
-Use cycle analysis as a structured prior and confirmation layer, not as deterministic prophecy. Long cycles such as Kondratieff/technology-capex waves should receive low tactical weight unless confirmed by current orders, pricing power, capacity utilization, profit revisions, and market relative strength. Avoid double-counting the same evidence across macro, industry, and technical buckets.
+Use cycle analysis as a structured prior and confirmation layer, not as deterministic prophecy. Long cycles such as Kondratieff/technology-capex waves should receive low tactical weight unless confirmed by current orders, pricing power, capacity utilization, profit revisions, and market relative strength. For macro-financial analysis, always reconcile five directions: fundamentals/cycles, sentiment/bubble, official-data water, buffer cushions, and jump-event risk. Avoid double-counting the same evidence across macro, industry, and technical buckets.
 
 ## Single-Stock Fundamental and Technical Analysis
 
@@ -86,14 +86,14 @@ When the user asks about publishable research positioning, related work, literat
 
 Always consider these families when data supports them:
 
-- Trend and breakout: moving average slope/cross, price above/below MA20/MA50/MA200, 20-day/55-day/channel breakout, support/resistance break.
+- Trend and breakout: moving average slope/cross, Granville moving-average buy/sell rules, price above/below MA20/MA50/MA200, 20-day/55-day/channel breakout, support/resistance break.
 - Trend stage and trend-end structure: MA20/50/120/200 stack and slope, daily Vegas EMA144/169, long-cycle EMA576/676 when enough data exists, 2ATR/3ATR Chandelier levels, Donchian 20/55-day highs/lows, recover/fail behavior, and weekly confirmation.
 - Momentum and relative strength: 3/6/12-month momentum for mid/long horizons, rate of change, trend continuation.
 - Volume confirmation: volume expansion on breakout, volume drying on pullback, price-volume divergence, relative volume.
 - Sector breadth and rotation: share of constituents above MA20/MA50/MA120, new highs versus new lows, advance/decline ratio, leader versus laggard contribution, intra-sector rotation continuity, and whether gains are broad or only driven by one or two leaders.
 - A-share ETF macro-trading regime: broad-index ETF share changes, index trend versus median-stock performance, top turnover concentration, theme turnover share versus market-cap share, leader high-volume distribution, policy/liquidity support confirmation, and hard downgrade/exit signals for broad and sector ETFs.
 - Bubble momentum and exhaustion: overextension above MA20/MA50, gap/limit-up clustering, failed second breakouts, double-top invalidation, long upper shadows, blow-off volume, fund inflow/financing/turnover heat, and insider sell-down or inquiry-transfer pressure.
-- Multi-cycle overlay: economic growth/inflation/credit phase, Kondratieff or technology-capex background, dollar liquidity tide, domestic policy and fiscal impulse, inventory and capex cycle, industry supply-demand and pricing cycle, sector market cycle, and Bayesian posterior trend probability after cross-validation.
+- Multi-cycle overlay: economic growth/inflation/credit phase, Kondratieff or technology-capex background, dollar liquidity tide, domestic policy and fiscal impulse, inventory and capex cycle, industry supply-demand and pricing cycle, sector market cycle, market sentiment and bubble heat, official-data water, buffer cushions, black-swan vulnerability, and Bayesian posterior trend probability after cross-validation.
 - Official-data verification: headline versus sub-components, definition/sample/revision checks, estimated bias/water range, reconstructed data range, cross-checks with market prices and independent proxies, and contradiction diagnosis before turning government data into a trading signal.
 - Single-stock fundamentals and event quality: revenue, deducted profit, gross margin, operating cash flow, debt and liquidity, segment revenue/profit mix, customer concentration, governance, pledge/reduction/buyback/supply pressure, valuation versus growth, and whether announcements can enter earnings or cash flow.
 - U.S. macro liquidity and Fed policy: inflation second derivative, ECI/wage momentum, payroll breadth, unemployment trend, QRA and Treasury supply, ACM/term-premium impulse, SOFR-IORB and repo pressure, ON RRP/TGA/reserve balance changes, discount-window primary/secondary/seasonal credit, SRF usage, first-derivative and second-derivative stress acceleration, AI/capex support, MOVE/VIX and risk-parity/CTA transmission.
@@ -110,11 +110,11 @@ Read these files as needed:
 
 - references/research-basis.md: empirical research used to prioritize U.S. equity default weights.
 - references/statistical-weighting.md: scoring, horizon windows, sample-size rules, and default weights.
-- references/trend-stage-analysis.md: trend-stage taxonomy, Vegas channel rules, fast-trend risk stack, asset-specific weighting, trend-end levels, and trend question output format.
+- references/trend-stage-analysis.md: trend-stage taxonomy, Vegas channel rules, Granville moving-average rules, fast-trend risk stack, asset-specific weighting, trend-end levels, and trend question output format.
 - references/sector-bubble-analysis.md: sector/theme breadth, rotation, leadership, bubble momentum score, bubble-risk score, bold/cautious decision matrix, and A-share policy/liquidity caveats.
 - references/a-share-macro-trading-model.md: A-share broad/sector ETF macro-trading regime classifier for index stabilization, ETF-share contraction, retail-loss breadth, turnover concentration, main-line crowding, operator-capital inference, ETF holdability scores, and hard exit/re-entry rules.
 - references/official-data-verification.md: official government/regulator data verification framework for component decomposition, estimated bias/water, reconstructed ranges, cross-validation, contradiction handling, and confidence adjustment.
-- references/cycle-overlay-analysis.md: multi-cycle hierarchy from long economic/Kondratieff/dollar-liquidity cycles to industry/sector cycles, horizon-specific weights, Bayesian posterior trend probability, cross-validation, and industry-cycle classification.
+- references/cycle-overlay-analysis.md: multi-cycle hierarchy from long economic/Kondratieff/dollar-liquidity cycles to industry/sector cycles, macro-financial five-direction checklist, buffer-cushion scoring, black-swan overlay, horizon-specific weights, Bayesian posterior trend probability, cross-validation, and industry-cycle classification.
 - references/single-stock-fundamental-technical-analysis.md: single-stock workflow for filtering noisy news, identifying core operating signals, scoring fundamentals, combining valuation with technical levels, and giving short-term/long-term price zones and risk-control decision trees.
 - references/us-macro-liquidity-fed-policy.md: U.S. macro liquidity dashboard, Fed policy-regime state machine, Treasury issuance and term-premium analysis, SOFR-IORB/reserve plumbing checks, and macro asset-playbook mapping.
 - references/macro-stress-derivative-analysis.md: level, first-derivative, and second-derivative macro stress framework for early crisis warning, acceleration scoring, and transmission-chain mapping.
