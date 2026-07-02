@@ -8,6 +8,7 @@ import csv
 import json
 import math
 from dataclasses import dataclass
+from datetime import date, datetime, timedelta
 from typing import Dict, Iterable, List, Optional, Tuple
 
 
@@ -39,10 +40,34 @@ class Bar:
     volume: float
 
 
+IMPORTANCE_SCORES = {"high": 1.0, "medium": 0.65, "low": 0.35}
+
+
 def parse_float(value: str) -> float:
     if value is None or str(value).strip() == "":
         return float("nan")
     return float(str(value).replace(",", "").strip())
+
+
+def parse_date(value: str) -> Optional[date]:
+    if value is None:
+        return None
+    raw = str(value).strip()
+    if not raw:
+        return None
+    raw = raw.replace("/", "-")
+    candidates = [raw[:10], raw]
+    for candidate in candidates:
+        try:
+            return date.fromisoformat(candidate)
+        except ValueError:
+            pass
+    for fmt in ("%Y%m%d", "%m-%d-%Y", "%m/%d/%Y"):
+        try:
+            return datetime.strptime(raw, fmt).date()
+        except ValueError:
+            pass
+    return None
 
 
 def normalize_columns(fieldnames: Iterable[str]) -> Dict[str, str]:
@@ -88,6 +113,146 @@ def load_bars(path: str) -> List[Bar]:
             bars.append(bar)
     bars.sort(key=lambda item: item.timestamp)
     return bars
+
+
+def third_friday(year: int, month: int) -> date:
+    current = date(year, month, 1)
+    while current.weekday() != 4:
+        current += timedelta(days=1)
+    return current + timedelta(days=14)
+
+
+def standard_us_options_events(as_of: date, window_days: int) -> List[dict]:
+    events = []
+    months = []
+    for offset in range(-1, 3):
+        month = as_of.month + offset
+        year = as_of.year + (month - 1) // 12
+        month = (month - 1) % 12 + 1
+        months.append((year, month))
+    for year, month in months:
+        expiry = third_friday(year, month)
+        distance = (expiry - as_of).days
+        if abs(distance) > window_days:
+            continue
+        quarterly = month in {3, 6, 9, 12}
+        events.append({
+            "date": expiry.isoformat(),
+            "event_type": "quarterly_triple_witching" if quarterly else "us_monthly_options_expiration",
+            "importance": "high" if quarterly else "medium",
+            "asset_scope": "us_equity,index_etf,index_futures",
+            "description": (
+                "Quarterly index futures/options and equity options expiration; watch gamma reset, "
+                "settlement liquidity, and false breakout risk."
+                if quarterly
+                else "Standard U.S. monthly equity/index options expiration; watch gamma pinning, "
+                "volatility crush, and post-expiry positioning reset."
+            ),
+            "days_from_as_of": distance,
+            "source": "computed_standard_calendar",
+        })
+    return events
+
+
+def normalize_event_columns(fieldnames: Iterable[str]) -> Dict[str, str]:
+    aliases = {
+        "date": {"date", "event_date", "timestamp", "time"},
+        "event_type": {"event_type", "type", "name", "event", "title"},
+        "importance": {"importance", "impact", "level", "priority"},
+        "description": {"description", "details", "note", "notes", "summary"},
+        "asset_scope": {"asset_scope", "scope", "asset", "assets", "market"},
+    }
+    normalized = {name.lower().strip(): name for name in fieldnames}
+    result = {}
+    for target, names in aliases.items():
+        for name in names:
+            if name in normalized:
+                result[target] = normalized[name]
+                break
+    if "date" not in result:
+        raise ValueError("Event calendar is missing a date/event_date column")
+    return result
+
+
+def normalize_importance(value: str) -> str:
+    raw = str(value or "").strip().lower()
+    if raw in {"high", "h", "3", "重要", "高"}:
+        return "high"
+    if raw in {"low", "l", "1", "低"}:
+        return "low"
+    return "medium"
+
+
+def load_event_calendar(path: str, as_of: date, window_days: int) -> List[dict]:
+    with open(path, newline="", encoding="utf-8-sig") as handle:
+        reader = csv.DictReader(handle)
+        if not reader.fieldnames:
+            raise ValueError("Event calendar CSV has no header row")
+        cols = normalize_event_columns(reader.fieldnames)
+        events = []
+        for row in reader:
+            event_date = parse_date(row.get(cols["date"], ""))
+            if event_date is None:
+                continue
+            distance = (event_date - as_of).days
+            if abs(distance) > window_days:
+                continue
+            event_type = row.get(cols.get("event_type", ""), "scheduled_event") or "scheduled_event"
+            importance = normalize_importance(row.get(cols.get("importance", ""), "medium"))
+            events.append({
+                "date": event_date.isoformat(),
+                "event_type": event_type,
+                "importance": importance,
+                "asset_scope": row.get(cols.get("asset_scope", ""), ""),
+                "description": row.get(cols.get("description", ""), ""),
+                "days_from_as_of": distance,
+                "source": "input_calendar",
+            })
+    return events
+
+
+def build_special_date_alerts(market: str, as_of: Optional[date], window_days: int, calendar_events: Optional[List[dict]]) -> Tuple[List[dict], Optional[float], Optional[str]]:
+    if as_of is None:
+        return [], None, None
+
+    events = list(calendar_events or [])
+    if market in {"us_equity", "us_index", "us_etf"} or "us" in market.lower():
+        events.extend(standard_us_options_events(as_of, window_days))
+
+    alerts = []
+    max_score = 0.0
+    for event in events:
+        importance = normalize_importance(event.get("importance", "medium"))
+        proximity = max(0.0, 1 - abs(float(event["days_from_as_of"])) / (window_days + 1))
+        score = 100 * (0.55 * proximity + 0.45 * IMPORTANCE_SCORES[importance])
+        max_score = max(max_score, score)
+        alerts.append({
+            "date": event["date"],
+            "event_type": event.get("event_type", "scheduled_event"),
+            "importance": importance,
+            "days_from_as_of": event["days_from_as_of"],
+            "asset_scope": event.get("asset_scope", ""),
+            "description": event.get("description", ""),
+            "source": event.get("source", "calendar"),
+            "risk_score": round(score, 1),
+            "analysis_effect": (
+                "Calendar event can distort short-term price, volatility, liquidity, or technical confirmation; "
+                "require post-event confirmation before upgrading directional confidence."
+            ),
+        })
+
+    if not alerts:
+        return [], 0.0, "none"
+    if max_score >= 75:
+        level = "severe"
+    elif max_score >= 50:
+        level = "high"
+    elif max_score >= 25:
+        level = "medium"
+    else:
+        level = "low"
+    alerts.sort(key=lambda item: (-item["risk_score"], abs(item["days_from_as_of"]), item["date"]))
+    return alerts, round(max_score, 1), level
 
 
 def sma(values: List[float], period: int) -> List[Optional[float]]:
@@ -243,12 +408,29 @@ def add_signal(signals: List[dict], family: str, signal: str, direction: str, st
     })
 
 
-def analyze(bars: List[Bar], horizon: str, market: str) -> dict:
+def analyze(
+    bars: List[Bar],
+    horizon: str,
+    market: str,
+    calendar_events: Optional[List[dict]] = None,
+    as_of: Optional[date] = None,
+    event_window_days: int = 5,
+) -> dict:
     warnings = []
     if len(bars) < 60:
         warnings.append("Fewer than 60 bars; probability confidence is low.")
     if any(bar.high < max(bar.open, bar.close) or bar.low > min(bar.open, bar.close) for bar in bars):
         warnings.append("Some OHLC rows are internally inconsistent.")
+
+    latest_bar_date = parse_date(bars[-1].timestamp) if bars else None
+    analysis_date = as_of or latest_bar_date
+    special_alerts, calendar_risk_score, calendar_warning_level = build_special_date_alerts(
+        market, analysis_date, event_window_days, calendar_events
+    )
+    if calendar_warning_level in {"high", "severe"}:
+        warnings.append(
+            "High special-date event risk near the analysis date; lower short-term confidence and require post-event confirmation."
+        )
 
     closes = [bar.close for bar in bars]
     volumes = [bar.volume for bar in bars]
@@ -397,6 +579,9 @@ def analyze(bars: List[Bar], horizon: str, market: str) -> dict:
             "atr14": current_atr,
         },
         "score_components": {"bullish": round(bullish, 4), "bearish": round(bearish, 4), "net": round(net, 4)},
+        "special_date_risk_score": calendar_risk_score,
+        "special_date_warning_level": calendar_warning_level,
+        "special_date_alerts": special_alerts,
         "probabilities": probabilities,
         "probability_basis": probability_basis,
         "confidence": confidence,
@@ -410,12 +595,20 @@ def main() -> None:
     parser.add_argument("--input", required=True, help="Path to OHLCV CSV file.")
     parser.add_argument("--market", default="us_equity", help="Market profile name.")
     parser.add_argument("--horizon", choices=["short", "mid", "long"], default="mid")
+    parser.add_argument("--calendar", help="Optional event calendar CSV with date,event_type,importance,description,asset_scope.")
+    parser.add_argument("--as-of", help="Analysis date in YYYY-MM-DD format. Defaults to the latest bar timestamp.")
+    parser.add_argument("--event-window-days", type=int, default=5, help="Calendar warning window around the analysis date.")
     args = parser.parse_args()
 
     bars = load_bars(args.input)
     if not bars:
         raise SystemExit("No valid bars found in CSV.")
-    print(json.dumps(analyze(bars, args.horizon, args.market), ensure_ascii=False, indent=2))
+    as_of = parse_date(args.as_of) if args.as_of else None
+    if args.as_of and as_of is None:
+        raise SystemExit("--as-of must be parseable as a date, preferably YYYY-MM-DD.")
+    event_base_date = as_of or parse_date(bars[-1].timestamp)
+    calendar_events = load_event_calendar(args.calendar, event_base_date, args.event_window_days) if args.calendar and event_base_date else None
+    print(json.dumps(analyze(bars, args.horizon, args.market, calendar_events, as_of, args.event_window_days), ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

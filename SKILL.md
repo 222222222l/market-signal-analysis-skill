@@ -1,6 +1,6 @@
 ---
 name: market-signal-analysis
-description: Market-signal analysis for stocks, ETFs, sectors, indices, and liquid markets. Use for OHLCV or structured market data to compute indicators, evaluate trend stage and trend-end levels including Granville moving-average rules, analyze single-stock fundamentals plus technicals, filter noisy company news from hard operating signals, estimate short-term and long-term price zones, apply multi-cycle overlay analysis from economic/Kondratieff/dollar-liquidity cycles to industry and sector cycles with Bayesian buffer-cushion and black-swan overlays, verify official government and regulator data through component decomposition, bias/water estimation, and cross-validation, analyze A-share broad/sector ETF macro trading regimes such as index stabilization, ETF-share contraction, turnover concentration, main-line crowding, and retail risk control, and assess multi-timeframe buy/sell/hold signals, sector rotation, breadth, sentiment, liquidity, macro-regime context, and cautious probability-weighted evidence.
+description: Market-signal analysis for stocks, ETFs, sectors, indices, and liquid markets. Use for OHLCV or structured market data to compute indicators, trend-stage/trend-end levels including Granville/Vegas rules, single-stock fundamentals plus technicals, noisy-news filtering, price zones, multi-cycle Bayesian overlays, official-data verification, A-share ETF macro-trading regimes, U.S. macro liquidity/Fed policy, special-date event-calendar warnings for futures delivery, options expiration, FOMC/Fed/CPI/PCE/NFP/QRA/Treasury-auction dates, and probability-weighted buy/sell/hold views across breadth, sentiment, liquidity, and macro context.
 ---
 
 # Market Signal Analysis
@@ -19,9 +19,10 @@ Analyze technical signals only from sufficient OHLCV data or structured upstream
    - long-term: 3 to 24 months.
 4. Normalize OHLCV data by split/dividend adjustment status when available. Reject or qualify data with impossible OHLC values, missing volume on equity assets, duplicate timestamps, or fewer than the minimum bars in references/statistical-weighting.md.
 5. Compute indicators and candidate signals. Use scripts/analyze_ohlcv.py for CSV data, or implement the same schema when data arrives from an upstream agent/API.
-6. Score signal families with the U.S. equity default weights in references/statistical-weighting.md unless a market branch overrides them.
-7. Calibrate scores with historical hit analysis when enough in-sample data exists. Penalize weak sample sizes, high turnover, high drawdown, high correlation among duplicate indicators, and unvalidated parameter searches.
-8. Produce a probability-style technical view with matched evidence, opposing evidence, confidence, and caveats.
+6. Check whether the analysis window overlaps special dates that can distort price, volatility, dealer hedging, settlement liquidity, or macro expectations. Read references/special-date-event-risk.md when futures/options expiry, delivery, FOMC/Fed data, CPI/PCE/NFP/ECI/JOLTS, QRA, Treasury auctions, index rebalancing, month-end/quarter-end, or holiday liquidity is relevant.
+7. Score signal families with the U.S. equity default weights in references/statistical-weighting.md unless a market branch overrides them.
+8. Calibrate scores with historical hit analysis when enough in-sample data exists. Penalize weak sample sizes, high turnover, high drawdown, high correlation among duplicate indicators, and unvalidated parameter searches.
+9. Produce a probability-style technical view with matched evidence, opposing evidence, confidence, caveats, and any special-date warnings.
 
 ## Trend Stage and Trend End Analysis
 
@@ -74,6 +75,12 @@ When the user asks about early crisis detection, first-derivative or second-deri
 
 Classify the macro state before labeling the Fed as hawkish or dovish. Use five jointly evaluated variable groups: inflation/labor momentum, fiscal issuance and term premium, liquidity plumbing, AI/capex and real-demand support, and market transmission. Do not treat one data release or one headline as sufficient evidence for a regime change.
 
+## Special Date and Event-Calendar Risk
+
+When the user asks about entry timing, trend reliability, short-term price levels, liquidity, volatility, U.S. macro events, futures delivery, options expiry, ETF/index rebalancing, or market behavior around a known date, read references/special-date-event-risk.md before producing a view.
+
+Treat special dates as a volatility, liquidity, and signal-quality overlay rather than automatic bullish or bearish evidence. If a nearby special date can distort technical signals, display a special-date warning with event date, distance, asset scope, likely market mechanism, confidence impact, and what post-event confirmation is required.
+
 ## Deep Learning Extension
 
 When the user asks about Transformer models, deep learning, pretraining, fine-tuning, dynamic indicator weights, long-context daily sequences, target-price prediction, return-distribution prediction, or quantitative decision models, read references/deep-learning-extension.md before designing or coding the model.
@@ -97,6 +104,7 @@ Always consider these families when data supports them:
 - Official-data verification: headline versus sub-components, definition/sample/revision checks, estimated bias/water range, reconstructed data range, cross-checks with market prices and independent proxies, and contradiction diagnosis before turning government data into a trading signal.
 - Single-stock fundamentals and event quality: revenue, deducted profit, gross margin, operating cash flow, debt and liquidity, segment revenue/profit mix, customer concentration, governance, pledge/reduction/buyback/supply pressure, valuation versus growth, and whether announcements can enter earnings or cash flow.
 - U.S. macro liquidity and Fed policy: inflation second derivative, ECI/wage momentum, payroll breadth, unemployment trend, QRA and Treasury supply, ACM/term-premium impulse, SOFR-IORB and repo pressure, ON RRP/TGA/reserve balance changes, discount-window primary/secondary/seasonal credit, SRF usage, first-derivative and second-derivative stress acceleration, AI/capex support, MOVE/VIX and risk-parity/CTA transmission.
+- Special date and event-calendar risk: futures last-trade/delivery/roll dates, index and ETF options expiration, U.S. monthly OpEx, quarterly triple/quad witching, FOMC decisions/minutes/dots, CPI/PCE/NFP/ECI/JOLTS/ISM/retail sales, QRA and Treasury auctions/settlements, month-end/quarter-end, tax dates, index rebalances, holidays, and whether the event creates false-breakout, gamma, liquidity, or volatility-crush risk.
 - MACD: line/signal cross, histogram acceleration/deceleration, zero-line regime, bullish/bearish divergence.
 - RSI: overbought/oversold, centerline confirmation, bullish/bearish divergence, failure swing when detectable.
 - KDJ/stochastic: K/D/J cross, high/low zone reversal, overbought/oversold persistence.
@@ -118,6 +126,7 @@ Read these files as needed:
 - references/single-stock-fundamental-technical-analysis.md: single-stock workflow for filtering noisy news, identifying core operating signals, scoring fundamentals, combining valuation with technical levels, and giving short-term/long-term price zones and risk-control decision trees.
 - references/us-macro-liquidity-fed-policy.md: U.S. macro liquidity dashboard, Fed policy-regime state machine, Treasury issuance and term-premium analysis, SOFR-IORB/reserve plumbing checks, and macro asset-playbook mapping.
 - references/macro-stress-derivative-analysis.md: level, first-derivative, and second-derivative macro stress framework for early crisis warning, acceleration scoring, and transmission-chain mapping.
+- references/special-date-event-risk.md: special-date event-calendar overlay for futures delivery, options expiration, Fed/FOMC and macro releases, Treasury issuance dates, rebalancing, month/quarter-end, holiday liquidity, event-risk scoring, and required output warnings.
 - references/signal-taxonomy.md: exact signal definitions and evidence schema.
 - references/market-profiles.md: U.S. equity default profile and branch rules for other markets.
 - references/output-format.md: required answer format.
@@ -133,6 +142,12 @@ python scripts/analyze_ohlcv.py --input prices.csv --market us_equity --horizon 
 ```
 
 Expected columns are `timestamp,open,high,low,close,volume`. Case-insensitive aliases such as `date`, `time`, `o`, `h`, `l`, `c`, and `vol` are accepted. The script returns JSON with indicator snapshots, matched bullish/bearish signals, score components, probabilities, and warnings.
+
+Use `--calendar events.csv` when a known event calendar is available. Expected event columns are `date,event_type,importance,description,asset_scope`; aliases such as `event_date`, `type`, `impact`, `details`, and `scope` are accepted. The script also flags standard U.S. monthly options expiration and quarterly triple-witching dates for `us_equity`.
+
+```powershell
+python scripts/analyze_ohlcv.py --input prices.csv --market us_equity --horizon short --calendar events.csv --event-window-days 5
+```
 
 Use `scripts/train_market_transformer_demo.py` when the user asks for a trainable model architecture demo. It expects panel CSV data with at least `timestamp,symbol,market,open,high,low,close,volume`; all additional numeric columns are treated as candidate model features.
 

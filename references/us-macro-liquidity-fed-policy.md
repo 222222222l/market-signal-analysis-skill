@@ -33,6 +33,7 @@ Prefer these official or primary sources before market commentary:
 | Discount window | Federal Reserve H.4.1 loans: primary credit, secondary credit, and seasonal credit; FRED primary credit weekly average: https://fred.stlouisfed.org/series/WPC |
 | Term premium | New York Fed ACM term premia: https://www.newyorkfed.org/research/data_indicators/term-premia-tabs |
 | Repo/SRF | New York Fed repo, reverse repo, and Standing Repo Facility operations: https://www.newyorkfed.org/markets |
+| Macro and Fed calendars | FOMC calendar, BLS/BEA release calendars, Treasury QRA and auction calendars, and major settlement dates. Use references/special-date-event-risk.md when timing or liquidity is material. |
 
 ## Five Daily Variable Groups
 
@@ -45,6 +46,12 @@ Evaluate these five groups together. Do not let one group dominate unless it is 
 | Liquidity plumbing | SOFR-IORB, EFFR-IORB, repo rates, ON RRP, reserve balances, TGA, discount-window primary/secondary/seasonal credit, SRF/repo take-up, quarter-end/calendar effects | Identifies reserve scarcity, bank-funding stress, or money-market stress before it appears in risk assets. |
 | AI/capex and real-demand support | AI capex, power/grid/transformer demand, semiconductor cycle, corporate bond issuance, capex guidance, earnings breadth | Explains why growth assets may resist high rates when real investment demand remains strong. |
 | Market transmission | MOVE, VIX, MOVE/VIX correlation, credit spreads, USD, real yields, CTA/risk-parity deleveraging, equity breadth | Shows whether macro pressure is staying in rates or spilling into broad risk assets. |
+
+## Calendar Overlay
+
+Before assigning short-horizon probabilities, check whether the analysis date is near FOMC, CPI, PCE, NFP, ECI, JOLTS, ISM, QRA, Treasury auctions/settlements, month-end, quarter-end, tax dates, options expiration, or futures delivery. These dates can temporarily dominate the five variable groups through rate-path repricing, duration-supply shocks, dealer hedging, or reserve-drain effects.
+
+Use references/special-date-event-risk.md to score the event risk. A high calendar score should lower confidence, widen the expected range, and require T+1/T+2 confirmation; it should not automatically change the directional macro state.
 
 ## Scenario State Machine
 

@@ -120,3 +120,16 @@ When official government, central-bank, exchange, regulator, or official statist
 9. Market implication and confidence adjustment.
 
 Never present a top-line official number as decisive if the sub-components, methodology, or independent cross-checks are unavailable.
+
+## Special Date and Event-Calendar Questions
+
+When futures delivery, options expiration, Fed/FOMC events, CPI/PCE/NFP/ECI/JOLTS/ISM, QRA, Treasury auctions, index rebalances, month/quarter-end, holiday liquidity, or other special dates materially affect timing or liquidity, add this compact warning block:
+
+1. Special-date warning level: none, low, medium, high, or severe.
+2. Event list: date, distance from analysis date, type, importance, and affected assets.
+3. Main mechanism: gamma/pinning, futures roll or delivery, macro-rate repricing, Treasury/liquidity drain, rebalance flow, or thin liquidity.
+4. Impact on conclusion: whether confidence is lowered, expected range is widened, or post-event confirmation is required.
+5. Post-event confirmation: what price, volume, breadth, volatility, or liquidity evidence is needed after T+1/T+2.
+6. Missing data: option open interest/gamma, futures open interest, implied volatility, auction schedule, official release calendar, or exchange holiday data.
+
+Do not treat a special date as automatic bullish or bearish evidence. Use it to identify false-breakout risk, gap risk, volatility crush, and liquidity instability.

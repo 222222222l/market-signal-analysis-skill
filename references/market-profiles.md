@@ -39,8 +39,9 @@ overrides:
 
 - A-shares: account for price limits, T+1 trading, retail participation, policy/news sensitivity, suspension risk, ETF support/redemption, margin financing, northbound flows when available, and different turnover behavior. For broad-index or sector-index ETF questions, use references/a-share-macro-trading-model.md to classify whether the market is in policy-floor repair, range-stabilized liquidity extraction, main-line acceleration, crowded distribution, broad breakdown, or post-washout accumulation. Do not treat index stability as healthy breadth unless median-stock returns, ETF shares, turnover concentration, and leader behavior confirm it.
 - Hong Kong equities: account for China macro/policy exposure, lower liquidity in small/mid caps, different trading holidays, and FX linkage.
-- Futures: account for contract rolls, margin, leverage, tick size, expiry, contango/backwardation, and session structure.
-- Forex: account for 24/5 trading, macro calendars, carry, central-bank risk, and weaker centralized volume data.
+- Futures: account for contract rolls, margin, leverage, tick size, first-notice day, last-trade day, delivery windows, expiry, contango/backwardation, and session structure. Use references/special-date-event-risk.md around roll/delivery dates.
+- Options-heavy equity/index ETFs: account for weekly/monthly options expiration, quarterly triple/quad witching, gamma pinning, vol crush, and post-expiry positioning reset. Use references/special-date-event-risk.md when entry timing or false-breakout risk matters.
+- Forex: account for 24/5 trading, macro calendars, carry, central-bank risk, fixing windows, holiday liquidity, and weaker centralized volume data.
 - Crypto: account for 24/7 trading, fragmented exchanges, funding rates, liquidations, and exchange-specific volume quality.
 
 Do not silently reuse U.S. equity weights for another market without noting that the market branch is provisional.
