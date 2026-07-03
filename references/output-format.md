@@ -121,6 +121,37 @@ When official government, central-bank, exchange, regulator, or official statist
 
 Never present a top-line official number as decisive if the sub-components, methodology, or independent cross-checks are unavailable.
 
+## Actor Optimal-Path and Game-Equilibrium Questions
+
+When policy makers, regulators, central banks, treasury authorities, state-backed capital, large institutions, dealers, insiders, leveraged funds, or other strategic actors materially affect the market path, add this compact dashboard:
+
+1. Policy-maker lens:
+   - key actors
+   - objectives
+   - binding constraints
+   - cheapest likely tools
+   - costly/last-resort tools
+   - most likely optimal path
+2. Market-decision-maker lens:
+   - key actors
+   - positioning and flows
+   - risk constraints
+   - most likely optimal path
+3. Multi-actor game:
+   - direct game
+   - indirect / second-round game
+   - likely best responses
+4. Equilibrium state:
+   - aligned easing/risk-on, managed range, crowded chase, policy collision, crisis stabilization, coordination failure, or unstable disequilibrium
+   - Nash-like equilibrium status: stable, fragile, or unstable
+   - unilateral-deviation risk
+5. Market impact:
+   - liquidity, valuation, volatility, breadth, sector rotation, credit, rates, FX, or commodity transmission
+6. Confirmation signals.
+7. Invalidation signals.
+
+Use actor incentives and game equilibria as scenario priors, not proof of hidden coordination. Do not analyze a single actor in isolation when other actors' reactions can change the payoff. Require observable confirmation before raising confidence.
+
 ## Special Date and Event-Calendar Questions
 
 When futures delivery, options expiration, Fed/FOMC events, CPI/PCE/NFP/ECI/JOLTS/ISM, QRA, Treasury auctions, index rebalances, month/quarter-end, holiday liquidity, or other special dates materially affect timing or liquidity, add this compact warning block:

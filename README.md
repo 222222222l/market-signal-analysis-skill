@@ -11,6 +11,7 @@ The skill combines classic OHLCV technical analysis with statistical signal weig
 - Probability-style buy/sell/hold views with matched bullish and bearish evidence.
 - Sector and theme analysis: breadth, rotation, leading-stock strength, benchmark-relative strength, volume confirmation, and policy/liquidity caveats.
 - Bubble-market analysis: trend/momentum score, bubble-risk score, bold/cautious decision matrix, double-top versus second-breakout interpretation, and exhaustion signals.
+- Policy-maker and market-decision-maker game analysis: infer likely policy, institutional, dealer, insider, and leveraged-capital behavior from objectives, constraints, tools, incentives, multi-actor best responses, Nash-like equilibrium states, and observable confirmation.
 - U.S. macro liquidity and Federal Reserve policy-regime analysis: inflation/labor second derivative, Treasury issuance, term premium, SOFR-IORB pressure, ON RRP/TGA/reserves, AI/capex support, and market transmission.
 - Official government/regulator data verification: headline decomposition, component weights, estimated bias/water ranges, reconstructed ranges, and cross-validation against independent market or real-economy evidence.
 - A-share-specific caveats such as price limits, T+1, retail participation, policy narratives, financing, ETF/fund flows, and large shareholder sell-down announcements.
@@ -58,6 +59,10 @@ Classify the current U.S. macro liquidity state and Fed policy bias using inflat
 ```
 
 ```text
+Analyze this market as a multi-actor game between policy makers and market decision makers, assuming each actor chooses the best feasible response under its actual motives and constraints, and infer the likely Nash-like equilibrium.
+```
+
+```text
 Verify whether this official CPI/GDP/employment/credit data is reliable enough for a market signal by decomposing sub-components, estimating possible bias, and cross-checking independent evidence.
 ```
 
@@ -69,6 +74,7 @@ Verify whether this official CPI/GDP/employment/credit data is reliable enough f
 |-- agents/
 |   `-- openai.yaml
 |-- references/
+|   |-- actor-optimal-path-analysis.md
 |   |-- official-data-verification.md
 |   |-- deep-learning-extension.md
 |   |-- market-profiles.md
@@ -101,6 +107,14 @@ Verify whether this official CPI/GDP/employment/credit data is reliable enough f
 - Scenario state machine: baseline bear steepening, inflation bear flattening, fiscal issuance shock, plumbing tightening, traditional recession/disinflation.
 - SOFR-IORB, ON RRP, TGA, reserves, SRF/repo, and term-premium rules of thumb.
 - Fed reaction and cross-asset playbook mapping.
+
+`references/actor-optimal-path-analysis.md` contains the policy-maker and market-decision-maker game framework:
+
+- Concrete actor mapping: policy makers, regulators, state-backed capital, institutional funds, leveraged funds, dealers, insiders, and corporate actors.
+- Objective, constraint, tool, payoff, and reaction-function analysis.
+- Direct and indirect strategic games, best-response mapping, unilateral-deviation checks, and Nash-like equilibrium or unstable disequilibrium classification.
+- Interaction states such as aligned easing, managed range, crowded chase, policy collision, crisis stabilization, and coordination failure.
+- Confirmation and invalidation rules to avoid treating motive inference as certainty.
 
 `references/official-data-verification.md` contains the official-data quality framework:
 
