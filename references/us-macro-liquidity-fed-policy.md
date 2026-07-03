@@ -44,7 +44,7 @@ Evaluate these five groups together. Do not let one group dominate unless it is 
 | Inflation and labor second derivative | Core services ex-housing / supercore proxy, ECI, average hourly earnings, payroll breadth, unemployment trend, claims, JOLTS, energy impulse | Determines whether the Fed can focus on growth weakness or must keep inflation credibility first. |
 | Fiscal issuance and term premium | Treasury QRA, bill versus coupon mix, auction tails/bid-to-cover/dealer takedown, TGA path, deficit surprises, ACM/market term premium | Separates monetary policy rate expectations from duration-supply and risk-premium shocks. |
 | Liquidity plumbing | SOFR-IORB, EFFR-IORB, repo rates, ON RRP, reserve balances, TGA, discount-window primary/secondary/seasonal credit, SRF/repo take-up, quarter-end/calendar effects | Identifies reserve scarcity, bank-funding stress, or money-market stress before it appears in risk assets. |
-| AI/capex and real-demand support | AI capex, power/grid/transformer demand, semiconductor cycle, corporate bond issuance, capex guidance, earnings breadth | Explains why growth assets may resist high rates when real investment demand remains strong. |
+| Narrative/capex and real-demand support | Leading narrative capex or adoption data, power/grid/transformer demand when AI-related, sector order books, pricing, corporate bond issuance, capex guidance, earnings breadth | Explains why high-duration or high-valuation assets may resist high rates when real demand remains strong. |
 | Market transmission | MOVE, VIX, MOVE/VIX correlation, credit spreads, USD, real yields, CTA/risk-parity deleveraging, equity breadth | Shows whether macro pressure is staying in rates or spilling into broad risk assets. |
 
 ## Calendar Overlay
@@ -76,7 +76,7 @@ Confirm with:
 Asset read:
 
 - Negative for long-duration Treasuries and rate-sensitive defensives.
-- Mixed for equities; AI/capex winners can keep working if earnings revisions are strong.
+- Mixed for equities; leading narrative or capex winners can keep working if hard demand data and earnings revisions are strong.
 - USD and real yields tend to stay supported.
 
 ### 2. Inflation Bear Flattening
@@ -171,7 +171,7 @@ Meaning: inflation/labor and real-demand support dominate; fiscal supply matters
 
 Typical signs:
 
-- Inflation is high/sticky, employment is stable, fiscal supply is large, AI/capex remains strong.
+- Inflation is high/sticky, employment is stable, fiscal supply is large, leading narrative/capex demand remains strong.
 - Higher volatility, bear steepening, and fewer credible rate-cut promises.
 
 Trading posture:
@@ -240,7 +240,7 @@ Suggested weights:
 | Inflation and labor second derivative | 30 |
 | Fiscal issuance and term premium | 20 |
 | Liquidity plumbing | 25 |
-| AI/capex and real-demand support | 10 |
+| Narrative/capex and real-demand support | 10 |
 | Market transmission | 15 |
 
 Interpretation:
@@ -269,6 +269,93 @@ Examples:
 
 Do not average away second-derivative plumbing stress. A small absolute level can still matter if it is accelerating and confirmed by adjacent markets.
 
+## Liquidity Base and Narrative-Bubble Stage-Top Matrix
+
+Use this matrix when the user asks whether U.S. equities, Nasdaq, AI hardware, data-center, biotech, crypto, software, space, EV, clean energy, or any high-valuation narrative trade is near a stage top. Treat it as a probabilistic warning system, not as a mechanical sell signal.
+
+### Premise and Scope
+
+Apply this matrix only after the market has entered a bubble-momentum or non-fundamental-led phase. The practical definition is: price and valuation expansion are being driven more by liquidity, narrative, leverage, positioning, scarcity, and reflexive flows than by current earnings, cash flow, or conservative DCF assumptions.
+
+In this phase, fundamentals are not ignored. They are reclassified from the primary timing anchor to a hard-validation and second-derivative layer. A bubble can keep rising while valuation is already unreasonable, but it becomes fragile when liquidity tightens, positioning is crowded, and the narrative's hard operating data stop accelerating.
+
+Do not use this matrix for a normal fundamental-led rerating. If price gains are matched by broad earnings upgrades, cash-flow acceleration, falling leverage, and reasonable valuation, use ordinary fundamental and trend-stage analysis first.
+
+Separate three layers:
+
+- Liquidity base: reserve balances, SOFR-IORB, repo rates, ON RRP, TGA, SRF usage, discount-window credit, and calendar effects.
+- Market froth and top countdown: margin debt, 0DTE option share, index concentration, market-cap-to-GDP, money-supply versus Nasdaq divergence, insider sell/buy pressure, and Nasdaq forward valuation.
+- Narrative hard validation: use the real operating variables behind the specific story, such as orders, backlog, capex, usage, pricing, margins, inventories, regulatory milestones, customer adoption, financing, and earnings-revision breadth.
+
+Examples of narrative hard-validation adapters:
+
+| Narrative | Hard-validation variables |
+| --- | --- |
+| AI hardware / data center | Hyperscaler capex growth and second derivative, GPU/data-center lease pricing, power and grid bottlenecks, semiconductor orders, AI monetization, cloud margins. |
+| Biotech / healthcare innovation | Clinical trial milestones, approval probability, reimbursement, commercial launch traction, cash runway, financing window, partnership economics. |
+| Crypto / tokenization | Stablecoin liquidity, ETF/fund flows, on-chain activity quality, leverage/funding rates, exchange depth, regulatory path, real fee revenue. |
+| EV / clean energy | Deliveries, margins, inventory, battery costs, subsidy durability, charging/grid buildout, order backlog, financing cost. |
+| Software / SaaS | ARR growth, net retention, enterprise budget cycle, seat expansion, pricing power, free-cash-flow margin, sales-cycle length. |
+| Space / defense / strategic tech | Contract awards, budget appropriations, launch cadence, backlog quality, unit economics, cash conversion, export/regulatory constraints. |
+| Commodity or new-material scarcity | Realized price, inventories, treatment charges, capacity additions, offtake contracts, substitution risk, end-demand elasticity. |
+
+### Liquidity Phases
+
+Use current official or primary data before assigning a phase. Adjust all short-window changes for QRA, Treasury settlement, month-end, quarter-end, tax dates, and options expiration.
+
+| Phase | Typical evidence | Interpretation |
+| --- | --- | --- |
+| Green | Reserves above about $3.0T; SOFR-IORB comfortably negative; TGA stable or falling; ON RRP not the only buffer; no SRF/repo stress. | Liquidity base is not yet pressuring risk assets. |
+| Yellow | Reserves below about $3.0T or falling quickly; ON RRP near exhausted; TGA rising toward about $0.95T-$1.00T; SOFR-IORB near zero but not persistently positive. | Funding channel is tightening; reduce confidence in momentum signals, but do not call a structural top from liquidity alone. |
+| Orange | Reserves below about $2.9T while SOFR-IORB is positive for several sessions, or TGA rebuild drains several hundred billion dollars over a short window; repo rates or funding spreads begin confirming. | Reserve distribution pressure is becoming visible; require risk-reduction analysis and T+1/T+2 confirmation after settlement dates. |
+| Red | Reserves below about $2.8T, SOFR-IORB around or above +3 bp, repeated repo spikes, SRF usage appears or rises, discount-window credit accelerates, or bank/credit markets confirm stress. | Plumbing stress can override the normal macro score for short-horizon risk management. |
+| Break-glass | Reserves near or below about $2.5T with positive SOFR-IORB/repo stress and market transmission. | Treat as a forced de-risking or unconditional risk-control zone unless official liquidity repair is already effective. |
+
+Do not confuse H.4.1 reserve balances with discount-window borrowing. Reserve thresholds such as $2.8T or $2.5T refer to reserve balances, while discount-window credit is a bank-stress gauge that usually matters through its rate of change and persistence.
+
+### Market Froth Top Countdown
+
+Use a 7-signal dashboard for late-cycle equity froth. Suggested warning variables:
+
+| Signal | Warning interpretation |
+| --- | --- |
+| Margin debt month-over-month | Rapid positive acceleration signals leverage chasing; a negative-to-positive flip can remove a prior deleveraging trigger. |
+| SPX 0DTE share | Very high 0DTE share, especially on high-volatility days, signals short-horizon speculation and dealer-flow fragility. |
+| S&P 500 top-10 concentration | Extreme concentration means index strength can hide weakening breadth. |
+| Buffett indicator / market-cap-to-GDP | Very high market cap versus GDP is a valuation/froth warning, not a timing trigger by itself. |
+| M2 versus Nasdaq year-over-year gap | Nasdaq rising far faster than money/liquidity growth signals multiple expansion outrunning liquidity. |
+| Insider sell/buy ratio | High or rising selling pressure is a yellow/red warning when paired with valuation and breadth deterioration. |
+| Nasdaq 12-month forward PE | A non-extreme forward PE can delay the final top even when other froth signals are hot. |
+
+Interpretation:
+
+- 0-2 red signals: no broad top countdown.
+- 3-4 red signals: late-cycle heat; require breadth, volatility, credit, and liquidity confirmation before calling a top.
+- 5 or more red signals: synchronized top-countdown warning; tighten risk control and look for failed breakouts or liquidity stress.
+- 5 or more red signals plus red liquidity phase: high structural-top risk.
+
+For example, a dashboard with four red signals, one yellow signal, and two untriggered signals means the liquidity channel may already be in the yellow zone, but the final "5 of 7 synchronous flip" has not been reached. Do not upgrade it to a confirmed top unless market transmission also deteriorates.
+
+### Structural-Top Confirmation
+
+Only lean toward a structural top when liquidity warnings and market/fundamental warnings converge:
+
+- Liquidity confirmation: at least two of reserves below about $2.8T, SOFR-IORB around or above +3 bp, repeated repo spikes, SRF usage, discount-window acceleration, or TGA-driven reserve drain after ON RRP is nearly exhausted.
+- Market confirmation: at least two of failed index breakout, narrowing breadth, high concentration, volatility/credit spread confirmation, insider sell pressure, or leverage/0DTE excess.
+- Narrative hard-data confirmation: the story's core operating variables stop accelerating, such as order/backlog growth, capex, usage, pricing, margins, regulatory milestones, financing access, or earnings revisions.
+
+If the narrative's hard operating data are still positive and not decelerating, valuation is not extreme versus its own cycle, credit markets are open, and SOFR-IORB has not stayed positive, classify the setup as "yellow/orange warning" rather than "structural top confirmed."
+
+### False-Positive Controls
+
+Before using the matrix to call a stage top:
+
+- Check whether SOFR-IORB or repo pressure is only quarter-end, month-end, tax-date, or settlement-date noise.
+- Check whether TGA rebuild is temporary and likely to reverse into a drawdown.
+- Check whether ON RRP exhaustion is being offset by still-ample reserves.
+- Check whether call-option strength reflects healthy momentum rather than forced distribution; confirm with breadth, volume, skew, and dealer-gamma context.
+- Check whether the narrative's hard operating data, customer guidance, financing window, and earnings revisions still support the market's valuation.
+
 ## Indicator Rules of Thumb
 
 Use rules of thumb as warnings, not hard laws:
@@ -280,7 +367,7 @@ Use rules of thumb as warnings, not hard laws:
 - Term premium: rising term premium with stable front-end expectations is a fiscal/supply shock; rising front-end expectations is a policy shock.
 - ECI/wages: wage acceleration with sticky services inflation is more Fed-relevant than one noisy payroll number.
 - Payrolls: use breadth, hours, unemployment, claims, and revisions; do not rely only on headline nonfarm payrolls.
-- AI/capex: strong AI/capex can keep equity leadership alive even under high rates, but it does not neutralize funding stress.
+- Narrative/capex: strong hard-demand data can keep equity leadership alive even under high rates, but it does not neutralize funding stress.
 - Market transmission: MOVE leads rate-vol stress; VIX confirms equity stress; credit spreads confirm broad financial tightening.
 
 ## Output Format
