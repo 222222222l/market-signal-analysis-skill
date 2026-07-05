@@ -9,6 +9,17 @@ description: Market-signal analysis for stocks, ETFs, sectors, indices, and liqu
 
 Analyze technical signals only from sufficient OHLCV data or structured upstream agent/API data. If data is missing, stale, too short, split-adjustment status is unknown, or the timeframe cannot be inferred, state the limitation before producing probabilities. Never present technical probabilities as guaranteed returns or personalized financial advice.
 
+## Words-versus-Actions Check
+
+When an analysis involves an intentional actor such as a government, central bank, regulator, investment bank, fund manager, listed company, management team, insider, or industry body, do not infer its true stance from statements alone. Build a dated comparison of:
+
+- **Words**: speeches, research views, ratings, forecasts, guidance, promises, policy narratives, and investor communications.
+- **Actions**: liquidity operations, budgets, balance-sheet changes, lending standards, underwriting, proprietary or disclosed positioning, issuance, buybacks, insider trades, capital expenditure, procurement, enforcement, and actual fund flows.
+- **Control and constraints**: whether the action was discretionary or driven by client mandates, regulation, risk limits, liquidity needs, superior authorities, hedging, or inherited commitments.
+- **Consistency**: whether words and actions agree, lag for a plausible operational reason, or materially diverge.
+
+When words and actions materially diverge, treat repeated, costly, scalable, and hard-to-reverse actions within the actor's control as its revealed preference and primary evidence. Downweight unsupported statements accordingly. Do not collapse different desks, subsidiaries, officials, or principal-agent relationships into one actor. State the inferred true stance, evidence quality, and confidence level.
+
 ## Workflow
 
 1. Identify the market, symbol, asset type, data frequency, data range, and user horizon.
@@ -19,11 +30,12 @@ Analyze technical signals only from sufficient OHLCV data or structured upstream
    - long-term: 3 to 24 months.
 4. Normalize OHLCV data by split/dividend adjustment status when available. Reject or qualify data with impossible OHLC values, missing volume on equity assets, duplicate timestamps, or fewer than the minimum bars in references/statistical-weighting.md.
 5. Compute indicators and candidate signals. Use scripts/analyze_ohlcv.py for CSV data, or implement the same schema when data arrives from an upstream agent/API.
-6. Check whether the analysis window overlaps special dates that can distort price, volatility, dealer hedging, settlement liquidity, or macro expectations. Read references/special-date-event-risk.md when futures/options expiry, delivery, FOMC/Fed data, CPI/PCE/NFP/ECI/JOLTS, QRA, Treasury auctions, index rebalancing, month-end/quarter-end, or holiday liquidity is relevant.
-7. When policy makers, regulators, central banks, treasury issuance, state-backed capital, institutional positioning, dealer hedging, insiders, or other strategic actors materially affect the conclusion, read references/actor-optimal-path-analysis.md and infer the multi-actor game, each actor's best feasible response, the Nash-like equilibrium or unstable disequilibrium, and observable confirmation.
-8. Score signal families with the U.S. equity default weights in references/statistical-weighting.md unless a market branch overrides them.
-9. Calibrate scores with historical hit analysis when enough in-sample data exists. Penalize weak sample sizes, high turnover, high drawdown, high correlation among duplicate indicators, and unvalidated parameter searches.
-10. Produce a probability-style technical view with matched evidence, opposing evidence, confidence, caveats, any actor optimal-path read, and any special-date warnings.
+6. When a subjective actor's statements or forecasts are material, compare them with observable actions and use revealed preference as the higher-weight evidence when a verified divergence exists.
+7. Check whether the analysis window overlaps special dates that can distort price, volatility, dealer hedging, settlement liquidity, or macro expectations. Read references/special-date-event-risk.md when futures/options expiry, delivery, FOMC/Fed data, CPI/PCE/NFP/ECI/JOLTS, QRA, Treasury auctions, index rebalancing, month-end/quarter-end, or holiday liquidity is relevant.
+8. When policy makers, regulators, central banks, treasury issuance, state-backed capital, institutional positioning, dealer hedging, insiders, or other strategic actors materially affect the conclusion, read references/actor-optimal-path-analysis.md and infer the multi-actor game, each actor's best feasible response, the Nash-like equilibrium or unstable disequilibrium, and observable confirmation.
+9. Score signal families with the U.S. equity default weights in references/statistical-weighting.md unless a market branch overrides them.
+10. Calibrate scores with historical hit analysis when enough in-sample data exists. Penalize weak sample sizes, high turnover, high drawdown, high correlation among duplicate indicators, and unvalidated parameter searches.
+11. Produce a probability-style technical view with matched evidence, opposing evidence, confidence, caveats, any material words-versus-actions divergence, any actor optimal-path read, and any special-date warnings.
 
 ## Trend Stage and Trend End Analysis
 
@@ -113,6 +125,7 @@ Always consider these families when data supports them:
 - Single-stock fundamentals and event quality: revenue, deducted profit, gross margin, operating cash flow, debt and liquidity, segment revenue/profit mix, customer concentration, governance, pledge/reduction/buyback/supply pressure, valuation versus growth, and whether announcements can enter earnings or cash flow.
 - U.S. macro liquidity and Fed policy: inflation second derivative, ECI/wage momentum, payroll breadth, unemployment trend, QRA and Treasury supply, ACM/term-premium impulse, SOFR-IORB and repo pressure, ON RRP/TGA/reserve balance changes, discount-window primary/secondary/seasonal credit, SRF usage, first-derivative and second-derivative stress acceleration, narrative/capex support, high-valuation narrative-bubble stage-top and liquidity-top warnings, MOVE/VIX and risk-parity/CTA transmission.
 - Special date and event-calendar risk: futures last-trade/delivery/roll dates, index and ETF options expiration, U.S. monthly OpEx, quarterly triple/quad witching, FOMC decisions/minutes/dots, CPI/PCE/NFP/ECI/JOLTS/ISM/retail sales, QRA and Treasury auctions/settlements, month-end/quarter-end, tax dates, index rebalances, holidays, and whether the event creates false-breakout, gamma, liquidity, or volatility-crush risk.
+- Actor revealed preference: stated position versus actual allocation, balance-sheet, liquidity, credit, trading, issuance, buyback, insider, capex, procurement, and enforcement behavior; identify material divergence and privilege controlled, costly, repeated action over unsupported language.
 - MACD: line/signal cross, histogram acceleration/deceleration, zero-line regime, bullish/bearish divergence.
 - RSI: overbought/oversold, centerline confirmation, bullish/bearish divergence, failure swing when detectable.
 - KDJ/stochastic: K/D/J cross, high/low zone reversal, overbought/oversold persistence.
