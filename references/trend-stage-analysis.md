@@ -122,6 +122,36 @@ Confirmation rules:
 - In low-liquidity stocks, do not treat one-day volume spikes as reliable confirmation.
 - For losing positions, a bearish Granville state should prevent averaging down unless fundamental evidence improves and price reclaims the relevant MA.
 
+## Bottom Reversal Confirmation
+
+Use these rules for individual stocks, index ETFs, and indices that are already in a visible downtrend or post-crash decline. Do not apply them to ordinary pullbacks inside a healthy uptrend, and do not treat one candlestick as a durable long-term reversal without follow-through.
+
+### Bullish Engulfing Bottom Signal
+
+On the daily chart, classify a bottom bullish-engulfing reversal only when the setup is in a downtrend and these three checks are evaluated together:
+
+1. Candlestick structure: the latest candle is bullish, the prior candle is bearish or weak, and the latest real body effectively exceeds the prior day's real-body high, preferably closing above the higher of the prior open/close rather than only piercing an intraday shadow.
+2. Volume confirmation: latest volume or turnover expands materially versus the prior day. Treat 1.3x as a minimum effective expansion, 1.5x or more as stronger confirmation, and downgrade abnormal one-off volume that looks like distribution or a failed limit-up.
+3. Support context: price appears near an important moving-average support, prior base, recent swing low, gap support, or high-turnover/volume-by-price shelf. If chip-distribution data is unavailable, approximate with MA20/50/120/200, recent 20/55-day lows, prior consolidation ranges, and high-volume bars.
+
+Interpretation:
+
+- All three checks present: high-confidence early reversal candidate; if the next 1-3 sessions hold the engulfing midpoint/low or reclaim the nearest MA, treat the bottom reversal as likely established for the user's short/mid horizon.
+- Two checks present: lower-confidence reversal watch. Raise confidence only when volume expansion is strong, the bullish body is large and closes near the high, and follow-through holds support; otherwise classify it as an oversold bounce.
+- One check present: do not call a reversal signal. Use it only as background evidence.
+
+Invalidate the signal when price quickly closes back below the engulfing candle midpoint or low, loses the support zone on expanding volume, or fails to follow through while the relevant MA remains falling.
+
+### Key-MA Reclaim And Retest Signal
+
+Also treat reversal as confirmed when price stands above a key MA for the horizon, pulls back without an effective break, and then resumes with sustained healthy volume expansion.
+
+- Tactical reversal: reclaim MA20/MA30, retest without closing materially below it, and show 3-5 sessions of constructive volume.
+- Swing reversal: reclaim MA50/MA60, hold the retest, and show improving relative strength and MACD repair toward/above zero.
+- Long reversal: reclaim MA120/MA200 or the Vegas EMA144/169 area, hold on weekly structure, and show fundamental/sector confirmation when available.
+
+Healthy volume means rising volume on advances, contracting volume on pullbacks, and no repeated high-volume rejection at the same resistance. For broad indices, rely more on breadth, constituent participation, and ETF/futures flow because index volume alone can be distorted.
+
 ## Fast-Trend Risk Stack
 
 When price is far above Vegas, stage risk controls from fast to slow:

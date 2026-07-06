@@ -118,6 +118,8 @@ Use references/trend-stage-analysis.md for detailed trend-stage rules. For singl
 - Medium trend: 2 to 12 weeks. Use MA20/50, Donchian 55-day high/low, 2ATR/3ATR Chandelier, MACD zero-line regime, relative strength versus sector.
 - Long trend: 3 to 24 months. Use MA120/200, daily Vegas EMA144/169, weekly structure, 120/250-day range, valuation and earnings trend.
 - Granville rules: classify whether price is breaking above, pulling back to, reclaiming, failing at, or overextending away from the relevant MA20/50/120/200. Use this to distinguish "trend repair", "healthy pullback", "failed rebound", "oversold bounce", and "distribution after overextension".
+- Bottom reversal rules: in a downtrend, require daily bullish engulfing with the real body effectively exceeding the prior day's real-body high, material volume expansion versus the prior day, and proximity to a key MA/support or prior high-turnover support shelf before calling a high-confidence reversal. With only two of the three checks, downgrade to a reversal watch whose confidence depends on volume strength, body size, close location, and follow-through. With only one check, do not call a reversal.
+- Key-MA reclaim rules: treat reversal as more durable when price reclaims a horizon-relevant MA, retests it without an effective break, and then rises with sustained healthy volume. Use MA20/30 for tactical, MA50/60 for swing, and MA120/200 or Vegas EMA144/169 for long trend repair.
 
 For short-term price expectations, provide zones:
 
@@ -161,6 +163,7 @@ For individual stocks, include:
    - Trend stage.
    - Short-term, medium-term, and long-term structure.
    - Granville moving-average state for the most relevant horizon.
+   - Bottom bullish-engulfing or key-MA reclaim/retest signal state, if present.
    - Key support/resistance/invalidation levels.
 6. Price zones:
    - Short-term rebound zone.

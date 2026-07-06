@@ -112,7 +112,7 @@ When the user asks about publishable research positioning, related work, literat
 
 Always consider these families when data supports them:
 
-- Trend and breakout: moving average slope/cross, Granville moving-average buy/sell rules, price above/below MA20/MA50/MA200, 20-day/55-day/channel breakout, support/resistance break.
+- Trend and breakout: moving average slope/cross, Granville moving-average buy/sell rules, price above/below MA20/MA50/MA200, 20-day/55-day/channel breakout, support/resistance break, bottom bullish-engulfing reversal confirmation, and key-MA reclaim/retest confirmation.
 - Trend stage and trend-end structure: MA20/50/120/200 stack and slope, daily Vegas EMA144/169, long-cycle EMA576/676 when enough data exists, 2ATR/3ATR Chandelier levels, Donchian 20/55-day highs/lows, recover/fail behavior, and weekly confirmation.
 - Momentum and relative strength: 3/6/12-month momentum for mid/long horizons, rate of change, trend continuation.
 - Volume confirmation: volume expansion on breakout, volume drying on pullback, price-volume divergence, relative volume.
@@ -139,7 +139,7 @@ Read these files as needed:
 
 - references/research-basis.md: empirical research used to prioritize U.S. equity default weights.
 - references/statistical-weighting.md: scoring, horizon windows, sample-size rules, and default weights.
-- references/trend-stage-analysis.md: trend-stage taxonomy, Vegas channel rules, Granville moving-average rules, fast-trend risk stack, asset-specific weighting, trend-end levels, and trend question output format.
+- references/trend-stage-analysis.md: trend-stage taxonomy, Vegas channel rules, Granville moving-average rules, bottom bullish-engulfing and key-MA reclaim reversal rules, fast-trend risk stack, asset-specific weighting, trend-end levels, and trend question output format.
 - references/sector-bubble-analysis.md: sector/theme breadth, rotation, leadership, bubble momentum score, bubble-risk score, bold/cautious decision matrix, and A-share policy/liquidity caveats.
 - references/a-share-macro-trading-model.md: A-share broad/sector ETF macro-trading regime classifier for index stabilization, ETF-share contraction, retail-loss breadth, turnover concentration, main-line crowding, operator-capital inference, ETF holdability scores, and hard exit/re-entry rules.
 - references/official-data-verification.md: official government/regulator data verification framework for component decomposition, estimated bias/water, reconstructed ranges, cross-validation, contradiction handling, and confidence adjustment.

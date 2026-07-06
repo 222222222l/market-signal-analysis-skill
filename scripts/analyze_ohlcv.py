@@ -458,6 +458,136 @@ def analyze(
     current_macd_signal = latest(macd_signal)
     current_hist = latest(macd_hist)
 
+    current_bar = bars[-1]
+    prev_bar = bars[-2] if len(bars) > 1 else bars[-1]
+    support_tolerance = 0.03
+    if current_atr is not None and close:
+        support_tolerance = max(0.025, min(0.08, 1.5 * current_atr / close))
+
+    if len(bars) > 1:
+        prev_ma20 = ma20[-2] if len(ma20) > 1 else None
+        prev_ma50 = ma50[-2] if len(ma50) > 1 else None
+        downtrend_reasons = []
+        if prev_ma20 is not None and prev_close < prev_ma20:
+            downtrend_reasons.append("previous close below MA20")
+        if prev_ma20 is not None and prev_ma50 is not None and prev_ma20 < prev_ma50:
+            downtrend_reasons.append("MA20 below MA50")
+        if len(closes) > 22 and prev_close < closes[-22] * 0.95:
+            downtrend_reasons.append("20-bar decline exceeds 5%")
+        if len(closes) > 64 and prev_close < closes[-64] * 0.90:
+            downtrend_reasons.append("63-bar decline exceeds 10%")
+        downtrend_context = bool(downtrend_reasons)
+
+        prev_body_high = max(prev_bar.open, prev_bar.close)
+        prev_body_low = min(prev_bar.open, prev_bar.close)
+        current_body_low = min(current_bar.open, current_bar.close)
+        body_buffer = max(0.003 * prev_body_high, 0.05 * (current_atr or 0.0))
+        prior_weak = prev_bar.close < prev_bar.open or (len(closes) > 2 and prev_bar.close < closes[-3])
+        bullish_engulfing = (
+            current_bar.close > current_bar.open
+            and prior_weak
+            and current_bar.close > prev_body_high + body_buffer
+            and current_body_low <= prev_body_low + body_buffer
+        )
+
+        vol_vs_prev = current_bar.volume / prev_bar.volume if prev_bar.volume > 0 else None
+        vol_vs_20 = current_bar.volume / current_vol20 if current_vol20 else None
+        effective_volume_expansion = (
+            vol_vs_prev is not None
+            and vol_vs_prev >= 1.3
+            and (vol_vs_20 is None or vol_vs_20 >= 1.0)
+        )
+
+        support_refs: List[Tuple[str, float]] = []
+        for name, value in [("MA20", current_ma20), ("MA50", current_ma50), ("MA200", current_ma200)]:
+            if value is not None:
+                support_refs.append((name, value))
+        if len(bars) > 21:
+            support_refs.append(("20-bar low", min(bar.low for bar in bars[-21:-1])))
+        if len(bars) > 56:
+            support_refs.append(("55-bar low", min(bar.low for bar in bars[-56:-1])))
+        if len(bars) > 30 and current_vol20:
+            high_volume_closes = [bar.close for bar in bars[-61:-1] if bar.volume >= current_vol20 * 1.3]
+            if high_volume_closes:
+                support_refs.append(("high-volume shelf", sum(high_volume_closes) / len(high_volume_closes)))
+
+        nearby_supports = []
+        for name, level in support_refs:
+            if level <= 0:
+                continue
+            if (
+                current_bar.low <= level <= current_bar.close
+                or abs(current_bar.low - level) / level <= support_tolerance
+                or abs(current_bar.close - level) / level <= support_tolerance
+            ):
+                nearby_supports.append(name)
+        near_support = bool(nearby_supports)
+
+        bottom_condition_count = sum([bullish_engulfing, effective_volume_expansion, near_support])
+        if downtrend_context and bullish_engulfing and bottom_condition_count >= 2:
+            candle_range = max(current_bar.high - current_bar.low, 0.0)
+            close_location = 0.5 if candle_range == 0 else (current_bar.close - current_bar.low) / candle_range
+            body_gain = current_bar.close / prev_body_high - 1 if prev_body_high else 0.0
+            volume_bonus = min(0.15, max(0.0, (vol_vs_prev or 1.0) - 1.3) / 2)
+            body_bonus = min(0.10, max(0.0, body_gain) / 0.08)
+            close_bonus = 0.05 if close_location >= 0.7 else 0.0
+            strength = 0.50 + 0.10 * (bottom_condition_count - 2) + volume_bonus + body_bonus + close_bonus
+            signal_name = (
+                "bottom_bullish_engulfing_reversal"
+                if bottom_condition_count == 3
+                else "bottom_bullish_engulfing_watch"
+            )
+            support_text = ",".join(nearby_supports) if nearby_supports else "not confirmed"
+            volume_text = f"{vol_vs_prev:.2f}x previous day" if vol_vs_prev is not None else "unavailable vs previous day"
+            add_signal(
+                signals,
+                "trend_breakout_ma",
+                signal_name,
+                "bullish",
+                strength,
+                (
+                    f"Downtrend context ({'; '.join(downtrend_reasons)}); {bottom_condition_count}/3 "
+                    f"bottom checks matched: bullish engulfing body, volume {volume_text}, "
+                    f"support near {support_text}."
+                ),
+            )
+
+    if len(bars) >= 25:
+        for ma_name, ma_values, base_strength in [("MA20", ma20, 0.52), ("MA50", ma50, 0.62)]:
+            current_ma = ma_values[-1]
+            if current_ma is None or close <= current_ma:
+                continue
+            lookback = min(6, len(bars))
+            start_index = len(bars) - lookback
+            tested_without_break = False
+            material_break = False
+            for index in range(start_index, len(bars) - 1):
+                ma_value = ma_values[index]
+                if ma_value is None:
+                    continue
+                test_band = max(0.012, support_tolerance / 2)
+                if bars[index].low <= ma_value * (1 + support_tolerance) and bars[index].close >= ma_value * (1 - test_band):
+                    tested_without_break = True
+                if bars[index].close < ma_value * (1 - test_band):
+                    material_break = True
+            if not tested_without_break or material_break:
+                continue
+            recent_volume = sum(volumes[-5:]) / 5 if len(volumes) >= 5 else volumes[-1]
+            prior_volume = sum(volumes[-25:-5]) / 20 if len(volumes) >= 25 else (current_vol20 or recent_volume)
+            healthy_volume = prior_volume > 0 and recent_volume >= prior_volume * 1.05 and current_bar.volume >= prev_bar.volume * 0.8
+            if healthy_volume:
+                add_signal(
+                    signals,
+                    "trend_breakout_ma",
+                    "key_ma_reclaim_retest_reversal",
+                    "bullish",
+                    base_strength,
+                    (
+                        f"Price reclaimed {ma_name}, retested without an effective close below it, "
+                        f"and recent volume is {recent_volume / prior_volume:.2f}x the prior baseline."
+                    ),
+                )
+
     if current_ma20 and current_ma50:
         if close > current_ma20 > current_ma50:
             add_signal(signals, "trend_breakout_ma", "bullish_ma_regime", "bullish", 0.65, "Close is above MA20 and MA20 is above MA50.")
