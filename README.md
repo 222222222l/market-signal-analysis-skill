@@ -11,6 +11,7 @@ The skill combines classic OHLCV technical analysis with statistical signal weig
 - Probability-style buy/sell/hold views with matched bullish and bearish evidence.
 - Sector and theme analysis: breadth, rotation, leading-stock strength, benchmark-relative strength, volume confirmation, and policy/liquidity caveats.
 - Bubble-market analysis: trend/momentum score, bubble-risk score, bold/cautious decision matrix, double-top versus second-breakout interpretation, and exhaustion signals.
+- Fourier/FFT frequency-domain analysis: rolling dominant-cycle stability, Fourier trend lines, low/mid/high-frequency energy, noise-risk control, frequency-domain correlation, and integration with multi-cycle Bayesian scoring.
 - Policy-maker and market-decision-maker game analysis: infer likely policy, institutional, dealer, insider, and leveraged-capital behavior from objectives, constraints, tools, incentives, multi-actor best responses, Nash-like equilibrium states, and observable confirmation.
 - U.S. macro liquidity and Federal Reserve policy-regime analysis: inflation/labor second derivative, Treasury issuance, term premium, SOFR-IORB pressure, ON RRP/TGA/reserves, AI/capex support, and market transmission.
 - Official government/regulator data verification: headline decomposition, component weights, estimated bias/water ranges, reconstructed ranges, and cross-validation against independent market or real-economy evidence.
@@ -47,6 +48,10 @@ Analyze whether the AI hardware sector is still in a strong trend or has entered
 ```
 
 ```text
+Use Fourier/FFT frequency-domain analysis to test whether this sector ETF has a stable rotation rhythm or only noisy one-off swings.
+```
+
+```text
 Quantify whether this sector is broadening or narrowing based on leaders, breadth, volume, and relative strength.
 ```
 
@@ -75,8 +80,10 @@ Verify whether this official CPI/GDP/employment/credit data is reliable enough f
 |   `-- openai.yaml
 |-- references/
 |   |-- actor-optimal-path-analysis.md
+|   |-- cycle-overlay-analysis.md
 |   |-- official-data-verification.md
 |   |-- deep-learning-extension.md
+|   |-- fourier-cycle-analysis.md
 |   |-- market-profiles.md
 |   |-- output-format.md
 |   |-- research-and-optimization-roadmap.md
@@ -100,6 +107,15 @@ Verify whether this official CPI/GDP/employment/credit data is reliable enough f
 - Double-top and second-breakout interpretation.
 - Sector breadth checklist.
 - A-share policy and liquidity caveats.
+
+`references/fourier-cycle-analysis.md` contains the Fourier/FFT frequency-domain framework:
+
+- Rolling FFT on returns, detrended log price, volatility, volume/turnover, relative strength, and breadth.
+- Dominant-cycle stability checks across rolling windows.
+- Fourier trend-line construction and interpretation.
+- Low/mid/high-frequency energy split for trend, swing rhythm, and noise risk.
+- Frequency-domain correlation for diversification and crisis-resonance checks.
+- Bayesian integration rules that adjust cycle reliability without double-counting trend evidence.
 
 `references/us-macro-liquidity-fed-policy.md` contains the U.S. macro liquidity and Fed policy-regime framework:
 

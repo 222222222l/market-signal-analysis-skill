@@ -1,6 +1,6 @@
 # Cycle Overlay Analysis
 
-Use this reference when a request asks about macro cycles, Kondratieff cycles, dollar-liquidity tides, credit/inventory cycles, industry prosperity cycles, sector rotation cycles, multi-cycle resonance, cycle weighting, macro-financial regime, buffer cushions, black-swan risk, or Bayesian trend probabilities.
+Use this reference when a request asks about macro cycles, Kondratieff cycles, dollar-liquidity tides, credit/inventory cycles, industry prosperity cycles, sector rotation cycles, multi-cycle resonance, cycle weighting, macro-financial regime, buffer cushions, black-swan risk, Fourier/FFT cycle confirmation, or Bayesian trend probabilities.
 
 Cycle analysis should improve evidence discipline. It should not turn vague long-cycle stories into deterministic forecasts. Treat long cycles as priors; require current data to confirm them.
 
@@ -17,6 +17,8 @@ Analyze from slow to fast, then reconcile from fast back to slow:
 | Industry supply-demand cycle | 3 months-5 years | capacity, utilization, inventory, order backlog, product prices, spreads, capex, import/export volume | Core profit-cycle signal for sectors and stocks. |
 | Sector market cycle | 1 week-18 months | relative strength, breadth, turnover, fund flow, earnings revisions, valuation percentile, leadership | Confirms whether investors are pricing the cycle. |
 | Single-security cycle | days-24 months | company fundamentals, events, technical stage, float supply, insider actions | Converts cycle view into actionable risk levels. |
+
+Fourier/FFT frequency-domain evidence can be used inside the sector market cycle, global dollar tide, liquidity, commodity, or single-security layers when sufficient time-series data exists. Treat it as a cycle-stability and noise-quality overlay, not as an independent macro cause.
 
 ## Macro-Financial Five-Direction Checklist
 
@@ -47,6 +49,7 @@ Use current, measurable data where possible:
 - Liquidity: rates, credit spreads, money/credit growth, dollar index, funding stress, equity turnover.
 - Industry: capacity utilization, inventory days, backlog, order intake, utilization, revenue and margin revisions.
 - Market: relative strength, breadth, volume, valuation, fund flows, earnings revisions.
+- Frequency-domain rhythm: rolling FFT on log returns, detrended log price, realized volatility, turnover, relative strength, or breadth to test whether dominant cycle bands are stable and whether high-frequency noise is rising.
 
 ## Buffer-Cushion Scoring
 
@@ -130,6 +133,20 @@ Interpretation:
 
 Confidence is lower when the score is driven by one layer, when evidence is lagging, when policy can abruptly reverse incentives, or when market price strongly disagrees with fundamentals.
 
+## Fourier Frequency-Domain Overlay
+
+Use references/fourier-cycle-analysis.md when Fourier/FFT evidence is material. Integrate it conservatively:
+
+| Fourier Evidence | Cycle Impact |
+| --- | --- |
+| Stable low-frequency trend agrees with the scored macro/industry/technical layer | Increase that layer's reliability by `+0.05` to `+0.15`, capped at `1.0`. |
+| Stable medium-frequency rhythm agrees with major trend and breadth | Improve timing confidence; do not upgrade fundamental prosperity by itself. |
+| High-frequency energy share rises sharply | Reduce position confidence, increase event/noise caution, or add a tail-risk warning. |
+| Dominant period appears in only one window or after parameter fishing | Do not adjust the cycle score; mention as low-reliability observation only. |
+| Frequency-domain correlation shows low-frequency co-movement across supposed hedges | Reduce diversification confidence and increase black-swan vulnerability. |
+
+Do not double-count the same price trend. If trend-stage analysis already scored a strong moving-average or relative-strength trend, Fourier low-frequency confirmation should adjust reliability rather than add a separate large bullish direction score.
+
 ## Bayesian Trend Probability
 
 Use Bayesian updating to turn a prior trend probability into a posterior probability.
@@ -144,6 +161,7 @@ Use Bayesian updating to turn a prior trend probability into a posterior probabi
    - `posterior_logit = logit(prior) + beta * cycle_score`
    - Default `beta = 0.75` for medium-term sector calls.
    - Use `beta = 0.45` for short-term trades and `beta = 0.90` for long-term industry calls with strong data.
+   - If FFT evidence is strong and non-overlapping, apply it through reliability changes first. Use only a small extra logit adjustment (`+/-0.05` to `+/-0.25`) for timing/noise when it is not already captured by trend, breadth, or special-date risk.
 4. Add buffer-cushion evidence:
    - `buffer_score = sum(buffer_weight_i * br_i * b_i) / sum(buffer_weight_i * br_i)`
    - `posterior_logit += gamma * buffer_score`
@@ -174,6 +192,7 @@ Require at least three of five evidence families before calling a sector a risin
 4. Market confirmation: relative strength, breadth, volume, leadership, or valuation rerating confirms.
 5. Micro confirmation: leading companies disclose orders, capacity utilization, delivery, or customer adoption.
 6. Buffer confirmation: balance-sheet, liquidity, fiscal, external, or market-structure cushions are not being rapidly consumed.
+7. Frequency-domain confirmation: rolling FFT shows stable cycle bands or a stable low-frequency trend that agrees with current market/fundamental evidence, without high-frequency noise overwhelming the signal.
 
 For declining cycles, require at least three of:
 
@@ -192,7 +211,7 @@ When using cycle overlay, include:
 2. Cycle-state table by layer with direction score, reliability, and evidence.
 3. Weighted cycle score and Bayesian posterior probability.
 4. Five-direction macro check: fundamentals/cycles, sentiment/bubble, official-data water, buffers, black-swan vulnerability.
-5. Cross-validation: macro/policy, industry data, financial statements, market confirmation, micro evidence, buffer confirmation.
+5. Cross-validation: macro/policy, industry data, financial statements, market confirmation, micro evidence, buffer confirmation, and optional frequency-domain confirmation.
 6. Upside industries: why multiple cycles align, what could invalidate the view.
 7. Downside/declining industries: what pressures overlap, what could reverse the view.
 8. Ordinary-investor caution: distinguish prosperity trend from chaseable price, and name the level or evidence that would force reassessment.
