@@ -1,188 +1,81 @@
 ---
 name: market-signal-analysis
-description: Market-signal analysis for stocks, ETFs, sectors, indices, and liquid markets. Use for OHLCV or structured market data to compute indicators, trend-stage/trend-end levels including Granville/Vegas rules, single-stock fundamentals plus technicals, noisy-news filtering, price zones, multi-cycle Bayesian overlays, Fourier/FFT frequency-domain cycle and noise analysis, official-data verification, multi-actor policy-maker and market-decision-maker game/Nash-like equilibrium analysis, A-share ETF macro-trading regimes, U.S. macro liquidity/Fed policy, high-valuation narrative-bubble stage-top and liquidity-top warning matrices, special-date event-calendar warnings for futures delivery, options expiration, FOMC/Fed/CPI/PCE/NFP/QRA/Treasury-auction dates, and probability-weighted buy/sell/hold views across breadth, sentiment, liquidity, and macro context.
+description: Analyze stocks, ETFs, sectors, indices, and liquid markets with OHLCV, fundamentals, breadth, liquidity, valuation, policy, actor incentives, cycles/FFT, and event risk. Use for trend-stage or trend-end analysis, Granville/Vegas signals, probability-weighted buy/sell/hold views, sector rotation and high-valuation bubbles, A/H-share ETF regimes, single-stock news and valuation, official-data verification, multi-actor game equilibria, U.S. liquidity and Fed policy, macro stress, special-date risk, or quantitative market-model design.
 ---
 
 # Market Signal Analysis
 
-## Core Rule
+## Mission
 
-Analyze technical signals only from sufficient OHLCV data or structured upstream agent/API data. If data is missing, stale, too short, split-adjustment status is unknown, or the timeframe cannot be inferred, state the limitation before producing probabilities. Never present technical probabilities as guaranteed returns or personalized financial advice.
+Produce horizon-specific, causal, probability-aware market decision support. Explain what is observed, what is inferred, what could change the view, and which evidence matters most. Do not turn indicators, narratives, or policy motives into certainty.
 
-## Words-versus-Actions Check
+## First Principles
 
-When an analysis involves an intentional actor such as a government, central bank, regulator, investment bank, fund manager, listed company, management team, insider, or industry body, do not infer its true stance from statements alone. Build a dated comparison of:
-
-- **Words**: speeches, research views, ratings, forecasts, guidance, promises, policy narratives, and investor communications.
-- **Actions**: liquidity operations, budgets, balance-sheet changes, lending standards, underwriting, proprietary or disclosed positioning, issuance, buybacks, insider trades, capital expenditure, procurement, enforcement, and actual fund flows.
-- **Control and constraints**: whether the action was discretionary or driven by client mandates, regulation, risk limits, liquidity needs, superior authorities, hedging, or inherited commitments.
-- **Consistency**: whether words and actions agree, lag for a plausible operational reason, or materially diverge.
-
-When words and actions materially diverge, treat repeated, costly, scalable, and hard-to-reverse actions within the actor's control as its revealed preference and primary evidence. Downweight unsupported statements accordingly. Do not collapse different desks, subsidiaries, officials, or principal-agent relationships into one actor. State the inferred true stance, evidence quality, and confidence level.
+1. **Gate on data quality.** Verify symbol, market, timestamp, frequency, range, adjustment status, missing fields, and source freshness. If essential data is missing or stale, narrow the claim or withhold numeric probabilities.
+2. **Fix the horizon before selecting signals.** Intraday, short, medium, and long horizons use different data, actors, transmission speeds, and invalidation levels. Use `us_equity` only when the market is genuinely U.S. equity or unspecified; otherwise read `references/market-profiles.md`.
+3. **Separate state, flow, and expectation.** Valuation and leverage are states; fund flows and earnings revisions are flows; policy promises and narratives are expectations. A vulnerable state is not a timing signal without a flow or catalyst.
+4. **Build the causal chain before using correlation.** Identify driver -> transmission -> market variable -> price/earnings effect -> confirmation. Treat correlation, Fourier coherence, and historical analogies as supporting evidence unless a plausible mechanism exists.
+5. **Prefer revealed action to unsupported language.** Compare dated words with costly, repeated, scalable, and hard-to-reverse actions within the actor's control. Preserve principal-agent, desk, subsidiary, mandate, and balance-sheet distinctions.
+6. **Use independent evidence and base rates.** Group correlated indicators, cap duplicate weight, condition priors on market and regime, and shrink small samples. Label probabilities as empirical, model-implied, or scenario weights.
+7. **Model paths, not isolated targets.** Give a horizon, catalyst or transmission path, range, probability, and invalidation condition. A point target without a path and time window is low-value precision.
+8. **Try to disprove the preferred view.** State the strongest opposing explanation and observable evidence that would change the conclusion. Do not average genuine contradictions into a false neutral.
+9. **Use the minimum sufficient model.** Load one primary module and normally no more than two overlays. Add another module only when it can materially change the decision, probability, or risk boundary.
+10. **Keep analysis non-guaranteed.** Distinguish market analysis from personalized financial advice and account for costs, slippage, liquidity, leverage, and gap risk when relevant.
 
 ## Workflow
 
-1. Identify the market, symbol, asset type, data frequency, data range, and user horizon.
-2. Default to `us_equity` when the market is not specified. Use references/market-profiles.md when a different market is specified.
-3. Map the user's wording to a horizon:
-   - short-term: intraday to 10 trading days.
-   - mid-term: 2 to 12 weeks.
-   - long-term: 3 to 24 months.
-4. Normalize OHLCV data by split/dividend adjustment status when available. Reject or qualify data with impossible OHLC values, missing volume on equity assets, duplicate timestamps, or fewer than the minimum bars in references/statistical-weighting.md.
-5. Compute indicators and candidate signals. Use scripts/analyze_ohlcv.py for CSV data, or implement the same schema when data arrives from an upstream agent/API.
-6. When a subjective actor's statements or forecasts are material, compare them with observable actions and use revealed preference as the higher-weight evidence when a verified divergence exists.
-7. Check whether the analysis window overlaps special dates that can distort price, volatility, dealer hedging, settlement liquidity, or macro expectations. Read references/special-date-event-risk.md when futures/options expiry, delivery, FOMC/Fed data, CPI/PCE/NFP/ECI/JOLTS, QRA, Treasury auctions, index rebalancing, month-end/quarter-end, or holiday liquidity is relevant.
-8. When policy makers, regulators, central banks, treasury issuance, state-backed capital, institutional positioning, dealer hedging, insiders, or other strategic actors materially affect the conclusion, read references/actor-optimal-path-analysis.md and infer the multi-actor game, each actor's best feasible response, the Nash-like equilibrium or unstable disequilibrium, and observable confirmation.
-9. Score signal families with the U.S. equity default weights in references/statistical-weighting.md unless a market branch overrides them.
-10. Calibrate scores with historical hit analysis when enough in-sample data exists. Penalize weak sample sizes, high turnover, high drawdown, high correlation among duplicate indicators, and unvalidated parameter searches.
-11. Produce a probability-style technical view with matched evidence, opposing evidence, confidence, caveats, any material words-versus-actions divergence, any actor optimal-path read, and any special-date warnings.
+1. Frame the target, market, asset type, decision horizon, and user's actual question.
+2. Run the data gate. Record source, as-of time, adjustment status, sample length, and material omissions.
+3. Select the minimum primary module and overlays from the routing table.
+4. Build an evidence ledger with four labels: verified observation, estimated value, inference, and scenario assumption.
+5. Classify the regime and write the shortest causal transmission chain that explains the relevant price path.
+6. Score only decision-relevant, sufficiently independent evidence. Use `references/statistical-weighting.md` for quantitative probabilities and calibration.
+7. Compare the base case with at least one credible opposing case. Run actor deviation, regime-change, and event-risk checks when applicable.
+8. Deliver the conclusion first, then evidence, scenarios, levels or time windows, and explicit update/invalidation triggers. Use `references/output-format.md` for structured or complex answers.
 
-## Trend Stage and Trend End Analysis
+## Module Router
 
-When the user asks about trend direction, stage trend, uptrend/downtrend ending, Vegas channel, Granville rules, channel position, formal trend break, "where the trend ends", "whether the main rise is over", staged stop/risk levels, trend-following holding rules, or Chinese-language phrases for main-rise, cooling-off, breakdown, or topping, read references/trend-stage-analysis.md before producing a view.
+| Primary question | Read | Add only when material |
+| --- | --- | --- |
+| General OHLCV signal or probability view | `references/signal-taxonomy.md`, `references/statistical-weighting.md` | `references/market-profiles.md` |
+| Trend stage/end, Granville, Vegas, breakout, reversal, stop level | `references/trend-stage-analysis.md` | signal taxonomy, statistical weighting |
+| Sector/theme rotation, breadth, leadership, high-valuation bubble | `references/sector-bubble-analysis.md` | trend stage; actor/game; cycles |
+| A-share broad or sector ETF, index support, crowding, ordinary-investor holdability | `references/a-share-macro-trading-model.md` | trend stage; sector bubble; actor/game |
+| Individual stock fundamentals, valuation, announcement/news quality, hold/cut decision | `references/single-stock-fundamental-technical-analysis.md` | trend stage; event risk |
+| Official macro, regulator, exchange, central-bank, or statistical data | `references/official-data-verification.md` | relevant macro or policy module |
+| Policy-maker, institution, dealer, insider, or strategic interaction | `references/actor-optimal-path-analysis.md` | official-data verification; event risk |
+| Economic, liquidity, inventory, capex, industry, or market cycles | `references/cycle-overlay-analysis.md` | Fourier; sector bubble |
+| FFT/Fourier rhythm, denoising, dominant-cycle stability, frequency correlation | `references/fourier-cycle-analysis.md` | cycle overlay; trend stage |
+| U.S. liquidity, Fed, Treasury issuance, rates, USD, gold, Nasdaq | `references/us-macro-liquidity-fed-policy.md` | macro stress derivatives; official data; event risk |
+| Early crisis, marginal deterioration, acceleration, contagion | `references/macro-stress-derivative-analysis.md` | U.S. macro or relevant regional framework |
+| Expiry, delivery, FOMC/data release, QRA/auction, rebalance, month/quarter-end | `references/special-date-event-risk.md` | relevant primary module |
+| Trainable Transformer/TFT market model | `references/deep-learning-extension.md` | `references/research-and-optimization-roadmap.md` for research design |
 
-Use trend-stage analysis as a weighted evidence dashboard, not as a one-indicator verdict. Select or reweight indicators by asset type and market structure: broad indices need MA/Vegas/breadth confirmation; high-beta A-share themes need MA20/MA50, ATR/Chandelier, failed-breakout, turnover heat, and breadth; crypto/futures need wider volatility and leverage/liquidation context; low-liquidity small caps need lower confidence.
+## Composition Rules
 
-Separate early risk-reduction signals from formal trend-end signals. In fast or parabolic trends, do not wait for the daily Vegas channel to manage risk; use MA20/MA50, 2ATR/3ATR Chandelier, Donchian 20/55-day lows, volume, and relative strength first, then use EMA144/169 and weekly structure for main-trend invalidation.
+- Treat technicals as timing and path evidence, fundamentals as cash-flow and valuation evidence, liquidity as discount-rate and marginal-demand evidence, and actor analysis as a scenario prior. Do not substitute one family for another.
+- For policy or actor questions, compare words versus actions and model direct and second-round strategic responses. Call an equilibrium stable only after a unilateral-deviation test and observable confirmation.
+- For bubble regimes, separate "expensive but strengthening" from "expensive and weakening." Valuation can define fragility; breadth, flows, revisions, credit, and failed price structure usually determine timing.
+- For cycles and Fourier analysis, use rolling, regime-aware evidence. Long cycles and spectral peaks adjust priors or confidence; they do not independently cause price moves.
+- For official data, decompose components, definitions, revisions, base effects, and independent proxies before raising confidence.
+- When evidence families conflict, preserve the conflict, explain which horizon each governs, and widen ranges or lower confidence.
 
-## Sector, Theme, and Bubble Momentum
+## Minimum Output Contract
 
-When the user asks about a sector/board/theme, market main line, bubble-like trend, sentiment support, "whether to be bold or cautious", "whether the theme can keep rising", "double top versus second breakout", or "whether a sector can double", read references/sector-bubble-analysis.md before producing a view.
+Lead with the answer. State the as-of time and horizon, data quality, regime, causal chain, strongest supporting and opposing evidence, probability type, base/upside/downside scenarios, relevant levels or time windows, and observable invalidation/update triggers. Match the user's language. Never fabricate precision when the data cannot support it.
 
-Use a two-score framework:
+## Scripts
 
-- Trend/momentum score T: measures whether price, relative strength, breadth, leadership, volume, fundamentals, and policy/liquidity still support risk-taking.
-- Bubble-risk score R: measures whether valuation, short-term overextension, turnover/fund inflow heat, breadth deterioration, failed breakouts, insider sell-downs, and consensus euphoria make the trend fragile.
-
-Do not use valuation alone as a timing signal in a bubble momentum regime. Treat "expensive but strong" differently from "expensive and weakening"; require price/volume deterioration, breadth deterioration, or failed-breakout evidence before calling a trend broken.
-
-## A-Share Macro ETF Trading Model
-
-When the user asks about A-share broad-index ETFs, sector-index ETFs, CSI 300, CSI A500, SSE 50, STAR 50, ChiNext, "index range-bound while retail accounts bleed", national-team or operator-capital behavior, ETF share contraction, turnover concentration, main-line crowding, when ordinary investors can hold ETFs with lower risk, or when to exit after abnormal capital behavior, read references/a-share-macro-trading-model.md before producing a view.
-
-Use the model as an evidence-based regime classifier, not as proof of a coordinated manipulation scheme. Combine it with trend-stage analysis for index levels and sector-bubble analysis for crowded main-line ETFs. For ordinary investors, prioritize ETF holdability, hard exit conditions, and whether price, breadth, ETF shares, and leader behavior confirm each other.
-
-## Official Data Verification
-
-When the analysis relies on government, central-bank, exchange, regulator, or official statistical data such as CPI/PCE, GDP, employment, wages, fiscal data, credit aggregates, money supply, FX reserves, trade, property, industrial output, PMI, official fund-flow data, or regulatory disclosures, read references/official-data-verification.md before assigning probabilities.
-
-Never use an official headline number alone as a high-confidence market signal. Decompose sub-components, estimate possible measurement bias or "water", cross-check with independent data, and explain contradictions. If sub-component or cross-check data is missing, reduce confidence and state the limitation.
-
-## Policy-Maker and Market-Decision-Maker Optimal Paths
-
-When the user asks why policy makers, regulators, central banks, treasury authorities, state-backed funds, institutions, dealers, insiders, or other large actors would act a certain way, or when their behavior can materially change the market path, read references/actor-optimal-path-analysis.md before producing a view.
-
-Analyze from two perspectives: first from concrete policy makers who can change rules, liquidity, financing, or supervision; then from concrete market decision makers who allocate capital, hedge, chase, de-risk, or provide liquidity. Do not analyze actors in isolation. Model their direct and indirect strategic interactions, assume each actor chooses the best feasible response to the expected behavior of others, and identify the Nash-like equilibrium or unstable disequilibrium. Use this as a scenario prior, not proof of hidden coordination. Require observable confirmation from policy actions, flows, prices, breadth, liquidity, credit, or official data.
-
-## Multi-Cycle Overlay Analysis
-
-When the user asks about economic cycles, Kondratieff cycles, dollar tides, liquidity cycles, credit cycles, inventory cycles, industry cycles, sector cycles, cyclical resonance, cycle weighting, Bayesian trend probability, buffer cushions, black-swan risk, macro-financial regime, or which industries are in rising/declining prosperity phases under multiple cycles, read references/cycle-overlay-analysis.md before producing a view.
-
-Use cycle analysis as a structured prior and confirmation layer, not as deterministic prophecy. Long cycles such as Kondratieff/technology-capex waves should receive low tactical weight unless confirmed by current orders, pricing power, capacity utilization, profit revisions, and market relative strength. For macro-financial analysis, always reconcile five directions: fundamentals/cycles, sentiment/bubble, official-data water, buffer cushions, and jump-event risk. Avoid double-counting the same evidence across macro, industry, and technical buckets.
-
-## Fourier / Frequency-Domain Cycle Analysis
-
-When the user asks about Fourier transform, FFT, frequency-domain analysis, spectral analysis, hidden market cycles, dominant cycle length, cycle stability, Fourier trend lines, low/mid/high-frequency energy, market noise, denoising, phase/rhythm, frequency-domain correlation, or using Fourier features in quantitative models, read references/fourier-cycle-analysis.md before producing a view.
-
-Use Fourier analysis as a rhythm, denoising, and risk-control layer. Do not use one FFT peak as a deterministic forecast. Prefer log returns, detrended log prices, volatility, volume/turnover changes, relative strength, or breadth series; use rolling windows; require repeated dominant-cycle bands across windows; and integrate the result with trend-stage, sector-bubble, multi-cycle Bayesian, special-date, and actor/game evidence before changing probabilities.
-
-## Single-Stock Fundamental and Technical Analysis
-
-When the user asks about an individual stock's fundamentals, whether to cut losses or hold, whether company news is real catalyst or noise, whether a "good story" changes the investment thesis, where short-term or long-term price may go, or how to combine financial statements, announcements, valuation, and technical levels, read references/single-stock-fundamental-technical-analysis.md before producing a view.
-
-Treat company announcements, market rumors, and concept labels as evidence with different reliability. Do not upgrade a stock because of broad narrative words such as cooperation, layout, empowerment, robot, AI, semiconductor, low-altitude, overseas expansion, or strategic transformation unless the signal has a verifiable amount, timeline, delivery path, financial-statement impact, and price/volume confirmation. Separate "company is not bad" from "stock has positive expected return from this price."
-
-## U.S. Macro Liquidity and Fed Policy
-
-When the user asks about U.S. liquidity, Fed hawkish/dovish direction, rate-cut/rate-hike probability, Treasury issuance, term premium, reserve scarcity, SOFR-IORB pressure, ON RRP, TGA, QT/QE, discount-window borrowing, primary credit, recession versus inflation, U.S. equity stage tops, liquidity tops, AI/Nasdaq or other high-valuation narrative-bubble top risk, or macro transmission into equities/bonds/gold/USD, read references/us-macro-liquidity-fed-policy.md before producing a view.
-
-When the user asks about early crisis detection, first-derivative or second-derivative macro signals, marginal deterioration, acceleration, contagion, transmission chains, or whether a liquidity/funding stress signal is only local or becoming systemic, also read references/macro-stress-derivative-analysis.md.
-
-Classify the macro state before labeling the Fed as hawkish or dovish. Use five jointly evaluated variable groups: inflation/labor momentum, fiscal issuance and term premium, liquidity plumbing, narrative/capex and real-demand support, and market transmission. Do not treat one data release or one headline as sufficient evidence for a regime change.
-
-## Special Date and Event-Calendar Risk
-
-When the user asks about entry timing, trend reliability, short-term price levels, liquidity, volatility, U.S. macro events, futures delivery, options expiry, ETF/index rebalancing, or market behavior around a known date, read references/special-date-event-risk.md before producing a view.
-
-Treat special dates as a volatility, liquidity, and signal-quality overlay rather than automatic bullish or bearish evidence. If a nearby special date can distort technical signals, display a special-date warning with event date, distance, asset scope, likely market mechanism, confidence impact, and what post-event confirmation is required.
-
-## Deep Learning Extension
-
-When the user asks about Transformer models, deep learning, pretraining, fine-tuning, dynamic indicator weights, long-context daily sequences, target-price prediction, return-distribution prediction, or quantitative decision models, read references/deep-learning-extension.md before designing or coding the model.
-
-Use the extension as a decision-first design: predict normalized returns, risk, and position utility rather than optimizing only next-close price error. Prefer single-timeframe long-context daily modeling for the first version when the user wants self-attention over long continuous samples.
-
-When the user asks about publishable research positioning, related work, literature-backed improvements, benchmark datasets, standard training/evaluation datasets, ablation plans, or paper-quality experimental design, read references/research-and-optimization-roadmap.md.
-
-## Required Signal Families
-
-Always consider these families when data supports them:
-
-- Trend and breakout: moving average slope/cross, Granville moving-average buy/sell rules, price above/below MA20/MA50/MA200, 20-day/55-day/channel breakout, support/resistance break, bottom bullish-engulfing reversal confirmation, and key-MA reclaim/retest confirmation.
-- Trend stage and trend-end structure: MA20/50/120/200 stack and slope, daily Vegas EMA144/169, long-cycle EMA576/676 when enough data exists, 2ATR/3ATR Chandelier levels, Donchian 20/55-day highs/lows, recover/fail behavior, and weekly confirmation.
-- Momentum and relative strength: 3/6/12-month momentum for mid/long horizons, rate of change, trend continuation.
-- Volume confirmation: volume expansion on breakout, volume drying on pullback, price-volume divergence, relative volume.
-- Sector breadth and rotation: share of constituents above MA20/MA50/MA120, new highs versus new lows, advance/decline ratio, leader versus laggard contribution, intra-sector rotation continuity, and whether gains are broad or only driven by one or two leaders.
-- A-share ETF macro-trading regime: broad-index ETF share changes, index trend versus median-stock performance, top turnover concentration, theme turnover share versus market-cap share, leader high-volume distribution, policy/liquidity support confirmation, and hard downgrade/exit signals for broad and sector ETFs.
-- Bubble momentum and exhaustion: overextension above MA20/MA50, gap/limit-up clustering, failed second breakouts, double-top invalidation, long upper shadows, blow-off volume, fund inflow/financing/turnover heat, and insider sell-down or inquiry-transfer pressure.
-- Multi-cycle overlay: economic growth/inflation/credit phase, Kondratieff or technology-capex background, dollar liquidity tide, domestic policy and fiscal impulse, inventory and capex cycle, industry supply-demand and pricing cycle, sector market cycle, market sentiment and bubble heat, official-data water, buffer cushions, black-swan vulnerability, and Bayesian posterior trend probability after cross-validation.
-- Fourier/FFT frequency-domain overlay: log-return or detrended-price FFT, rolling-window dominant-cycle stability, low/mid/high-frequency energy split, Fourier trend-line slope and distance, high-frequency noise risk, frequency-domain correlation, and integration with multi-cycle Bayesian scoring without double-counting trend evidence.
-- Official-data verification: headline versus sub-components, definition/sample/revision checks, estimated bias/water range, reconstructed data range, cross-checks with market prices and independent proxies, and contradiction diagnosis before turning government data into a trading signal.
-- Actor optimal-path analysis: concrete policy-maker objectives, constraints, tools, reaction functions, state-backed capital behavior, institutional/leveraged/dealer/insider incentives, feasible best responses, direct and indirect multi-actor games, Nash-like equilibrium or unstable disequilibrium, unilateral-deviation risk, and observable confirmation or invalidation.
-- Single-stock fundamentals and event quality: revenue, deducted profit, gross margin, operating cash flow, debt and liquidity, segment revenue/profit mix, customer concentration, governance, pledge/reduction/buyback/supply pressure, valuation versus growth, and whether announcements can enter earnings or cash flow.
-- U.S. macro liquidity and Fed policy: inflation second derivative, ECI/wage momentum, payroll breadth, unemployment trend, QRA and Treasury supply, ACM/term-premium impulse, SOFR-IORB and repo pressure, ON RRP/TGA/reserve balance changes, discount-window primary/secondary/seasonal credit, SRF usage, first-derivative and second-derivative stress acceleration, narrative/capex support, high-valuation narrative-bubble stage-top and liquidity-top warnings, MOVE/VIX and risk-parity/CTA transmission.
-- Special date and event-calendar risk: futures last-trade/delivery/roll dates, index and ETF options expiration, U.S. monthly OpEx, quarterly triple/quad witching, FOMC decisions/minutes/dots, CPI/PCE/NFP/ECI/JOLTS/ISM/retail sales, QRA and Treasury auctions/settlements, month-end/quarter-end, tax dates, index rebalances, holidays, and whether the event creates false-breakout, gamma, liquidity, or volatility-crush risk.
-- Actor revealed preference: stated position versus actual allocation, balance-sheet, liquidity, credit, trading, issuance, buyback, insider, capex, procurement, and enforcement behavior; identify material divergence and privilege controlled, costly, repeated action over unsupported language.
-- MACD: line/signal cross, histogram acceleration/deceleration, zero-line regime, bullish/bearish divergence.
-- RSI: overbought/oversold, centerline confirmation, bullish/bearish divergence, failure swing when detectable.
-- KDJ/stochastic: K/D/J cross, high/low zone reversal, overbought/oversold persistence.
-- Divergence: top divergence and bottom divergence using price swing highs/lows versus MACD histogram/line, RSI, or KDJ.
-- Volatility and risk regime: ATR expansion/contraction, Bollinger Band squeeze/expansion, gap risk when available.
-- Multi-timeframe agreement: align hourly, daily, weekly, and monthly signals according to the user's horizon.
-
-## References
-
-Read these files as needed:
-
-- references/research-basis.md: empirical research used to prioritize U.S. equity default weights.
-- references/statistical-weighting.md: scoring, horizon windows, sample-size rules, and default weights.
-- references/trend-stage-analysis.md: trend-stage taxonomy, Vegas channel rules, Granville moving-average rules, bottom bullish-engulfing and key-MA reclaim reversal rules, fast-trend risk stack, asset-specific weighting, trend-end levels, and trend question output format.
-- references/sector-bubble-analysis.md: sector/theme breadth, rotation, leadership, bubble momentum score, bubble-risk score, bold/cautious decision matrix, and A-share policy/liquidity caveats.
-- references/a-share-macro-trading-model.md: A-share broad/sector ETF macro-trading regime classifier for index stabilization, ETF-share contraction, retail-loss breadth, turnover concentration, main-line crowding, operator-capital inference, ETF holdability scores, and hard exit/re-entry rules.
-- references/official-data-verification.md: official government/regulator data verification framework for component decomposition, estimated bias/water, reconstructed ranges, cross-validation, contradiction handling, and confidence adjustment.
-- references/actor-optimal-path-analysis.md: policy-maker and market-decision-maker game framework for inferring likely actions, direct/indirect actor interactions, Nash-like equilibrium or unstable disequilibrium, and market impact from objectives, constraints, tools, and observable confirmation.
-- references/cycle-overlay-analysis.md: multi-cycle hierarchy from long economic/Kondratieff/dollar-liquidity cycles to industry/sector cycles, macro-financial five-direction checklist, buffer-cushion scoring, black-swan overlay, horizon-specific weights, Bayesian posterior trend probability, cross-validation, and industry-cycle classification.
-- references/fourier-cycle-analysis.md: Fourier/FFT frequency-domain framework for rolling cycle stability, trend denoising, low/mid/high-frequency energy, noise risk, frequency-domain correlation, Fourier features, and integration with multi-cycle Bayesian analysis.
-- references/single-stock-fundamental-technical-analysis.md: single-stock workflow for filtering noisy news, identifying core operating signals, scoring fundamentals, combining valuation with technical levels, and giving short-term/long-term price zones and risk-control decision trees.
-- references/us-macro-liquidity-fed-policy.md: U.S. macro liquidity dashboard, Fed policy-regime state machine, Treasury issuance and term-premium analysis, SOFR-IORB/reserve plumbing checks, high-valuation narrative-bubble liquidity-base and stage-top warning matrix, and macro asset-playbook mapping.
-- references/macro-stress-derivative-analysis.md: level, first-derivative, and second-derivative macro stress framework for early crisis warning, acceleration scoring, and transmission-chain mapping.
-- references/special-date-event-risk.md: special-date event-calendar overlay for futures delivery, options expiration, Fed/FOMC and macro releases, Treasury issuance dates, rebalancing, month/quarter-end, holiday liquidity, event-risk scoring, and required output warnings.
-- references/signal-taxonomy.md: exact signal definitions and evidence schema.
-- references/market-profiles.md: U.S. equity default profile and branch rules for other markets.
-- references/output-format.md: required answer format.
-- references/deep-learning-extension.md: Transformer/TFT-style pretraining, fine-tuning, dynamic feature weighting, objective functions, and model output schema for quantitative decision support.
-- references/research-and-optimization-roadmap.md: paper-oriented related research, executable model optimization roadmap, standard dataset candidates, recommended benchmark plan, and ablation matrix.
-
-## Script
-
-Use `scripts/analyze_ohlcv.py` when the user provides CSV OHLCV data or when upstream agent/API data can be exported to CSV.
+Use `scripts/analyze_ohlcv.py` for CSV OHLCV analysis. Expected columns are `timestamp,open,high,low,close,volume`; case-insensitive aliases are accepted. Add `--calendar events.csv` when a known event calendar is available.
 
 ```powershell
 python scripts/analyze_ohlcv.py --input prices.csv --market us_equity --horizon short
 ```
 
-Expected columns are `timestamp,open,high,low,close,volume`. Case-insensitive aliases such as `date`, `time`, `o`, `h`, `l`, `c`, and `vol` are accepted. The script returns JSON with indicator snapshots, matched bullish/bearish signals, score components, probabilities, and warnings.
-
-Use `--calendar events.csv` when a known event calendar is available. Expected event columns are `date,event_type,importance,description,asset_scope`; aliases such as `event_date`, `type`, `impact`, `details`, and `scope` are accepted. The script also flags standard U.S. monthly options expiration and quarterly triple-witching dates for `us_equity`.
-
-```powershell
-python scripts/analyze_ohlcv.py --input prices.csv --market us_equity --horizon short --calendar events.csv --event-window-days 5
-```
-
-Use `scripts/train_market_transformer_demo.py` when the user asks for a trainable model architecture demo. It expects panel CSV data with at least `timestamp,symbol,market,open,high,low,close,volume`; all additional numeric columns are treated as candidate model features.
+Use `scripts/train_market_transformer_demo.py` only for a requested trainable-model demo. It expects panel data with `timestamp,symbol,market,open,high,low,close,volume` plus optional numeric features.
 
 ```powershell
 python scripts/train_market_transformer_demo.py --input panel_daily_features.csv --lookback 256 --horizon 1 --epochs 5
 ```
 
-The demo outputs expected return, p10/p50/p90 return quantiles, up probability, downside risk, position score, and averaged dynamic feature weights.
+Run `scripts/validate_skill_graph.py` after changing the skill architecture.

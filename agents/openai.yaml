@@ -1,4 +1,4 @@
 interface:
   display_name: "Market Signal Analysis"
-  short_description: "Analyze trends, cycles, FFT rhythm, liquidity, and bubble risk."
-  default_prompt: "Use $market-signal-analysis to analyze this investment target with fundamentals, trend-stage signals, Fourier/FFT frequency-domain cycle and noise checks, multi-cycle Bayesian overlays, official-data quality, actor/game incentives, liquidity, bubble-risk, and event-date warnings."
+  short_description: "Causal, probability-aware analysis of trends, liquidity, and risk."
+  default_prompt: "Use $market-signal-analysis to analyze this market question with the minimum sufficient modules, current data, a causal transmission chain, independent evidence, probability labels, scenarios, and explicit invalidation conditions."
