@@ -56,7 +56,7 @@ Produce horizon-specific, causal, probability-aware market decision support. Exp
 - Treat technicals as timing and path evidence, fundamentals as cash-flow and valuation evidence, liquidity as discount-rate and marginal-demand evidence, and actor analysis as a scenario prior. Do not substitute one family for another.
 - For policy or actor questions, compare words versus actions and model direct and second-round strategic responses. Call an equilibrium stable only after a unilateral-deviation test and observable confirmation.
 - For bubble regimes, separate "expensive but strengthening" from "expensive and weakening." Valuation can define fragility; breadth, flows, revisions, credit, and failed price structure usually determine timing.
-- For cycles and Fourier analysis, use rolling, regime-aware evidence. Long cycles and spectral peaks adjust priors or confidence; they do not independently cause price moves.
+- For cycles and Fourier analysis, use rolling, regime-aware evidence. When HP or BK filtering is used, disclose parameters and causal versus two-sided construction, treat symmetric endpoints as descriptive only, and do not count the filter and the FFT of its output as independent evidence. Long cycles and spectral peaks adjust priors or confidence; they do not independently cause price moves.
 - For official data, decompose components, definitions, revisions, base effects, and independent proxies before raising confidence.
 - When evidence families conflict, preserve the conflict, explain which horizon each governs, and widen ranges or lower confidence.
 

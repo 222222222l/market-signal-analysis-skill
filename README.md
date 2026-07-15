@@ -36,7 +36,7 @@ The default rule is one primary module plus no more than two overlays. Extra mod
 - Official-data decomposition, measurement-bias ranges, revisions, and independent cross-checks.
 - Policy-maker and market-decision-maker incentives, direct/indirect games, and Nash-like equilibrium analysis.
 - Economic, credit, liquidity, inventory, capex, industry, and market-cycle overlays.
-- Rolling Fourier/FFT rhythm, denoising, cycle stability, noise energy, and frequency-domain correlation.
+- Rolling Fourier/FFT rhythm, HP/BK pre-filtering, endpoint-safe detrending, cycle stability, noise energy, and frequency-domain correlation.
 - U.S. liquidity, Fed policy, Treasury issuance, term premium, reserve plumbing, macro stress, and cross-asset transmission.
 - Futures/options expiry, FOMC and macro releases, Treasury auctions, index rebalances, and thin-liquidity dates.
 - Optional Transformer/TFT market-model and publishable research design.
