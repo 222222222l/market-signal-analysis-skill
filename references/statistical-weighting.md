@@ -67,6 +67,26 @@ Start from a market-, asset-, horizon-, and regime-conditional prior. Update it 
 - Shrink unstable estimates toward the relevant base rate. Increase shrinkage after parameter search, regime change, taxonomy change, or source-methodology change.
 - When groups conflict, widen the scenario distribution and lower confidence. Do not hide conflict in a single average score.
 
+## Bayesian Multi-State Update
+
+For mutually exclusive states such as `up`, `range`, and `down`, start with a horizon- and regime-conditional prior and update in log space:
+
+```text
+log_posterior_s = log(prior_s) + sum_g reliability_g * log(LR_g,s)
+posterior_s = exp(log_posterior_s) / sum_k exp(log_posterior_k)
+```
+
+Each `g` must be an independent evidence family, not an indicator. Examples are trend, breadth, ETF flow, fundamentals/revisions, valuation, policy/liquidity, positioning, and event risk. Combine correlated observations inside a family before assigning one likelihood ratio.
+
+Rules:
+
+- Estimate likelihood ratios from regime-matched historical events when possible.
+- If using heuristic likelihood mapping, cap each family LR to roughly 0.5-2.0, label the result `model-implied scenario weights`, and run alternative-prior sensitivity.
+- Use reliability from 0 to 1 for freshness, source quality, coverage, and sample stability.
+- Do not let posterior probabilities fall below 3%-5% when event or policy risk is material.
+- If a neutral prior and the selected regime prior produce different leading states, report low confidence and the posterior range.
+- Do not use the posterior as a price target. Pair each state with a path, horizon, conditional return range, and invalidation evidence.
+
 ## Historical Hit Analysis
 
 When sufficient history exists, replace or adjust priors with symbol-specific statistics:

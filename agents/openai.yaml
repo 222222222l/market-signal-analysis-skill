@@ -1,4 +1,4 @@
 interface:
   display_name: "Market Signal Analysis"
-  short_description: "Causal, probability-aware analysis of trends, liquidity, and risk."
-  default_prompt: "Use $market-signal-analysis to analyze this market question with the minimum sufficient modules, current data, a causal transmission chain, independent evidence, probability labels, scenarios, and explicit invalidation conditions."
+  short_description: "Market signals, ETF flows, liquidity, and Bayesian scenarios."
+  default_prompt: "Use $market-signal-analysis to analyze this market question with current data, the minimum sufficient modules, a causal transmission chain, independent evidence, ETF-flow and crowding checks when relevant, probability labels, scenarios, and explicit invalidation conditions."

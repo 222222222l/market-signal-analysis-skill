@@ -58,6 +58,9 @@ Add only the relevant block:
 | Trend stage | Stage, warning level, structural break level, formal trend-end level, and reclaim/retest condition. |
 | Sector/bubble | Trend score, bubble-risk score, breadth/leadership, crowding, and failed-breakout condition. |
 | A-share ETF | Regime, ETF holdability, breadth versus index, turnover concentration, operator-capital inference, exit/re-entry signals. |
+| Broad ETF monitoring | Peer-aggregated flow, price-flow state, support-withdrawal risk, actor-attribution grade, up/range/down posterior and sensitivity. |
+| Sector ETF crowding | Share trend/Z-score, flow pressure, price-flow quadrant, crowding, unwind risk, fundamentals/revisions, up/range/down posterior. |
+| Hong Kong ETF | Canonical fund/share-class identity, counter consolidation, NAV freshness, primary flow, Southbound state, global-flow offset, market quality, crowding/unwind, posterior sensitivity. |
 | Official data | Components, definition/revision issues, data-quality score, bias range, independent confirmations and contradictions. |
 | Actor/game | Actors, objectives, constraints, best responses, Nash-like state, deviation risk, observable confirmation. |
 | U.S. macro | Inflation/labor, issuance/term premium, plumbing, real-demand/capex, transmission, Fed reaction function. |

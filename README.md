@@ -31,7 +31,9 @@ The default rule is one primary module plus no more than two overlays. Extra mod
 - OHLCV, trend, breakout, momentum, volume, MACD, RSI, KDJ, divergence, volatility, and multi-timeframe structure.
 - Granville and Vegas rules, trend-stage classification, ATR/Chandelier risk levels, reversal and reclaim/retest signals.
 - Sector breadth, leadership, rotation, crowding, high-valuation narrative bubbles, and exhaustion risk.
-- A-share broad/sector ETF regimes, index-versus-breadth divergence, turnover concentration, and policy-capital effects.
+- A-share broad-ETF peer aggregation, creation/redemption monitoring, support-withdrawal risk, ETF migration, and index-versus-breadth divergence.
+- Sector-ETF share trends, flow pressure, capacity, concentration, crowding/unwind scores, and Bayesian up/range/down scenario weights.
+- Hong Kong ETF canonical-fund flows, multi-counter deduplication, Southbound ETF Connect, market-maker inventory, NAV-timing, and cross-border Bayesian scenarios.
 - Single-stock fundamentals, valuation, announcement/news quality, governance, capital supply, and technical boundaries.
 - Official-data decomposition, measurement-bias ranges, revisions, and independent cross-checks.
 - Policy-maker and market-decision-maker incentives, direct/indirect games, and Nash-like equilibrium analysis.
@@ -73,6 +75,22 @@ Classify U.S. liquidity and Fed policy, then map the result into Nasdaq, Treasur
 Verify the official employment data, model policy and market actors' best responses, and identify the likely equilibrium.
 ```
 
+For deterministic A-share ETF flow analysis, provide daily long-form data with
+`date,symbol,group,scope,close,nav,shares,turnover`. Optional breadth,
+concentration, capacity, valuation, fundamental, policy, derivatives, and
+cross-market fields improve coverage.
+
+```powershell
+python scripts/analyze_etf_flows.py --input etf_daily.csv --scope broad --group csi300 --regime range_extraction --pretty
+```
+
+For Hong Kong-listed ETFs, add `--market hk` and normalize multiple trading
+counters into one canonical fund/share-class row before analysis.
+
+The script aggregates peer products by estimated money flow, not raw shares,
+and labels its Bayesian output as model-implied scenario weights rather than
+historical hit probabilities.
+
 ## Repository Layout
 
 ```text
@@ -88,6 +106,9 @@ Verify the official employment data, model policy and market actors' best respon
 |   |-- trend-stage-analysis.md
 |   |-- sector-bubble-analysis.md
 |   |-- a-share-macro-trading-model.md
+|   |-- a-share-broad-etf-monitoring.md
+|   |-- a-share-sector-etf-crowding.md
+|   |-- hong-kong-etf-flow-monitoring.md
 |   |-- single-stock-fundamental-technical-analysis.md
 |   |-- official-data-verification.md
 |   |-- actor-optimal-path-analysis.md
@@ -100,6 +121,7 @@ Verify the official employment data, model policy and market actors' best respon
 |   `-- research-and-optimization-roadmap.md
 `-- scripts/
     |-- analyze_ohlcv.py
+    |-- analyze_etf_flows.py
     |-- train_market_transformer_demo.py
     `-- validate_skill_graph.py
 ```

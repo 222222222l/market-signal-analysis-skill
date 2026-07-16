@@ -1,6 +1,6 @@
 ---
 name: market-signal-analysis
-description: Analyze stocks, ETFs, sectors, indices, and liquid markets with OHLCV, fundamentals, breadth, liquidity, valuation, policy, actor incentives, cycles/FFT, and event risk. Use for trend-stage or trend-end analysis, Granville/Vegas signals, probability-weighted buy/sell/hold views, sector rotation and high-valuation bubbles, A/H-share ETF regimes, single-stock news and valuation, official-data verification, multi-actor game equilibria, U.S. liquidity and Fed policy, macro stress, special-date risk, or quantitative market-model design.
+description: Analyze stocks, ETFs, sectors, indices, and liquid markets with OHLCV, fundamentals, breadth, liquidity, ETF shares/flows, valuation, policy, actor incentives, cycles/FFT, and event risk. Use for trend-stage or trend-end analysis, Granville/Vegas signals, probability-weighted buy/sell/hold views, A-share broad-ETF support/withdrawal, A/H sector-ETF crowding and redemption, Hong Kong ETF Connect and multi-counter flows, sector rotation and high-valuation bubbles, A/H-share ETF regimes, single-stock news and valuation, official-data verification, multi-actor game equilibria, U.S. liquidity and Fed policy, macro stress, special-date risk, or quantitative market-model design.
 ---
 
 # Market Signal Analysis
@@ -41,6 +41,9 @@ Produce horizon-specific, causal, probability-aware market decision support. Exp
 | Trend stage/end, Granville, Vegas, breakout, reversal, stop level | `references/trend-stage-analysis.md` | signal taxonomy, statistical weighting |
 | Sector/theme rotation, breadth, leadership, high-valuation bubble | `references/sector-bubble-analysis.md` | trend stage; actor/game; cycles |
 | A-share broad or sector ETF, index support, crowding, ordinary-investor holdability | `references/a-share-macro-trading-model.md` | trend stage; sector bubble; actor/game |
+| A-share broad-ETF group shares, policy support/withdrawal, ETF migration | `references/a-share-broad-etf-monitoring.md` | A-share macro; actor/game; statistical weighting |
+| Single sector ETF share trend, crowding, redemption feedback, flow-price divergence | `references/a-share-sector-etf-crowding.md` | A-share macro; sector bubble; statistical weighting |
+| Hong Kong ETF units, multi-counter identity, Southbound ETF Connect, market-maker inventory | `references/hong-kong-etf-flow-monitoring.md` | A-share/H-share macro; statistical weighting; actor/game |
 | Individual stock fundamentals, valuation, announcement/news quality, hold/cut decision | `references/single-stock-fundamental-technical-analysis.md` | trend stage; event risk |
 | Official macro, regulator, exchange, central-bank, or statistical data | `references/official-data-verification.md` | relevant macro or policy module |
 | Policy-maker, institution, dealer, insider, or strategic interaction | `references/actor-optimal-path-analysis.md` | official-data verification; event risk |
@@ -58,6 +61,7 @@ Produce horizon-specific, causal, probability-aware market decision support. Exp
 - For bubble regimes, separate "expensive but strengthening" from "expensive and weakening." Valuation can define fragility; breadth, flows, revisions, credit, and failed price structure usually determine timing.
 - For cycles and Fourier analysis, use rolling, regime-aware evidence. When HP or BK filtering is used, disclose parameters and causal versus two-sided construction, treat symmetric endpoints as descriptive only, and do not count the filter and the FFT of its output as independent evidence. Long cycles and spectral peaks adjust priors or confidence; they do not independently cause price moves.
 - For official data, decompose components, definitions, revisions, base effects, and independent proxies before raising confidence.
+- For ETF-flow inference, aggregate peer ETFs by exposure, use share changes rather than AUM changes, separate secondary-market selling from primary-market redemption, and never identify a seller from shares alone.
 - When evidence families conflict, preserve the conflict, explain which horizon each governs, and widen ranges or lower confidence.
 
 ## Minimum Output Contract
@@ -71,6 +75,14 @@ Use `scripts/analyze_ohlcv.py` for CSV OHLCV analysis. Expected columns are `tim
 ```powershell
 python scripts/analyze_ohlcv.py --input prices.csv --market us_equity --horizon short
 ```
+
+Use `scripts/analyze_etf_flows.py` for daily A/H-share ETF share/flow, crowding, unwind, and three-state Bayesian scenario analysis. Read the market-specific ETF reference for the input schema and interpretation limits.
+
+```powershell
+python scripts/analyze_etf_flows.py --input etf_daily.csv --scope broad --group csi300
+```
+
+Add `--market hk` for canonical fund-level Hong Kong data. Do not pass repeated multi-counter units as separate funds.
 
 Use `scripts/train_market_transformer_demo.py` only for a requested trainable-model demo. It expects panel data with `timestamp,symbol,market,open,high,low,close,volume` plus optional numeric features.
 
