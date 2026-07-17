@@ -1,153 +1,164 @@
 # Market Signal Analysis Skill
 
-Codex skill for professional technical market analysis across stocks, ETFs, indices, sectors, boards, themes, and other liquid investment markets.
+A Codex skill for causal, probability-aware analysis of stocks, ETFs, sectors, indices, and liquid macro markets.
 
-The skill combines classic OHLCV technical analysis with statistical signal weighting, multi-timeframe scoring, sector rotation analysis, and a bubble-momentum framework for markets where valuation alone is not a useful timing tool.
+It combines technical structure, fundamentals, breadth, valuation, liquidity, policy, actor incentives, cycles, event risk, and data-quality checks without forcing every question through every framework.
 
-## What It Covers
+## Design
 
-- Multi-timeframe technical analysis: hourly, daily, weekly, monthly.
-- Common indicators: moving averages, MACD, RSI, KDJ/stochastic, Bollinger Bands, ATR, volume, momentum, relative strength, breakout, and divergence.
-- Probability-style buy/sell/hold views with matched bullish and bearish evidence.
-- Sector and theme analysis: breadth, rotation, leading-stock strength, benchmark-relative strength, volume confirmation, and policy/liquidity caveats.
-- Bubble-market analysis: trend/momentum score, bubble-risk score, bold/cautious decision matrix, double-top versus second-breakout interpretation, and exhaustion signals.
-- Fourier/FFT frequency-domain analysis: rolling dominant-cycle stability, Fourier trend lines, low/mid/high-frequency energy, noise-risk control, frequency-domain correlation, and integration with multi-cycle Bayesian scoring.
-- Policy-maker and market-decision-maker game analysis: infer likely policy, institutional, dealer, insider, and leveraged-capital behavior from objectives, constraints, tools, incentives, multi-actor best responses, Nash-like equilibrium states, and observable confirmation.
-- U.S. macro liquidity and Federal Reserve policy-regime analysis: inflation/labor second derivative, Treasury issuance, term premium, SOFR-IORB pressure, ON RRP/TGA/reserves, AI/capex support, and market transmission.
-- Official government/regulator data verification: headline decomposition, component weights, estimated bias/water ranges, reconstructed ranges, and cross-validation against independent market or real-economy evidence.
-- A-share-specific caveats such as price limits, T+1, retail participation, policy narratives, financing, ETF/fund flows, and large shareholder sell-down announcements.
-- Optional deep-learning/Transformer-oriented design guidance for quantitative signal models.
+The skill uses a progressive-disclosure architecture:
+
+1. `SKILL.md` contains only first principles, the common workflow, module routing, composition rules, and the minimum output contract.
+2. `references/` contains specialized frameworks loaded only when the question needs them.
+3. `scripts/` contains deterministic analysis and architecture-validation helpers.
+
+The default rule is one primary module plus no more than two overlays. Extra modules should be loaded only when they can change the decision, probability, or risk boundary.
+
+## Core Principles
+
+- Fix the market and decision horizon before choosing signals.
+- Gate conclusions on data source, freshness, adjustment status, and sample length.
+- Separate state, flow, and expectation.
+- Build a causal transmission chain before relying on correlations or historical analogies.
+- Compare actors' words with costly, repeated, observable actions.
+- Deduplicate correlated evidence and condition probabilities on base rates and regimes.
+- Label probabilities as empirical, model-implied, or scenario weights.
+- Give paths, ranges, time windows, and invalidation conditions instead of unsupported point targets.
+- State the strongest opposing case and what evidence would falsify the preferred view.
+
+## Coverage
+
+- OHLCV, trend, breakout, momentum, volume, MACD, RSI, KDJ, divergence, volatility, and multi-timeframe structure.
+- Market-stage-specific behavior selection across crypto, A-shares, and U.S. equities, with risk-budget filtering, executable exits, regime-matched return priors, all-in costs, failure/ruin paths, and survival-adjusted log growth.
+- Granville and Vegas rules, trend-stage classification, ATR/Chandelier risk levels, reversal and reclaim/retest signals.
+- Sector breadth, leadership, rotation, crowding, high-valuation narrative bubbles, and exhaustion risk.
+- A-share broad-ETF peer aggregation, creation/redemption monitoring, support-withdrawal risk, ETF migration, and index-versus-breadth divergence.
+- Sector-ETF share trends, flow pressure, capacity, concentration, crowding/unwind scores, and Bayesian up/range/down scenario weights.
+- Hong Kong ETF canonical-fund flows, multi-counter deduplication, Southbound ETF Connect, market-maker inventory, NAV-timing, and cross-border Bayesian scenarios.
+- Single-stock fundamentals, valuation, announcement/news quality, governance, capital supply, and technical boundaries.
+- Official-data decomposition, measurement-bias ranges, revisions, and independent cross-checks.
+- Policy-maker and market-decision-maker incentives, direct/indirect games, and Nash-like equilibrium analysis.
+- Economic, credit, liquidity, inventory, capex, industry, and market-cycle overlays.
+- Rolling Fourier/FFT rhythm, HP/BK pre-filtering, endpoint-safe detrending, cycle stability, noise energy, and frequency-domain correlation.
+- U.S. liquidity, Fed policy, Treasury issuance, term premium, reserve plumbing, macro stress, and cross-asset transmission.
+- Futures/options expiry, FOMC and macro releases, Treasury auctions, index rebalances, and thin-liquidity dates.
+- Optional Transformer/TFT market-model and publishable research design.
 
 ## Installation
-
-Clone this repository into your Codex skills directory:
 
 ```powershell
 git clone https://github.com/222222222l/market-signal-analysis-skill.git $env:USERPROFILE\.codex\skills\market-signal-analysis
 ```
 
-If you already have a local copy, update it with:
+To update an existing clone:
 
 ```powershell
-cd $env:USERPROFILE\.codex\skills\market-signal-analysis
-git pull
+git -C $env:USERPROFILE\.codex\skills\market-signal-analysis pull
 ```
 
-Restart Codex or reload skills after installation if your environment does not discover new skills automatically.
+Reload Codex skills if the environment does not discover changes automatically.
 
 ## Usage Examples
 
-Ask Codex questions such as:
-
 ```text
-Use market-signal-analysis to analyze NVDA across daily and weekly timeframes.
+Use market-signal-analysis to determine whether this ETF is in a healthy pullback or a formal trend break.
 ```
 
 ```text
-Analyze whether the AI hardware sector is still in a strong trend or has entered a bubble-risk phase.
+Analyze whether this high-valuation sector is expensive but strengthening or expensive and weakening.
 ```
 
 ```text
-Use Fourier/FFT frequency-domain analysis to test whether this sector ETF has a stable rotation rhythm or only noisy one-off swings.
+Classify U.S. liquidity and Fed policy, then map the result into Nasdaq, Treasuries, USD, and gold scenarios.
 ```
 
 ```text
-Quantify whether this sector is broadening or narrowing based on leaders, breadth, volume, and relative strength.
+Verify the official employment data, model policy and market actors' best responses, and identify the likely equilibrium.
 ```
 
 ```text
-Build a cautious/bold decision view for this theme after a second breakout.
+Classify this market's current stage, compare eligible behavior modes, and estimate the net return range after costs, exit failures, and ruin risk.
 ```
 
-```text
-Classify the current U.S. macro liquidity state and Fed policy bias using inflation, Treasury issuance, SOFR-IORB, reserves, AI capex, and market transmission.
+For deterministic A-share ETF flow analysis, provide daily long-form data with
+`date,symbol,group,scope,close,nav,shares,turnover`. Optional breadth,
+concentration, capacity, valuation, fundamental, policy, derivatives, and
+cross-market fields improve coverage.
+
+```powershell
+python scripts/analyze_etf_flows.py --input etf_daily.csv --scope broad --group csi300 --regime range_extraction --pretty
 ```
 
-```text
-Analyze this market as a multi-actor game between policy makers and market decision makers, assuming each actor chooses the best feasible response under its actual motives and constraints, and infer the likely Nash-like equilibrium.
+For Hong Kong-listed ETFs, add `--market hk` and normalize multiple trading
+counters into one canonical fund/share-class row before analysis.
+
+The script aggregates peer products by estimated money flow, not raw shares,
+and labels its Bayesian output as model-implied scenario weights rather than
+historical hit probabilities.
+
+For behavior-mode selection, provide market-state probabilities, horizon-matched
+return priors, costs, exit/ruin paths, and explicit risk limits:
+
+```powershell
+python scripts/recommend_behavior_mode.py --input behavior_priors.json --pretty
 ```
 
-```text
-Verify whether this official CPI/GDP/employment/credit data is reliable enough for a market signal by decomposing sub-components, estimating possible bias, and cross-checking independent evidence.
-```
+The calculator rejects modes that violate the risk budget and withholds a
+numeric return when a material state prior has fewer than 20 effective events.
 
 ## Repository Layout
 
 ```text
 .
-|-- SKILL.md
+|-- SKILL.md                         # compact router and invariants
 |-- agents/
-|   `-- openai.yaml
+|   `-- openai.yaml                 # Codex UI metadata
 |-- references/
-|   |-- actor-optimal-path-analysis.md
-|   |-- cycle-overlay-analysis.md
-|   |-- official-data-verification.md
-|   |-- deep-learning-extension.md
-|   |-- fourier-cycle-analysis.md
-|   |-- market-profiles.md
-|   |-- output-format.md
-|   |-- research-and-optimization-roadmap.md
-|   |-- research-basis.md
-|   |-- sector-bubble-analysis.md
 |   |-- signal-taxonomy.md
 |   |-- statistical-weighting.md
-|   `-- us-macro-liquidity-fed-policy.md
+|   |-- market-profiles.md
+|   |-- output-format.md
+|   |-- behavior-mode-selection.md
+|   |-- trend-stage-analysis.md
+|   |-- sector-bubble-analysis.md
+|   |-- a-share-macro-trading-model.md
+|   |-- a-share-broad-etf-monitoring.md
+|   |-- a-share-sector-etf-crowding.md
+|   |-- hong-kong-etf-flow-monitoring.md
+|   |-- single-stock-fundamental-technical-analysis.md
+|   |-- official-data-verification.md
+|   |-- actor-optimal-path-analysis.md
+|   |-- cycle-overlay-analysis.md
+|   |-- fourier-cycle-analysis.md
+|   |-- us-macro-liquidity-fed-policy.md
+|   |-- macro-stress-derivative-analysis.md
+|   |-- special-date-event-risk.md
+|   |-- deep-learning-extension.md
+|   `-- research-and-optimization-roadmap.md
 `-- scripts/
     |-- analyze_ohlcv.py
-    `-- train_market_transformer_demo.py
+    |-- analyze_etf_flows.py
+    |-- recommend_behavior_mode.py
+    |-- train_market_transformer_demo.py
+    `-- validate_skill_graph.py
 ```
-
-## Key Reference
-
-`references/sector-bubble-analysis.md` contains the sector and bubble-momentum framework:
-
-- Trend/momentum score `T`.
-- Bubble-risk score `R`.
-- Bold/cautious matrix.
-- Double-top and second-breakout interpretation.
-- Sector breadth checklist.
-- A-share policy and liquidity caveats.
-
-`references/fourier-cycle-analysis.md` contains the Fourier/FFT frequency-domain framework:
-
-- Rolling FFT on returns, detrended log price, volatility, volume/turnover, relative strength, and breadth.
-- Dominant-cycle stability checks across rolling windows.
-- Fourier trend-line construction and interpretation.
-- Low/mid/high-frequency energy split for trend, swing rhythm, and noise risk.
-- Frequency-domain correlation for diversification and crisis-resonance checks.
-- Bayesian integration rules that adjust cycle reliability without double-counting trend evidence.
-
-`references/us-macro-liquidity-fed-policy.md` contains the U.S. macro liquidity and Fed policy-regime framework:
-
-- Five-variable dashboard: inflation/labor, fiscal/term premium, liquidity plumbing, AI/capex, market transmission.
-- Scenario state machine: baseline bear steepening, inflation bear flattening, fiscal issuance shock, plumbing tightening, traditional recession/disinflation.
-- SOFR-IORB, ON RRP, TGA, reserves, SRF/repo, and term-premium rules of thumb.
-- Fed reaction and cross-asset playbook mapping.
-
-`references/actor-optimal-path-analysis.md` contains the policy-maker and market-decision-maker game framework:
-
-- Concrete actor mapping: policy makers, regulators, state-backed capital, institutional funds, leveraged funds, dealers, insiders, and corporate actors.
-- Objective, constraint, tool, payoff, and reaction-function analysis.
-- Direct and indirect strategic games, best-response mapping, unilateral-deviation checks, and Nash-like equilibrium or unstable disequilibrium classification.
-- Interaction states such as aligned easing, managed range, crowded chase, policy collision, crisis stabilization, and coordination failure.
-- Confirmation and invalidation rules to avoid treating motive inference as certainty.
-
-`references/official-data-verification.md` contains the official-data quality framework:
-
-- Headline versus sub-component checks.
-- Estimated bias/water and reconstructed ranges.
-- Cross-validation with market, fiscal, corporate, household, trade, and real-economy indicators.
-- Contradiction diagnosis before converting official data into a trading signal.
 
 ## Validation
 
-The skill folder follows the Codex skill structure:
+Run the architecture check after modifying routes or references:
 
-- Required `SKILL.md` with YAML frontmatter.
-- Optional `agents/` metadata.
-- Optional `references/` documentation for progressive disclosure.
-- Optional `scripts/` utilities.
+```powershell
+python scripts/validate_skill_graph.py
+```
+
+Run the Codex skill validator when available:
+
+```powershell
+python C:\Users\Administrator\.codex\skills\.system\skill-creator\scripts\quick_validate.py .
+```
+
+The architecture validator enforces a compact `SKILL.md`, verifies that every specialized reference is routed directly from it, and catches broken or orphaned references.
 
 ## Disclaimer
 
-This skill is for market analysis and decision support only. It does not provide personalized investment advice, guaranteed returns, or risk-free trading signals. Market probabilities should be treated as uncertain scenarios and validated against current data, liquidity, transaction costs, and the user's own risk constraints.
+This skill provides uncertain market analysis and decision support, not guaranteed returns or personalized financial advice. Validate current data, liquidity, costs, tax constraints, and risk capacity before acting.

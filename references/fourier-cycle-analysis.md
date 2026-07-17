@@ -37,6 +37,41 @@ Prefer stationary or detrended inputs:
 
 Avoid directly running FFT on raw price and then calling the lowest-frequency component a "cycle"; raw prices often embed trend, splits, inflation, regime shifts, and structural growth.
 
+## HP and BK Pre-Filtering
+
+Treat a filter as a declared preprocessing choice, not as evidence that a cycle exists. Select the target horizon and economic question before selecting the filter.
+
+| Filter | Best Use | Required Disclosure | Main Failure Modes |
+| --- | --- | --- | --- |
+| Hodrick-Prescott (HP) | Separate a smooth low-frequency trend from a residual cycle, especially in monthly or quarterly macro series; optionally detrend log price before exploratory FFT. | Sampling frequency, smoothing parameter `lambda`, full-sample versus rolling/one-sided construction, and endpoint revision size. | Two-sided look-ahead, severe endpoint instability, arbitrary smoothness, spurious cycles, and amplitude/phase distortion. |
+| Baxter-King (BK) | Extract a predeclared period band for ex-post business-, inventory-, sector-, or rotation-cycle research. | Lower and upper periods in observations, truncation length `K`, sample lost at both ends, and whether the band was chosen before inspecting results. | Symmetric and non-causal output, loss of `K` observations at each edge, poor live-end usability, leakage, and circular band selection. |
+
+Selection rules:
+
+1. Use log returns first when the question is short-horizon market rhythm or risk. They usually need less model-dependent detrending.
+2. Use HP when the question requires a broad trend-cycle split. There is no universal `lambda` for daily market data; justify it from the sampling frequency and target horizon. `lambda = 1600` is a conventional quarterly macro anchor, not a default for every frequency.
+3. Use BK when testing a known band such as a business or inventory cycle. Express cutoffs in observations and require several complete target cycles plus the observations lost to `K`.
+4. Use HP and BK in parallel as robustness checks when both are material. Do not serially HP-filter and then BK-filter by default; repeated filtering can manufacture smoothness and distort phase or amplitude.
+5. For a live turning-point decision, avoid a full-sample symmetric HP endpoint and the latest symmetric BK value. Prefer a rolling or expanding one-sided HP estimate, a causal/state-space alternative, or delay the signal until enough future observations exist.
+
+### HP -> FFT Workflow
+
+1. Define the horizon that the HP trend should remove.
+2. Compute `cycle_t = transformed_series_t - hp_trend_t` using only data available at each historical decision date when backtesting.
+3. Run rolling FFT on the cycle, not one full-sample residual.
+4. Re-run across a small predeclared `lambda` grid and compare with log returns plus a simple linear or moving-average detrend.
+5. Accept a dominant period only if its band, energy share, and phase interpretation remain materially stable. Treat a full-sample endpoint reversal that disappears in the one-sided estimate as look-ahead, not a signal.
+
+### BK -> FFT Workflow
+
+1. Set the lower period, upper period, and `K` from an economic or market-horizon prior before viewing the target spectrum.
+2. Apply BK only when the sample contains enough complete cycles after losing `K` observations at each edge.
+3. Use FFT on the BK component to verify energy concentration and rolling stability inside the predeclared band; do not use it to rediscover the band imposed by BK.
+4. Compare the result with the unfiltered or independently detrended spectrum and adjacent placebo bands.
+5. Do not issue a current-period timing signal from a symmetric BK endpoint. Label the output ex-post or use a causal approximation with explicit phase-delay analysis.
+
+Avoid circular confirmation: if HP or BK mechanically creates the input passed to FFT, the filtered shape and its FFT are one evidence family. Agreement between them does not provide two independent votes.
+
 Minimum practical windows:
 
 | Horizon | Rolling Window | Typical Question |
@@ -51,7 +86,7 @@ Use rolling windows. Do not run one static multi-year FFT and infer a permanent 
 
 1. Choose the input series and horizon.
 2. Clean missing data, corporate-action gaps, duplicate timestamps, and impossible values.
-3. Transform into log returns or detrended series.
+3. Transform into log returns or a declared detrended series. If using HP or BK, record all filter parameters, endpoint loss/revision, and whether the historical value is causal.
 4. Demean the series. Apply a window such as Hann/Hanning to reduce spectral leakage.
 5. Run FFT or real FFT.
 6. Convert frequencies into periods: `period = 1 / frequency`.
@@ -86,6 +121,8 @@ Decision rules:
 | Price far above or below line | Emotional overextension risk | Do not use distance alone; combine with breadth, valuation, volume, and support/resistance. |
 
 Avoid full-sample leakage. A historical chart may use only data known up to each date when drawing the Fourier trend line for backtesting.
+
+HP trend and Fourier low-pass trend are alternative smoothers of the same series. Their visual agreement is a robustness observation, not independent evidence; disagreement should trigger parameter and endpoint-sensitivity checks.
 
 ## Cycle Pullback Framework
 
@@ -221,6 +258,9 @@ Require:
 - Comparison with a simple moving-average or momentum baseline.
 - Transaction-cost and turnover check.
 - No future-data leakage in filtered trend lines.
+- HP endpoint-revision and `lambda` sensitivity checks when HP is used.
+- BK cutoff, `K`, edge-loss, and adjacent-band placebo checks when BK is used.
+- A causal or rolling reconstruction for any claimed real-time signal.
 - No parameter fishing across many window lengths without penalty.
 
 Downgrade confidence when:
@@ -236,7 +276,7 @@ Downgrade confidence when:
 When Fourier analysis materially affects the answer, add:
 
 1. Input series, date range, frequency, and window length.
-2. Data transform used: returns, detrended log price, volatility, volume change, relative strength, or breadth.
+2. Data transform and filter used: returns, detrended log price, volatility, volume change, relative strength, or breadth; for HP report `lambda` and endpoint method, and for BK report the period band, `K`, and observations lost.
 3. Dominant period bands and rolling stability.
 4. Energy split: low, medium, high frequency.
 5. Fourier trend-line state when used.

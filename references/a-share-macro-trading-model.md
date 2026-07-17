@@ -2,6 +2,8 @@
 
 Use this reference for A-share broad-index ETFs, sector-index ETFs, policy-driven index support, "index range-bound while retail accounts bleed", national-team or operator-capital inference, ETF share contraction, turnover concentration, and questions about when ordinary investors can hold ETFs with lower risk and when they should exit.
 
+For daily peer-aggregated broad-ETF monitoring and support-withdrawal inference, also read `references/a-share-broad-etf-monitoring.md`. For one sector ETF's share trend, crowding, and redemption feedback, also read `references/a-share-sector-etf-crowding.md`.
+
 This model is an evidence framework, not proof of a coordinated operator. Infer "operator capital" only from observable price, breadth, ETF share, turnover, fund-flow, policy, and leader-stock behavior.
 
 ## Core Premise
