@@ -47,13 +47,13 @@ The default rule is one primary module plus no more than two overlays. Extra mod
 ## Installation
 
 ```powershell
-git clone https://github.com/222222222l/market-signal-analysis-skill.git $env:USERPROFILE\.codex\skills\market-signal-analysis
+git clone https://github.com/222222222l/market-signal-analysis-skill.git $env:USERPROFILE\.codex\skills\market-signal-analysis-skill
 ```
 
 To update an existing clone:
 
 ```powershell
-git -C $env:USERPROFILE\.codex\skills\market-signal-analysis pull
+git -C $env:USERPROFILE\.codex\skills\market-signal-analysis-skill pull
 ```
 
 Reload Codex skills if the environment does not discover changes automatically.
