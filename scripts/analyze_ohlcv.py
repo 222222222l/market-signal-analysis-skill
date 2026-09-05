@@ -72,12 +72,12 @@ def parse_date(value: str) -> Optional[date]:
 
 def normalize_columns(fieldnames: Iterable[str]) -> Dict[str, str]:
     aliases = {
-        "timestamp": {"timestamp", "date", "datetime", "time"},
-        "open": {"open", "o"},
-        "high": {"high", "h"},
-        "low": {"low", "l"},
-        "close": {"close", "c", "adj_close", "adjusted_close"},
-        "volume": {"volume", "vol", "v"},
+        "timestamp": ("timestamp", "date", "datetime", "time"),
+        "open": ("open", "o"),
+        "high": ("high", "h"),
+        "low": ("low", "l"),
+        "close": ("close", "c"),
+        "volume": ("volume", "vol", "v"),
     }
     normalized = {name.lower().strip(): name for name in fieldnames}
     result = {}
@@ -88,8 +88,25 @@ def normalize_columns(fieldnames: Iterable[str]) -> Dict[str, str]:
                 break
     missing = [key for key in aliases if key not in result]
     if missing:
+        if 'close' in missing and {'adj_close', 'adjusted_close'} & normalized.keys():
+            raise ValueError('Adjusted close alone cannot be mixed with raw OHLC; provide consistently adjusted open/high/low/close columns.')
         raise ValueError(f"Missing required columns: {', '.join(missing)}")
     return result
+
+
+def score_signal_families(signals: List[dict]) -> Dict[str, dict]:
+    families: Dict[str, dict] = {}
+    for signal in signals:
+        direction = signal['direction']
+        if direction not in {'bullish', 'bearish'}:
+            continue
+        scores = families.setdefault(signal['family'], {'bullish': 0.0, 'bearish': 0.0})
+        scores[direction] = max(scores[direction], min(1.0, max(0.0, signal['strength'])))
+    for family, scores in families.items():
+        scale = FAMILY_WEIGHTS[family] / max(1.0, sum(scores.values()))
+        for direction in scores:
+            scores[direction] *= scale
+    return families
 
 
 def load_bars(path: str) -> List[Bar]:
@@ -661,14 +678,9 @@ def analyze(
         elif atr_pct < 0.02:
             add_signal(signals, "volatility_regime", "low_volatility_constructive", "bullish", 0.20, f"ATR is contained at {atr_pct:.1%} of price.")
 
-    bullish = 0.0
-    bearish = 0.0
-    for signal in signals:
-        contribution = FAMILY_WEIGHTS[signal["family"]] * signal["strength"]
-        if signal["direction"] == "bullish":
-            bullish += contribution
-        elif signal["direction"] == "bearish":
-            bearish += contribution
+    family_scores = score_signal_families(signals)
+    bullish = sum(scores['bullish'] for scores in family_scores.values())
+    bearish = sum(scores['bearish'] for scores in family_scores.values())
 
     net = bullish - bearish
     buy_raw = 1 / (1 + math.exp(-2.6 * net))
@@ -681,7 +693,8 @@ def analyze(
         "sell": round(100 * sell_raw / total, 1),
         "hold": round(100 * hold_raw / total, 1),
     }
-    probability_basis = "default_prior"
+    probability_basis = "model_implied_probability"
+    warnings.append('Model-implied probability from heuristic scores; not calibrated empirical frequencies.')
 
     confidence = "medium" if len(bars) >= 200 else "low"
     if len(bars) < 60:
@@ -709,6 +722,7 @@ def analyze(
             "atr14": current_atr,
         },
         "score_components": {"bullish": round(bullish, 4), "bearish": round(bearish, 4), "net": round(net, 4)},
+        "family_score_components": family_scores,
         "special_date_risk_score": calendar_risk_score,
         "special_date_warning_level": calendar_warning_level,
         "special_date_alerts": special_alerts,

@@ -55,6 +55,12 @@ hold_probability = max(0, 1 - abs(raw_buy_probability - raw_sell_probability) * 
 
 Normalize buy/sell/hold to sum to 100%.
 
+The bundled OHLCV helper uses the strongest signal per direction within each
+family, then scales combined bullish and bearish contributions to that family's
+weight cap. Repeating a correlated signal cannot increase its contribution.
+`family_score_components` exposes this calculation. Inputs must provide
+consistently adjusted OHLC columns; an adjusted close alone is rejected.
+
 Label this output `model-implied probability`. Do not call it an empirical hit probability unless it has been calibrated on a defined historical sample. If expected move does not clear costs, volatility, or the user's decision threshold, increase the neutral/hold weight rather than forcing a directional call.
 
 ## Base Rates and Evidence Dependence
